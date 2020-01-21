@@ -5,7 +5,7 @@ with legacy fallback in the browser.
 
 ## Usage
 
-```bash
+```js
 import {
   fileOpenPromise,
   fileSavePromise,
@@ -46,6 +46,22 @@ import {
   openButton.disabled = false;
   saveButton.disabled = false;
 })();
+```
+
+## API
+
+```js
+const options = {
+  mimeTypes: ['*/*'],
+};
+const blob = await fileOpen(options);
+```
+
+```js
+const options = {
+  fileName: 'untitled.txt',
+};
+await fileSave(blob, options);
 ```
 
 ## License
