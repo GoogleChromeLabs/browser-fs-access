@@ -1,0 +1,50 @@
+{
+  "name": "browser-nativefs",
+  "version": "0.0.1",
+  "description": "Native File System API with legacy fallback in the browser.",
+  "browser": "./dist/nativefs.mjs",
+  "main": "./dist/nativefs.mjs",
+  "module": "./dist/nativefs.mjs",
+  "scripts": {
+    "start": "npx http-server",
+    "clean": "shx rm -rf ./dist",
+    "build": "npm run clean && shx mkdir ./dist && npx ./build.sh",
+    "prepare": "npm run lint && npm run build",
+    "lint": "npx eslint ./src/*.mjs --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomayac/browser-nativefs.git"
+  },
+  "keywords": [
+    "Native",
+    "File",
+    "System",
+    "API"
+  ],
+  "files": [
+    "dist/"
+  ],
+  "author": "Thomas Steiner (https://blog.tomayac.com/)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/tomayac/browser-nativefs/issues"
+  },
+  "homepage": "https://github.com/tomayac/browser-nativefs#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-google": "^0.14.0",
+    "http-server": "^0.12.1",
+    "shx": "^0.3.2",
+    "terser": "^4.6.3"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module"
+    },
+    "extends": [
+      "google"
+    ]
+  }
+}
