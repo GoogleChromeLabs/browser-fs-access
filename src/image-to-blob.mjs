@@ -15,7 +15,7 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
-export default async (img) => {
+export const imageToBlob = async (img) => {
   return new Promise((resolve) => {
     const canvas = document.createElement('canvas');
     canvas.width = img.naturalWidth;
