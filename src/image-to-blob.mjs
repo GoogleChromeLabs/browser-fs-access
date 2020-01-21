@@ -15,7 +15,12 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
-export const imageToBlob = async (img) => {
+/**
+ * Converts an image to a Blob.
+ * @param {HTMLImageElement} img - Image element.
+ * @return {Blob} Resulting Blob.
+ */
+const imageToBlob = async (img) => {
   return new Promise((resolve) => {
     const canvas = document.createElement('canvas');
     canvas.width = img.naturalWidth;
@@ -27,3 +32,5 @@ export const imageToBlob = async (img) => {
     });
   });
 };
+
+export {imageToBlob};

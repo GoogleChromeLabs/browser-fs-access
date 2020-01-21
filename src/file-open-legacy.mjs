@@ -15,15 +15,22 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
+/**
+ * Opens a file from disk using the legacy `<input type="file">` method.
+ * @param {Object} [options] - Optional options object.
+ * @param {string[]} options.mimeTypes - Acceptable MIME types.
+ * @param {boolean} options.multiple - Allow multiple files to be selected.
+ * @return {File | File[]} Opened file(s).
+ */
 export default async (options = {}) => {
   return new Promise((resolve) => {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = options.mimeTypes || ['*/*'];
+    input.multiple = options.multiple || false;
+    input.accept = options.mimeTypes.join() || '*/*';
     input.addEventListener('change', () => {
-      const file = input.files[0];
       input.remove();
-      return resolve(file);
+      return resolve(input.multiple ? input.files : input.files[0]);
     });
     input.click();
   });

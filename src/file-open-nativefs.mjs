@@ -15,9 +15,18 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
+/**
+ * Opens a file from disk using the Native File System API.
+ * @param {Object} [options] - Optional options object.
+ * @param {string[]} options.mimeTypes - Acceptable MIME types.
+ * @param {string[]} options.extensions - Acceptable file extensions.
+ * @param {boolean} options.multiple - Allow multiple files to be selected.
+ * @param {string} options.description - Suggested file description.
+ * @return {File | File[]} Opened file(s).
+ */
 export default async (options = {}) => {
   try {
-    const handle = await chooseFileSystemEntries({
+    const handleOrHandles = await chooseFileSystemEntries({
       accepts: [
         {
           description: options.description || '',
@@ -25,9 +34,21 @@ export default async (options = {}) => {
           extensions: options.extensions || [''],
         },
       ],
+      multiple: options.multiple || false,
     });
-    const file = await handle.getFile();
-    file.handle = handle;
+    if (options.multiple) {
+      const files = [];
+      for (const handle of handleOrHandles) {
+        const file = await handle.getFile();
+        // TODO: is this good practice?
+        file.handle = handle;
+        files.push(file);
+      }
+      return files;
+    }
+    const file = await handleOrHandles.getFile();
+    // TODO: is this good practice?
+    file.handle = handleOrHandles;
     return file;
   } catch (err) {
     throw err;

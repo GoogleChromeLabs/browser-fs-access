@@ -14,22 +14,30 @@
  * limitations under the License.
  */
 
-import {fileOpenPromise, fileSavePromise} from '../dist/nativefs.mjs'
-import imageToBlob from '../src/image-to-blob.mjs';
+import {
+  fileOpenPromise,
+  fileSavePromise,
+  imageToBlob,
+} from '../src/nativefs.mjs';
 
 (async () => {
   const fileOpen = (await fileOpenPromise).default;
   const fileSave = (await fileSavePromise).default;
 
   const openButton = document.querySelector('#open');
+  const openMultipleButton = document.querySelector('#open-multiple');
   const saveButton = document.querySelector('#save');
 
-  openButton.addEventListener('click', async (e) => {
+  const appendImage = (blob) => {
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(blob);
+    document.body.append(img);
+  };
+
+  openButton.addEventListener('click', async () => {
     try {
       const blob = await fileOpen({mimeTypes: ['image/*']});
-      const img = document.createElement('img');
-      img.src = URL.createObjectURL(blob);
-      document.body.append(img);
+      appendImage(blob);
     } catch (err) {
       if (err.name !== 'AbortError') {
         console.error(err);
@@ -37,7 +45,20 @@ import imageToBlob from '../src/image-to-blob.mjs';
     }
   });
 
-  saveButton.addEventListener('click', async (e) => {
+  openMultipleButton.addEventListener('click', async () => {
+    try {
+      const blobs = await fileOpen({mimeTypes: ['image/*'], multiple: true});
+      for (const blob of blobs) {
+        appendImage(blob);
+      }
+    } catch (err) {
+      if (err.name !== 'AbortError') {
+        console.error(err);
+      }
+    }
+  });
+
+  saveButton.addEventListener('click', async () => {
     const blob = await imageToBlob(document.querySelector('img'));
     try {
       await fileSave(blob, {fileName: 'Untitled.png'});
@@ -49,5 +70,6 @@ import imageToBlob from '../src/image-to-blob.mjs';
   });
 
   openButton.disabled = false;
+  openMultipleButton.disabled = false;
   saveButton.disabled = false;
 })();

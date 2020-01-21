@@ -15,6 +15,9 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
+/**
+ * @module browser-nativefs
+ */
 export {fileOpenPromise} from './file-open.mjs';
 export {fileSavePromise} from './file-save.mjs';
 export {imageToBlob} from './image-to-blob.mjs';

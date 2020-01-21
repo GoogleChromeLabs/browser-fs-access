@@ -15,6 +15,12 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
+/**
+ * Saves a file to disk using the legacy `<a download>` method.
+ * @param {Blob} blob - To-be-saved blob.
+ * @param {Object} [options] - Optional options object.
+ * @param {string} options.fileName - Suggested file name.
+ */
 export default async (blob, options = {}) => {
   const a = document.createElement('a');
   a.download = options.fileName || 'Untitled',

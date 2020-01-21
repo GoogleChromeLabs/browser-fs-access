@@ -15,6 +15,15 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
+/**
+ * Saves a file to disk using the Native File System API.
+ * @param {Blob} blob - To-be-saved blob.
+ * @param {Object} [options] - Optional options object.
+ * @param {string[]} options.mimeTypes - Acceptable MIME types.
+ * @param {string} options.fileName - Suggested file name.
+ * @param {string} options.description - Suggested file description.
+ * @param {FileSystemHandle} [handle] - Optional file handle to save in place.
+ */
 export default async (blob, options = {}, handle = null) => {
   try {
     handle = handle || await chooseFileSystemEntries({
