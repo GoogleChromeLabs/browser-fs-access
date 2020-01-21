@@ -36,7 +36,10 @@ import {
 
   openButton.addEventListener('click', async () => {
     try {
-      const blob = await fileOpen({mimeTypes: ['image/*']});
+      const blob = await fileOpen({
+        mimeTypes: ['image/jpg'],
+        extensions: ['jpg', 'jpeg'],
+      });
       appendImage(blob);
     } catch (err) {
       if (err.name !== 'AbortError') {
@@ -47,7 +50,11 @@ import {
 
   openMultipleButton.addEventListener('click', async () => {
     try {
-      const blobs = await fileOpen({mimeTypes: ['image/*'], multiple: true});
+      const blobs = await fileOpen({
+        mimeTypes: ['image/jpg'],
+        extensions: ['jpg', 'jpeg'],
+        multiple: true,
+      });
       for (const blob of blobs) {
         appendImage(blob);
       }

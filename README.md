@@ -1,50 +1,32 @@
 # Browser-NativeFS
 
-Use the [Native File System API](https://wicg.github.io/native-file-system/)
-with legacy fallback in the browser.
+This module allows you to either use the
+[Native File System API](https://wicg.github.io/native-file-system/) on supporting browsers,
+with a transparent fallback to the `<input type="file">` and `<a download>` legacy methods.
 
 ## Usage
+
+The module feature-detects support for the Native File System API and
+only loads the actually relevant code.
 
 ```js
 import {
   fileOpenPromise,
   fileSavePromise,
-  imageToBlob
 } from 'https://unpkg.com/browser-nativefs';
 
 (async () => {
+  // This dynamically either loads the Native File System API
+  // or the legacy module.
   const fileOpen = (await fileOpenPromise).default;
   const fileSave = (await fileSavePromise).default;
 
-  const openButton = document.querySelector('#open');
-  const saveButton = document.querySelector('#save');
-
-  openButton.addEventListener('click', async (e) => {
-    try {
-      const blob = await fileOpen({mimeTypes: ['image/*']});
-      const img = document.createElement('img');
-      img.src = URL.createObjectURL(blob);
-      document.body.append(img);
-    } catch (err) {
-      if (err.name !== 'AbortError') {
-        console.error(err);
-      }
-    }
-  });
-
-  saveButton.addEventListener('click', async (e) => {
-    const blob = await imageToBlob(document.querySelector('img'));
-    try {
-      await fileSave(blob, {fileName: 'Untitled.png'});
-    } catch (err) {
-      if (err.name !== 'AbortError') {
-        console.error(err);
-      }
-    }
-  });
-
-  openButton.disabled = false;
-  saveButton.disabled = false;
+  // Open a file.
+  const blob = await fileOpen({mimeTypes: ['image/*']});
+  // Open multiple files
+  const blobs = await fileOpen({mimeTypes: ['image/*'], multiple: true});
+  // Save a file.
+  await fileSave(blob, {fileName: 'Untitled.png'});
 })();
 ```
 
@@ -52,16 +34,19 @@ import {
 
 ```js
 const options = {
-  mimeTypes: ['*/*'],
+  mimeTypes: ['image/*'],
+  extensions: ['png', 'jpg', 'jpeg', 'webp'],
+  multiple: true,
+  description: 'Image files',
 };
-const blob = await fileOpen(options);
+const blobs = await fileOpen(options);
 ```
 
 ```js
 const options = {
-  fileName: 'untitled.txt',
+  fileName: 'Untitled.txt',
 };
-await fileSave(blob, options);
+await fileSave(someBlob, options);
 ```
 
 ## License

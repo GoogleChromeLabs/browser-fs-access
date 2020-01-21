@@ -19,6 +19,7 @@
  * Opens a file from disk using the legacy `<input type="file">` method.
  * @param {Object} [options] - Optional options object.
  * @param {string[]} options.mimeTypes - Acceptable MIME types.
+ * @param {string[]} options.extensions - Acceptable file extensions.
  * @param {boolean} options.multiple - Allow multiple files to be selected.
  * @return {File | File[]} Opened file(s).
  */
@@ -26,8 +27,12 @@ export default async (options = {}) => {
   return new Promise((resolve) => {
     const input = document.createElement('input');
     input.type = 'file';
+    const accept = [
+      ...(options.mimeTypes ? options.mimeTypes : []),
+      (options.extensions ? options.extensions.map((ext) => `.${ext}`) : []),
+    ].join();
     input.multiple = options.multiple || false;
-    input.accept = options.mimeTypes.join() || '*/*';
+    input.accept = accept || '*/*';
     input.addEventListener('change', () => {
       input.remove();
       return resolve(input.multiple ? input.files : input.files[0]);
