@@ -1,6 +1,6 @@
 {
   "name": "browser-nativefs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Native File System API with legacy fallback in the browser.",
   "browser": "./dist/nativefs.mjs",
   "main": "./dist/nativefs.mjs",
@@ -17,10 +17,10 @@
     "url": "git+https://github.com/tomayac/browser-nativefs.git"
   },
   "keywords": [
-    "Native",
-    "File",
-    "System",
-    "API"
+    "native file system",
+    "native file system api",
+    "native fs",
+    "nativefs"
   ],
   "files": [
     "dist/"
