@@ -18,7 +18,7 @@ import {
   fileOpenPromise,
   fileSavePromise,
   imageToBlob,
-} from '../src/nativefs.mjs';
+} from '../src/index.js';
 
 (async () => {
   const fileOpen = (await fileOpenPromise).default;

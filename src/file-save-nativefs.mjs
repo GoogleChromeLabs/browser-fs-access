@@ -26,7 +26,7 @@
 export default async (blob, options = {}, handle = null) => {
   try {
     options.fileName = options.fileName || 'Untitled';
-    handle = handle || await chooseFileSystemEntries({
+    handle = handle || await window.chooseFileSystemEntries({
       type: 'saveFile',
       accepts: [
         {

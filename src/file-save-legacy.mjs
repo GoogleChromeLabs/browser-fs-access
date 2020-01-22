@@ -23,7 +23,7 @@
  */
 export default async (blob, options = {}) => {
   const a = document.createElement('a');
-  a.download = options.fileName || 'Untitled',
+  a.download = options.fileName || 'Untitled';
   a.rel = 'noopener';
   a.href = URL.createObjectURL(blob);
   a.addEventListener('click', (e) => {

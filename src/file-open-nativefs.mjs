@@ -26,7 +26,7 @@
  */
 export default async (options = {}) => {
   try {
-    const handleOrHandles = await chooseFileSystemEntries({
+    const handleOrHandles = await window.chooseFileSystemEntries({
       accepts: [
         {
           description: options.description || '',
