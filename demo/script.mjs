@@ -15,15 +15,12 @@
  */
 
 import {
-  fileOpenPromise,
-  fileSavePromise,
+  fileOpen,
+  fileSave,
   imageToBlob,
 } from '../src/index.js';
 
 (async () => {
-  const fileOpen = (await fileOpenPromise).default;
-  const fileSave = (await fileSavePromise).default;
-
   const openButton = document.querySelector('#open');
   const openMultipleButton = document.querySelector('#open-multiple');
   const saveButton = document.querySelector('#save');
