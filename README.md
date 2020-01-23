@@ -11,15 +11,12 @@ only loads the actually relevant code.
 
 ```js
 import {
-  fileOpenPromise,
-  fileSavePromise,
+  fileOpen,
+  fileSave,
 } from 'https://unpkg.com/browser-nativefs';
 
 (async () => {
-  // This dynamically either loads the Native File System API
-  // or the legacy module.
-  const fileOpen = (await fileOpenPromise).default;
-  const fileSave = (await fileSavePromise).default;
+  // These methods will use the Native File System API or a fallback implementation.
 
   // Open a file.
   const blob = await fileOpen({mimeTypes: ['image/*']});
