@@ -76,6 +76,10 @@ const handle = previouslyOpenedBlob.handle;
 await fileSave(someBlob, options, handle);
 ```
 
+## Acknowledgements
+
+Thanks to @developit for improving the dynamic module loading.
+
 ## License
 
 Apache 2.0.
