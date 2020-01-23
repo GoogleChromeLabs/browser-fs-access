@@ -15,7 +15,7 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
-const implementation = 'chooseFileSystemEntries' in window
+const implementation = 'chooseFileSystemEntries' in self
   ? import('./file-open-nativefs.mjs')
   : import('./file-open-legacy.mjs');
 
