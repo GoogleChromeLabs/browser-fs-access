@@ -18,6 +18,6 @@
 /**
  * @module browser-nativefs
  */
-export {fileOpenPromise} from './file-open.mjs';
-export {fileSavePromise} from './file-save.mjs';
+export {fileOpen} from './file-open.mjs';
+export {fileSave} from './file-save.mjs';
 export {imageToBlob} from './image-to-blob.mjs';

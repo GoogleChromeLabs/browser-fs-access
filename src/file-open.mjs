@@ -15,13 +15,14 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
+const implementation = 'chooseFileSystemEntries' in self
+  ? import('./file-open-nativefs.mjs')
+  : import('./file-open-legacy.mjs');
+
 /**
  * For opening files, dynamically either loads the Native File System API module
  * or the legacy method.
  */
-export const fileOpenPromise = (async () => {
-  if ('chooseFileSystemEntries' in window) {
-    return await import('./file-open-nativefs.mjs');
-  }
-  return await import('./file-open-legacy.mjs');
-})();
+export async function fileOpen(...args) {
+  return (await implementation).default.call(this, ...args);
+}
