@@ -13,7 +13,8 @@ The module feature-detects support for the Native File System API and
 only loads the actually relevant code.
 
 ```js
-// The imported methods will use the Native File System API or a fallback implementation.
+// The imported methods will use the Native
+// File System API or a fallback implementation.
 import {
   fileOpen,
   fileSave,
