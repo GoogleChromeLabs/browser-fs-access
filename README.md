@@ -78,7 +78,8 @@ await fileSave(someBlob, options, handle);
 
 ## Acknowledgements
 
-Thanks to @developit for improving the dynamic module loading.
+Thanks to [@developit](https://github.com/developit)
+for improving the dynamic module loading.
 
 ## License
 
