@@ -77,6 +77,12 @@ const handle = previouslyOpenedBlob.handle;
 await fileSave(someBlob, options, handle);
 ```
 
+## Browser-NativeFS in Action
+
+You can see the module in action in the [Excalidraw](https://excalidraw.com/) drawing app.
+
+![excalidraw](https://user-images.githubusercontent.com/145676/73060246-b4a64200-3e97-11ea-8f70-fa5edd63f78e.png)
+
 ## Acknowledgements
 
 Thanks to [@developit](https://github.com/developit)
