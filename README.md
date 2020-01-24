@@ -88,6 +88,8 @@ You can see the module in action in the [Excalidraw](https://excalidraw.com/) dr
 Thanks to [@developit](https://github.com/developit)
 for improving the dynamic module loading.
 
-## License
+## License and Note
 
 Apache 2.0.
+
+This is not an official Google product.
