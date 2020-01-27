@@ -30,9 +30,7 @@ export default async (blob, options = {}, handle = null) => {
       type: 'saveFile',
       accepts: [
         {
-          description: options.description ||
-              `${blob.type.split('/')[0][0].toUpperCase()}${
-                blob.type.split('/')[0].substr(1)} file`,
+          description: options.description || '',
           mimeTypes: [blob.type],
         },
       ],
