@@ -86,7 +86,9 @@ You can see the module in action in the [Excalidraw](https://excalidraw.com/) dr
 ## Acknowledgements
 
 Thanks to [@developit](https://github.com/developit)
-for improving the dynamic module loading.
+for improving the dynamic module loading
+and [@dwelle](https://github.com/dwelle) for the helpful feedback
+and issue reports.
 
 ## License and Note
 
