@@ -1,10 +1,10 @@
 {
   "name": "browser-nativefs",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Native File System API with legacy fallback in the browser.",
-  "browser": "./dist/index.js",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
+  "browser": "dist/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "scripts": {
     "start": "npx http-server -o /demo/",
     "clean": "shx rm -rf ./dist",
