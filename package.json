@@ -1,6 +1,6 @@
 {
   "name": "browser-nativefs",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Native File System API with legacy fallback in the browser.",
   "browser": "./dist/index.js",
   "main": "./dist/index.js",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tomayac/browser-nativefs.git"
+    "url": "git+https://github.com/GoogleChromeLabs/browser-nativefs.git"
   },
   "keywords": [
     "native file system",
@@ -28,9 +28,9 @@
   "author": "Thomas Steiner (https://blog.tomayac.com/)",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/tomayac/browser-nativefs/issues"
+    "url": "https://github.com/GoogleChromeLabs/browser-nativefs/issues"
   },
-  "homepage": "https://github.com/tomayac/browser-nativefs#readme",
+  "homepage": "https://github.com/GoogleChromeLabs/browser-nativefs#readme",
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-google": "^0.14.0",
