@@ -67,7 +67,6 @@ import {
   });
 
   openDirectoryButton.addEventListener('click', async () => {
-    // const blobs = await directoryOpen({recursive: true});
     const blobs = await directoryOpen();
     let fileStructure = '';
     blobs.sort((a, b) => {
