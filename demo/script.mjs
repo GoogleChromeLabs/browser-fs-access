@@ -16,6 +16,7 @@
 
 import {
   fileOpen,
+  directoryOpen,
   fileSave,
   imageToBlob,
 } from '../src/index.js';
@@ -23,12 +24,15 @@ import {
 (async () => {
   const openButton = document.querySelector('#open');
   const openMultipleButton = document.querySelector('#open-multiple');
+  const openDirectoryButton = document.querySelector('#open-directory');
   const saveButton = document.querySelector('#save');
+  const pre = document.querySelector('pre');
 
   const appendImage = (blob) => {
     const img = document.createElement('img');
     img.src = URL.createObjectURL(blob);
     document.body.append(img);
+    setTimeout(() => URL.revokeObjectURL(img.src), 0);
   };
 
   openButton.addEventListener('click', async () => {
@@ -62,6 +66,35 @@ import {
     }
   });
 
+  openDirectoryButton.addEventListener('click', async () => {
+    // const blobs = await directoryOpen({recursive: true});
+    const blobs = await directoryOpen();
+    let fileStructure = '';
+    blobs.sort((a, b) => {
+      a = a.webkitRelativePath + a.name;
+      b = b.webkitRelativePath + b.name;
+      if (a < b) {
+        return -1;
+      } else if (a > b) {
+        return 1;
+      }
+      return 0;
+    }).forEach((blob) => {
+      // The Native File System API currently reports the `webkitRelativePath`
+      // as empty string `''`.
+      fileStructure += `${blob.webkitRelativePath}${
+          blob.webkitRelativePath.endsWith(blob.name) ?
+          '' : blob.name}\n`;
+    });
+    pre.textContent = fileStructure;
+
+    blobs.filter((blob) => {
+      return blob.type.startsWith('image/');
+    }).forEach((blob) => {
+      appendImage(blob);
+    });
+  });
+
   saveButton.addEventListener('click', async () => {
     const blob = await imageToBlob(document.querySelector('img'));
     try {
@@ -75,5 +108,6 @@ import {
 
   openButton.disabled = false;
   openMultipleButton.disabled = false;
+  openDirectoryButton.disabled = false;
   saveButton.disabled = false;
 })();

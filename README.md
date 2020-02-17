@@ -17,6 +17,7 @@ only loads the actually relevant code.
 // File System API or a fallback implementation.
 import {
   fileOpen,
+  directoryOpen,
   fileSave,
 } from 'https://unpkg.com/browser-nativefs';
 
@@ -30,6 +31,12 @@ import {
   const blobs = await fileOpen({
     mimeTypes: ['image/*'],
     multiple: true,
+  });
+
+  // Open all files in a directory,
+  // recursively including subdirectories.
+  const blobs = await directoryOpen({
+    recursive: true
   });
 
   // Save a file.
@@ -57,6 +64,29 @@ const options = {
 };
 
 const blobs = await fileOpen(options);
+```
+
+Opening directories:
+
+Note that there are some differences between the Native File System API
+and the fallback approach
+[`<input type="file" webkitdirectory multiple>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory).
+Namely, the Native File System API currently doesn't provide useful
+relative path info as
+[`webkitRelativePath`](https://developer.mozilla.org/en-US/docs/Web/API/File/webkitRelativePath)
+did, so you need to keep track of paths yourself.
+
+```js
+// Options are optional.
+const options = {
+  // Set to `true` for allowing multiple directories, defaults to `false`.
+  multiple: true,
+  // Set to `true` to recursively open files in all subdirectories,
+  // defaults to `false`.
+  recursive: true,
+};
+
+const blobs = await directoryOpen(options);
 ```
 
 Saving files:

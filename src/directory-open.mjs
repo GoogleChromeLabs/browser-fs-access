@@ -15,10 +15,14 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
+const implementation = 'chooseFileSystemEntries' in self ?
+  import('./directory-open-nativefs.mjs') :
+  import('./directory-open-legacy.mjs');
+
 /**
- * @module browser-nativefs
+ * For opening directories, dynamically either loads the Native File System API
+ * module or the legacy method.
  */
-export {fileOpen} from './file-open.mjs';
-export {directoryOpen} from './directory-open.mjs';
-export {fileSave} from './file-save.mjs';
-export {imageToBlob} from './image-to-blob.mjs';
+export async function directoryOpen(...args) {
+  return (await implementation).default(...args);
+}
