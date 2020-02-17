@@ -35,7 +35,7 @@ import {
 
   // Open all files in a directory,
   // recursively including subdirectories.
-  const blobs = await directoryOpen({
+  const blobsInDirectory = await directoryOpen({
     recursive: true
   });
 
@@ -48,7 +48,7 @@ import {
 
 ## API Documentation
 
-Opening files:
+### Opening files:
 
 ```js
 // Options are optional.
@@ -66,7 +66,7 @@ const options = {
 const blobs = await fileOpen(options);
 ```
 
-Opening directories:
+### Opening directories:
 
 Note that there are some differences between the Native File System API
 and the fallback approach
@@ -89,7 +89,7 @@ const options = {
 const blobs = await directoryOpen(options);
 ```
 
-Saving files:
+### Saving files:
 
 ```js
 // Options are optional.
