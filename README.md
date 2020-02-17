@@ -7,6 +7,10 @@ with a transparent fallback to the `<input type="file">` and `<a download>` lega
 Read more on the background of this module in my post
 [Progressive Enhancement In the Age of Fugu APIs](https://blog.tomayac.com/2020/01/23/progressive-enhancement-in-the-age-of-fugu-apis/).
 
+## Live Demo
+
+See the library in action: https://browser-nativefs.glitch.me/.
+
 ## Usage Example
 
 The module feature-detects support for the Native File System API and
