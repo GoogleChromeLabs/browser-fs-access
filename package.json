@@ -1,6 +1,6 @@
 {
   "name": "browser-nativefs",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Native File System API with legacy fallback in the browser.",
   "browser": "dist/index.js",
   "main": "dist/index.js",
@@ -36,7 +36,7 @@
     "eslint-config-google": "^0.14.0",
     "http-server": "^0.12.1",
     "shx": "^0.3.2",
-    "terser": "^4.6.3"
+    "terser": "^4.6.6"
   },
   "eslintConfig": {
     "parserOptions": {
