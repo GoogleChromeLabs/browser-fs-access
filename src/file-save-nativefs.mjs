@@ -54,10 +54,18 @@ export default async (blob, options = {}, handle = null) => {
             },
           ],
         });
-        const writer = await handle.createWriter();
-        await writer.truncate(0);
-        await writer.write(0, blob);
-        await writer.close();
+        // This is only temporarily necessary until Chrome 81 is fully gone.
+        // https://wicg.github.io/native-file-system/#ref-for-dom-filesystemfilehandle-createwritable①:~:text=In%20the%20Origin%20Trial%20as%20available%20in%20Chrome%2082%2C%20createWritable%20replaces%20the%20createWriter%20method.
+        if ('create' in handle) {
+          const writer = await handle.createWriter();
+          await writer.truncate(0);
+          await writer.write(0, blob);
+          await writer.close();
+        } else {
+          const writable = await handle.createWritable();
+          await writable.write(blob);
+          await writable.close();
+        }
       } catch (err) {
         throw err;
       }
