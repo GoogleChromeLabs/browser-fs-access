@@ -19,7 +19,7 @@ import {
   directoryOpen,
   fileSave,
   imageToBlob,
-} from '../src/index.js';
+} from '../dist/index.js';
 
 (async () => {
   const openButton = document.querySelector('#open');
@@ -67,31 +67,37 @@ import {
   });
 
   openDirectoryButton.addEventListener('click', async () => {
-    const blobs = await directoryOpen();
-    let fileStructure = '';
-    blobs.sort((a, b) => {
-      a = a.webkitRelativePath + a.name;
-      b = b.webkitRelativePath + b.name;
-      if (a < b) {
-        return -1;
-      } else if (a > b) {
-        return 1;
-      }
-      return 0;
-    }).forEach((blob) => {
-      // The Native File System API currently reports the `webkitRelativePath`
-      // as empty string `''`.
-      fileStructure += `${blob.webkitRelativePath}${
-          blob.webkitRelativePath.endsWith(blob.name) ?
-          '' : blob.name}\n`;
-    });
-    pre.textContent = fileStructure;
+    try {
+      const blobs = await directoryOpen();
+      let fileStructure = '';
+      blobs.sort((a, b) => {
+        a = a.webkitRelativePath + a.name;
+        b = b.webkitRelativePath + b.name;
+        if (a < b) {
+          return -1;
+        } else if (a > b) {
+          return 1;
+        }
+        return 0;
+      }).forEach((blob) => {
+        // The Native File System API currently reports the `webkitRelativePath`
+        // as empty string `''`.
+        fileStructure += `${blob.webkitRelativePath}${
+            blob.webkitRelativePath.endsWith(blob.name) ?
+            '' : blob.name}\n`;
+      });
+      pre.textContent = fileStructure;
 
-    blobs.filter((blob) => {
-      return blob.type.startsWith('image/');
-    }).forEach((blob) => {
-      appendImage(blob);
-    });
+      blobs.filter((blob) => {
+        return blob.type.startsWith('image/');
+      }).forEach((blob) => {
+        appendImage(blob);
+      });
+    } catch (err) {
+      if (err.name !== 'AbortError') {
+        console.error(err);
+      }
+    }
   });
 
   saveButton.addEventListener('click', async () => {

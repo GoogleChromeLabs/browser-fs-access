@@ -49,7 +49,7 @@ export default async (options = {}) => {
   } catch (err) {
     // This is only temporarily necessary until Chrome 80 is fully gone.
     // https://github.com/WICG/native-file-system/issues/147
-    if (/not a valid enum value/.test(err.message)) {
+    if (err.name === 'TypeError') {
       try {
         const handle = await window.chooseFileSystemEntries({
           type: 'openDirectory',
@@ -61,8 +61,7 @@ export default async (options = {}) => {
       } catch (err) {
         throw err;
       }
-    } else {
-      throw err;
     }
+    throw err;
   }
 };

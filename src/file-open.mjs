@@ -16,8 +16,8 @@
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
 const implementation = 'chooseFileSystemEntries' in self ?
-  import('./file-open-nativefs.mjs') :
-  import('./file-open-legacy.mjs');
+  import('./nativefs/file-open-nativefs.mjs') :
+  import('./legacy/file-open-legacy.mjs');
 
 /**
  * For opening files, dynamically either loads the Native File System API module

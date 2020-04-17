@@ -40,14 +40,12 @@ export default async (options = {}) => {
       const files = [];
       for (const handle of handleOrHandles) {
         const file = await handle.getFile();
-        // TODO: is this good practice?
         file.handle = handle;
         files.push(file);
       }
       return files;
     }
     const file = await handleOrHandles.getFile();
-    // TODO: is this good practice?
     file.handle = handleOrHandles;
     return file;
   } catch (err) {

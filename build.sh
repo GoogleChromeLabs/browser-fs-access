@@ -16,12 +16,7 @@
 #
 # @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
-for f in $(cd ./src && ls *.mjs)
+for f in $(find ./src -type f)
 do
-  npx terser --compress --mangle --comments /@license/ --ecma 8 --module --output ./dist/"$f" -- "./src/"$f
-done
-
-for f in $(cd ./src && ls *.js)
-do
-  npx terser --compress --mangle --comments /@license/ --ecma 8 --module --output ./dist/"$f" -- "./src/"$f
+  npx terser --compress --mangle --comments /@license/ --ecma 8 --module --output ./dist/"${f//.\/src\//}" -- $f
 done
