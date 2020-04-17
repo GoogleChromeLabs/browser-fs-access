@@ -19,7 +19,7 @@ import {
   directoryOpen,
   fileSave,
   imageToBlob,
-} from '../dist/index.js';
+} from '../src/index.js';
 
 (async () => {
   const openButton = document.querySelector('#open');
