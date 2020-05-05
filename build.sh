@@ -16,7 +16,7 @@
 #
 # @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
-for f in $(find ./src -type f)
+for f in $(find ./src -type f \( -name \*.js -o -name \*.mjs \))
 do
   npx terser --compress --mangle --comments /@license/ --ecma 8 --module --output ./dist/"${f//.\/src\//}" -- $f
 done
