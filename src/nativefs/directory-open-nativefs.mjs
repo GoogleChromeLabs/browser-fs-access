@@ -29,7 +29,7 @@ const getFiles = async (entries, recursive, files = []) => {
 /**
  * Opens a directory from disk using the Native File System API.
  * @param {Object} [options] - Optional options object.
- * @param {string[]} options.recursive - Whether to recursively get
+ * @param {boolean} options.recursive - Whether to recursively get
  *     subdirectories.
  * @param {boolean} options.multiple - Allow multiple directories to be
  *     selected.

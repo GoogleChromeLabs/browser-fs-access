@@ -19,7 +19,7 @@
  * Opens a directory from disk using the `<input type="file" webkitdirectory>`
  * method.
  * @param {Object} [options] - Optional options object.
- * @param {string[]} options.recursive - Whether to recursively get
+ * @param {boolean} options.recursive - Whether to recursively get
  *     subdirectories.
  * @param {boolean} options.multiple - Allow multiple directories to be
  *     selected.
