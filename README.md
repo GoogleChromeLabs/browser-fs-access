@@ -130,6 +130,8 @@ Thanks to [@developit](https://github.com/developit)
 for improving the dynamic module loading
 and [@dwelle](https://github.com/dwelle) for the helpful feedback
 and issue reports.
+The TypeScript type annotations were provided by
+[@nanaian](https://github.com/nanaian).
 
 ## License and Note
 
