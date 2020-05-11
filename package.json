@@ -5,7 +5,7 @@
   "browser": "dist/index.js",
   "main": "dist/index.js",
   "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "index.d.ts",
   "scripts": {
     "start": "npx http-server -o /demo/",
     "clean": "shx rm -rf ./dist",
@@ -24,7 +24,8 @@
     "nativefs"
   ],
   "files": [
-    "dist/"
+    "dist/",
+    "index.d.ts"
   ],
   "author": "Thomas Steiner (https://blog.tomayac.com/)",
   "license": "Apache-2.0",

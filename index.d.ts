@@ -1,11 +1,16 @@
-export interface FileOpenOptions {
-  mimeTypes: string[],
-  extensions: string[],
-  multiple: boolean,
-  description: string,
-}
+export function fileOpen(options?: {
+  mimeTypes?: string[],
+  extensions?: string[],
+  description?: string,
+  multiple: true,
+}): Promise<File[]>;
 
-export function fileOpen(options?: FileOpenOptions): Promise<File | File[]>;
+export function fileOpen(options?: {
+  mimeTypes?: string[],
+  extensions?: string[],
+  description?: string,
+  multiple?: false,
+}): Promise<File>;
 
 export interface FileSaveOptions {
   mimeTypes: string[],
