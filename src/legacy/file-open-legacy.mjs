@@ -34,8 +34,7 @@ export default async (options = {}) => {
     input.multiple = options.multiple || false;
     input.accept = accept || '*/*';
     input.addEventListener('change', () => {
-      input.remove();
-      return resolve(input.multiple ? input.files : input.files[0]);
+      resolve(input.multiple ? input.files : input.files[0]);
     });
     input.click();
   });

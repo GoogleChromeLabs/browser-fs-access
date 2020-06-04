@@ -39,29 +39,22 @@ export default async (options = {}) => {
   options.recursive = options.recursive || false;
   options.multiple = options.multiple || false;
   try {
-    const handle = await window.chooseFileSystemEntries({
+    const handleOrHandles = await window.chooseFileSystemEntries({
       type: 'open-directory',
       multiple: options.multiple,
     });
-    const entries = await handle.getEntries();
+    if (options.multiple) {
+      const files = [];
+      for (const handle of handleOrHandles) {
+        const entries = await handle.getEntries();
+        files.push(await getFiles(entries, options.recursive));
+      }
+      return files;
+    }
+    const entries = await handleOrHandles.getEntries();
     const files = await getFiles(entries, options.recursive);
     return files;
   } catch (err) {
-    // This is only temporarily necessary until Chrome 80 is fully gone.
-    // https://github.com/WICG/native-file-system/issues/147
-    if (err.name === 'TypeError') {
-      try {
-        const handle = await window.chooseFileSystemEntries({
-          type: 'openDirectory',
-          multiple: options.multiple,
-        });
-        const entries = await handle.getEntries();
-        const files = await getFiles(entries, options.recursive);
-        return files;
-      } catch (err) {
-        throw err;
-      }
-    }
     throw err;
   }
 };

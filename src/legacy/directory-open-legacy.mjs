@@ -34,14 +34,28 @@ export default async (options = {}) => {
     input.webkitdirectory = true;
     input.multiple = options.multiple;
     input.addEventListener('change', () => {
-      input.remove();
       let files = Array.from(input.files);
       if (!options.recursive) {
         files = files.filter((file) => {
           return file.webkitRelativePath.split('/').length === 2;
         });
       }
-      return resolve(files);
+      if (options.multiple) {
+        const directories = new Set();
+        const filesByDirectory = [];
+        files.forEach((file) => {
+          directories.add(file.webkitRelativePath.split('/')[0]);
+        });
+        for (const directory of directories) {
+          filesByDirectory.push(
+              files.filter((file) => {
+                return file.webkitRelativePath.startsWith(directory);
+              }),
+          );
+        }
+        files = filesByDirectory;
+      }
+      resolve(files);
     });
     input.click();
   });

@@ -15,58 +15,6 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
-const getHandle = async (blob, options) => {
-  try {
-    return await window.chooseFileSystemEntries({
-      type: 'save-file',
-      accepts: [
-        {
-          description: options.description || '',
-          mimeTypes: [blob.type],
-        },
-      ],
-    });
-  } catch (err) {
-    // This is only temporarily necessary until Chrome 80 is fully gone.
-    // https://github.com/WICG/native-file-system/issues/147
-    if (err.name === 'TypeError') {
-      try {
-        return await window.chooseFileSystemEntries({
-          type: 'saveFile',
-          accepts: [
-            {
-              description: options.description || '',
-              mimeTypes: [blob.type],
-            },
-          ],
-        });
-      } catch (err) {
-        throw err;
-      }
-    }
-    throw err;
-  }
-};
-
-const writeBlob = async (handle, blob) => {
-  try {
-    // This is only temporarily necessary until Chrome 81 is fully gone.
-    // https://wicg.github.io/native-file-system/#ref-for-dom-filesystemfilehandle-createwritable①:~:text=In%20the%20Origin%20Trial%20as%20available%20in%20Chrome%2082%2C%20createWritable%20replaces%20the%20createWriter%20method.
-    if ('createWriter' in handle) {
-      const writer = await handle.createWriter();
-      await writer.truncate(0);
-      await writer.write(0, blob);
-      await writer.close();
-    } else {
-      const writable = await handle.createWritable();
-      await writable.write(blob);
-      await writable.close();
-    }
-  } catch (err) {
-    throw err;
-  }
-};
-
 /**
  * Saves a file to disk using the Native File System API.
  * @param {Blob} blob - To-be-saved blob.
@@ -78,8 +26,18 @@ const writeBlob = async (handle, blob) => {
 export default async (blob, options = {}, handle = null) => {
   try {
     options.fileName = options.fileName || 'Untitled';
-    handle = handle || await getHandle(blob, options);
-    await writeBlob(handle, blob);
+    handle = handle || await window.chooseFileSystemEntries({
+      type: 'save-file',
+      accepts: [
+        {
+          description: options.description || '',
+          mimeTypes: [blob.type],
+        },
+      ],
+    });
+    const writable = await handle.createWritable();
+    await writable.write(blob);
+    await writable.close();
   } catch (err) {
     throw err;
   }

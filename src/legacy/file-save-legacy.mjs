@@ -25,9 +25,8 @@ export default async (blob, options = {}) => {
   const a = document.createElement('a');
   a.download = options.fileName || 'Untitled';
   a.href = URL.createObjectURL(blob);
-  a.addEventListener('click', (e) => {
-    a.remove();
+  a.addEventListener('click', () => {
     setTimeout(() => URL.revokeObjectURL(a.href), 30 * 1000);
   });
-  setTimeout(() => a.click(), 0);
+  a.click();
 };
