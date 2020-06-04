@@ -38,6 +38,7 @@ export default async (blob, options = {}, handle = null) => {
     const writable = await handle.createWritable();
     await writable.write(blob);
     await writable.close();
+    return handle;
   } catch (err) {
     throw err;
   }

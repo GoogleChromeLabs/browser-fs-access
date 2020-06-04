@@ -19,7 +19,7 @@ export interface FileSaveOptions {
   description: string,
 }
 
-export function fileSave(blob: Blob, options?: FileSaveOptions, handle?: FileSystemHandle | null): Promise<void>;
+export function fileSave(blob: Blob, options?: FileSaveOptions, handle?: FileSystemHandle | null): Promise<FileSystemHandle>;
 
 export interface DirectoryOpenOptions {
   recursive: boolean,
