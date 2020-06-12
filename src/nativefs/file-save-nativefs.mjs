@@ -21,6 +21,7 @@
  * @param {Object} [options] - Optional options object.
  * @param {string} options.fileName - Suggested file name.
  * @param {string} options.description - Suggested file description.
+ * @param {string[]} options.extensions - Suggested file extensions.
  * @param {FileSystemHandle} [handle] - Optional file handle to save in place.
  */
 export default async (blob, options = {}, handle = null) => {
@@ -32,6 +33,7 @@ export default async (blob, options = {}, handle = null) => {
         {
           description: options.description || '',
           mimeTypes: [blob.type],
+          extensions: options.extensions || [''],
         },
       ],
     });

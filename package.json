@@ -1,6 +1,6 @@
 {
   "name": "browser-nativefs",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Native File System API with legacy fallback in the browser.",
   "browser": "dist/index.js",
   "main": "dist/index.js",
