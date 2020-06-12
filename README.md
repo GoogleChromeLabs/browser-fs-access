@@ -124,6 +124,12 @@ You can see the module in action in the [Excalidraw](https://excalidraw.com/) dr
 
 ![excalidraw](https://user-images.githubusercontent.com/145676/73060246-b4a64200-3e97-11ea-8f70-fa5edd63f78e.png)
 
+## Alternatives
+
+A similar, but more extensive library called
+[native-file-system-adapter](https://github.com/jimmywarting/native-file-system-adapter/)
+is provided by [@jimmywarting](https://github.com/jimmywarting).
+
 ## Acknowledgements
 
 Thanks to [@developit](https://github.com/developit)
