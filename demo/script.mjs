@@ -99,7 +99,6 @@ import {
     try {
       const blobs = await directoryOpen();
       listDirectory(blobs);
-      console.timeEnd('dir');
     } catch (err) {
       if (err.name !== 'AbortError') {
         console.error(err);
