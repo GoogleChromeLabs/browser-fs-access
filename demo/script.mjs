@@ -34,7 +34,7 @@ import {
     const img = document.createElement('img');
     img.src = URL.createObjectURL(blob);
     document.body.append(img);
-    setTimeout(() => URL.revokeObjectURL(img.src), 0);
+    img.onload = img.onerror = () => URL.revokeObjectURL(img.src);
   };
 
   const listDirectory = (blobs) => {
