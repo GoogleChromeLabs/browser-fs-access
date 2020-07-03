@@ -38,22 +38,11 @@ import {
   const listDirectory = (blobs) => {
     let fileStructure = '';
     blobs
-      .sort((a, b) => {
-        a = a.webkitRelativePath + a.name;
-        b = b.webkitRelativePath + b.name;
-        if (a < b) {
-          return -1;
-        } else if (a > b) {
-          return 1;
-        }
-        return 0;
-      })
+      .sort((a, b) => a.webkitRelativePath.localeCompare(b))
       .forEach((blob) => {
         // The Native File System API currently reports the `webkitRelativePath`
         // as empty string `''`.
-        fileStructure += `${blob.webkitRelativePath}${
-          blob.webkitRelativePath.endsWith(blob.name) ? '' : blob.name
-        }\n`;
+        fileStructure += `${blob.webkitRelativePath}\n`;
       });
     pre.textContent += fileStructure;
 

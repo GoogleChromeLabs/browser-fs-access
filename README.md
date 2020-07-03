@@ -81,14 +81,6 @@ const blobs = await fileOpen(options);
 
 ### Opening directories:
 
-Note that there are some differences between the Native File System API
-and the fallback approach
-[`<input type="file" webkitdirectory multiple>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory).
-Namely, the Native File System API currently doesn't provide useful
-relative path info as
-[`webkitRelativePath`](https://developer.mozilla.org/en-US/docs/Web/API/File/webkitRelativePath)
-did, so you need to keep track of paths yourself.
-
 ```js
 // Options are optional.
 const options = {
@@ -99,6 +91,8 @@ const options = {
 
 const blobs = await directoryOpen(options);
 ```
+
+The module also polyfills a [`webkitRelativePath`](https://developer.mozilla.org/en-US/docs/Web/API/File/webkitRelativePath) property on returned files in a consistent way, regardless of the underlying implementation.
 
 ### Saving files:
 
