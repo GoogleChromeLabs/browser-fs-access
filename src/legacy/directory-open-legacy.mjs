@@ -21,39 +21,20 @@
  * @param {Object} [options] - Optional options object.
  * @param {boolean} options.recursive - Whether to recursively get
  *     subdirectories.
- * @param {boolean} options.multiple - Allow multiple directories to be
- *     selected.
  * @return {File[]} Contained files.
  */
 export default async (options = {}) => {
   options.recursive = options.recursive || false;
-  options.multiple = options.multiple || false;
   return new Promise((resolve) => {
     const input = document.createElement('input');
     input.type = 'file';
     input.webkitdirectory = true;
-    input.multiple = options.multiple;
     input.addEventListener('change', () => {
       let files = Array.from(input.files);
       if (!options.recursive) {
         files = files.filter((file) => {
           return file.webkitRelativePath.split('/').length === 2;
         });
-      }
-      if (options.multiple) {
-        const directories = new Set();
-        const filesByDirectory = [];
-        files.forEach((file) => {
-          directories.add(file.webkitRelativePath.split('/')[0]);
-        });
-        for (const directory of directories) {
-          filesByDirectory.push(
-              files.filter((file) => {
-                return file.webkitRelativePath.startsWith(directory);
-              }),
-          );
-        }
-        files = filesByDirectory;
       }
       resolve(files);
     });

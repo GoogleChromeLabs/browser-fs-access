@@ -33,4 +33,4 @@ const imageToBlob = async (img) => {
   });
 };
 
-export {imageToBlob};
+export { imageToBlob };

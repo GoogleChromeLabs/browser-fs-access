@@ -26,16 +26,18 @@
  */
 export default async (blob, options = {}, handle = null) => {
   options.fileName = options.fileName || 'Untitled';
-  handle = handle || await window.chooseFileSystemEntries({
-    type: 'save-file',
-    accepts: [
-      {
-        description: options.description || '',
-        mimeTypes: [blob.type],
-        extensions: options.extensions || [''],
-      },
-    ],
-  });
+  handle =
+    handle ||
+    (await window.chooseFileSystemEntries({
+      type: 'save-file',
+      accepts: [
+        {
+          description: options.description || '',
+          mimeTypes: [blob.type],
+          extensions: options.extensions || [''],
+        },
+      ],
+    }));
   const writable = await handle.createWritable();
   await writable.write(blob);
   await writable.close();

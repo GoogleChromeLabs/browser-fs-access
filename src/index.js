@@ -18,7 +18,7 @@
 /**
  * @module browser-nativefs
  */
-export {fileOpen} from './file-open.mjs';
-export {directoryOpen} from './directory-open.mjs';
-export {fileSave} from './file-save.mjs';
-export {imageToBlob} from './util/image-to-blob.mjs';
+export { fileOpen } from './file-open.mjs';
+export { directoryOpen } from './directory-open.mjs';
+export { fileSave } from './file-save.mjs';
+export { imageToBlob } from './util/image-to-blob.mjs';

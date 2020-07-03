@@ -33,23 +33,12 @@ const getFiles = async (dirHandle, recursive) => {
  * @param {Object} [options] - Optional options object.
  * @param {boolean} options.recursive - Whether to recursively get
  *     subdirectories.
- * @param {boolean} options.multiple - Allow multiple directories to be
- *     selected.
  * @return {File[]} Contained files.
  */
 export default async (options = {}) => {
   options.recursive = options.recursive || false;
-  options.multiple = options.multiple || false;
-  const handleOrHandles = await window.chooseFileSystemEntries({
+  const handle = await window.chooseFileSystemEntries({
     type: 'open-directory',
-    multiple: options.multiple,
   });
-  if (options.multiple) {
-    return (
-      await Promise.all(
-          handleOrHandles.map((handle) => getFiles(handle, options.recursive)),
-      )
-    ).flat();
-  }
-  return getFiles(handleOrHandles, options.recursive);
+  return getFiles(handle, options.recursive);
 };

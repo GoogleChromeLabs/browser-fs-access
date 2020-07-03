@@ -25,8 +25,6 @@ import {
   const openButton = document.querySelector('#open');
   const openMultipleButton = document.querySelector('#open-multiple');
   const openDirectoryButton = document.querySelector('#open-directory');
-  const openDirectoryMultipleButton =
-      document.querySelector('#open-directory-multiple');
   const saveButton = document.querySelector('#save');
   const pre = document.querySelector('pre');
 
@@ -39,29 +37,33 @@ import {
 
   const listDirectory = (blobs) => {
     let fileStructure = '';
-    blobs.sort((a, b) => {
-      a = a.webkitRelativePath + a.name;
-      b = b.webkitRelativePath + b.name;
-      if (a < b) {
-        return -1;
-      } else if (a > b) {
-        return 1;
-      }
-      return 0;
-    }).forEach((blob) => {
-      // The Native File System API currently reports the `webkitRelativePath`
-      // as empty string `''`.
-      fileStructure += `${blob.webkitRelativePath}${
-          blob.webkitRelativePath.endsWith(blob.name) ?
-          '' : blob.name}\n`;
-    });
+    blobs
+      .sort((a, b) => {
+        a = a.webkitRelativePath + a.name;
+        b = b.webkitRelativePath + b.name;
+        if (a < b) {
+          return -1;
+        } else if (a > b) {
+          return 1;
+        }
+        return 0;
+      })
+      .forEach((blob) => {
+        // The Native File System API currently reports the `webkitRelativePath`
+        // as empty string `''`.
+        fileStructure += `${blob.webkitRelativePath}${
+          blob.webkitRelativePath.endsWith(blob.name) ? '' : blob.name
+        }\n`;
+      });
     pre.textContent += fileStructure;
 
-    blobs.filter((blob) => {
-      return blob.type.startsWith('image/');
-    }).forEach((blob) => {
-      appendImage(blob);
-    });
+    blobs
+      .filter((blob) => {
+        return blob.type.startsWith('image/');
+      })
+      .forEach((blob) => {
+        appendImage(blob);
+      });
   };
 
   openButton.addEventListener('click', async () => {
@@ -106,23 +108,13 @@ import {
     }
   });
 
-  openDirectoryMultipleButton.addEventListener('click', async () => {
-    try {
-      const directories = await directoryOpen({multiple: true});
-      directories.forEach((blobs) => {
-        listDirectory(blobs);
-      });
-    } catch (err) {
-      if (err.name !== 'AbortError') {
-        console.error(err);
-      }
-    }
-  });
-
   saveButton.addEventListener('click', async () => {
     const blob = await imageToBlob(document.querySelector('img'));
     try {
-      await fileSave(blob, {fileName: 'Untitled.png'});
+      await fileSave(blob, {
+        fileName: 'Untitled.png',
+        extensions: ['png'],
+      });
     } catch (err) {
       if (err.name !== 'AbortError') {
         console.error(err);
@@ -133,6 +125,5 @@ import {
   openButton.disabled = false;
   openMultipleButton.disabled = false;
   openDirectoryButton.disabled = false;
-  openDirectoryMultipleButton.disabled = false;
   saveButton.disabled = false;
 })();

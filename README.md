@@ -3,6 +3,7 @@
 This module allows you to easily use the
 [Native File System API](https://wicg.github.io/native-file-system/) on supporting browsers,
 with a transparent fallback to the `<input type="file">` and `<a download>` legacy methods.
+This library is a [ponyfill](https://ponyfill.com/).
 
 Read more on the background of this module in my post
 [Progressive Enhancement In the Age of Fugu APIs](https://blog.tomayac.com/2020/01/23/progressive-enhancement-in-the-age-of-fugu-apis/).
@@ -47,12 +48,13 @@ import {
   // Open all files in a directory,
   // recursively including subdirectories.
   const blobsInDirectory = await directoryOpen({
-    recursive: true
+    recursive: true,
   });
 
   // Save a file.
   await fileSave(blob, {
     fileName: 'Untitled.png',
+    extensions: ['png'],
   });
 })();
 ```
@@ -90,8 +92,6 @@ did, so you need to keep track of paths yourself.
 ```js
 // Options are optional.
 const options = {
-  // Set to `true` for allowing multiple directories, defaults to `false`.
-  multiple: true,
   // Set to `true` to recursively open files in all subdirectories,
   // defaults to `false`.
   recursive: true,
@@ -105,8 +105,10 @@ const blobs = await directoryOpen(options);
 ```js
 // Options are optional.
 const options = {
-   // Suggested file name to use, defaults to `''`.
+  // Suggested file name to use, defaults to `''`.
   fileName: 'Untitled.txt',
+  // Suggested file extensions, defaults to `''`.
+  extensions: ['txt'],
 };
 
 // Optional file handle to save back to an existing file.

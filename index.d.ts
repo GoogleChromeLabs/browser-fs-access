@@ -1,29 +1,32 @@
 export function fileOpen(options?: {
-  mimeTypes?: string[],
-  extensions?: string[],
-  description?: string,
-  multiple: true,
+  mimeTypes?: string[];
+  extensions?: string[];
+  description?: string;
+  multiple: true;
 }): Promise<File[]>;
 
 export function fileOpen(options?: {
-  mimeTypes?: string[],
-  extensions?: string[],
-  description?: string,
-  multiple?: false,
+  mimeTypes?: string[];
+  extensions?: string[];
+  description?: string;
+  multiple?: false;
 }): Promise<File>;
 
 export interface FileSaveOptions {
-  mimeTypes: string[],
-  extensions: string[],
-  multiple: boolean,
-  description: string,
+  mimeTypes: string[];
+  extensions: string[];
+  multiple: boolean;
+  description: string;
 }
 
-export function fileSave(blob: Blob, options?: FileSaveOptions, handle?: FileSystemHandle | null): Promise<FileSystemHandle>;
+export function fileSave(
+  blob: Blob,
+  options?: FileSaveOptions,
+  handle?: FileSystemHandle | null
+): Promise<FileSystemHandle>;
 
 export interface DirectoryOpenOptions {
-  recursive: boolean,
-  multiple: boolean,
+  recursive: boolean;
 }
 
 export function directoryOpen(options?: DirectoryOpenOptions): Promise<File[]>;
@@ -35,16 +38,20 @@ export function imageToBlob(img: HTMLImageElement): Promise<Blob>;
 // implemented as part of microsoft/TSJS-lib-generator.
 
 export interface FileSystemHandlePermissionDescriptor {
-  writable: boolean,
+  writable: boolean;
 }
 
 export interface FileSystemHandle {
-  readonly isFile: boolean,
-  readonly isDirectory: boolean,
-  readonly name: string,
+  readonly isFile: boolean;
+  readonly isDirectory: boolean;
+  readonly name: string;
 
-  isSameEntry: (other: FileSystemHandle) => Promise<boolean>,
+  isSameEntry: (other: FileSystemHandle) => Promise<boolean>;
 
-  queryPermission: (descriptor?: FileSystemHandlePermissionDescriptor) => Promise<PermissionState>,
-  requestPermission: (descriptor?: FileSystemHandlePermissionDescriptor) => Promise<PermissionState>,
+  queryPermission: (
+    descriptor?: FileSystemHandlePermissionDescriptor
+  ) => Promise<PermissionState>;
+  requestPermission: (
+    descriptor?: FileSystemHandlePermissionDescriptor
+  ) => Promise<PermissionState>;
 }

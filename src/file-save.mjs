@@ -15,9 +15,10 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
-const implementation = 'chooseFileSystemEntries' in self ?
-  import('./nativefs/file-save-nativefs.mjs') :
-  import('./legacy/file-save-legacy.mjs');
+const implementation =
+  'chooseFileSystemEntries' in self
+    ? import('./nativefs/file-save-nativefs.mjs')
+    : import('./legacy/file-save-legacy.mjs');
 
 /**
  * For saving files, dynamically either loads the Native File System API module
