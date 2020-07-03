@@ -15,6 +15,12 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
+const getFileWithHandle = async (handle) => {
+  const file = await handle.getFile();
+  file.handle = handle;
+  return file;
+};
+
 /**
  * Opens a file from disk using the Native File System API.
  * @param {Object} [options] - Optional options object.
@@ -25,30 +31,18 @@
  * @return {File | File[]} Opened file(s).
  */
 export default async (options = {}) => {
-  try {
-    const handleOrHandles = await window.chooseFileSystemEntries({
-      accepts: [
-        {
-          description: options.description || '',
-          mimeTypes: options.mimeTypes || ['*/*'],
-          extensions: options.extensions || [''],
-        },
-      ],
-      multiple: options.multiple || false,
-    });
-    if (options.multiple) {
-      const files = [];
-      for (const handle of handleOrHandles) {
-        const file = await handle.getFile();
-        file.handle = handle;
-        files.push(file);
-      }
-      return files;
-    }
-    const file = await handleOrHandles.getFile();
-    file.handle = handleOrHandles;
-    return file;
-  } catch (err) {
-    throw err;
+  const handleOrHandles = await window.chooseFileSystemEntries({
+    accepts: [
+      {
+        description: options.description || '',
+        mimeTypes: options.mimeTypes || ['*/*'],
+        extensions: options.extensions || [''],
+      },
+    ],
+    multiple: options.multiple || false,
+  });
+  if (options.multiple) {
+    return Promise.all(handleOrHandles.map(getFileWithHandle));
   }
+  return getFileWithHandle(handleOrHandles);
 };

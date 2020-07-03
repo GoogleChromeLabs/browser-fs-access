@@ -25,23 +25,19 @@
  * @param {FileSystemHandle} [handle] - Optional file handle to save in place.
  */
 export default async (blob, options = {}, handle = null) => {
-  try {
-    options.fileName = options.fileName || 'Untitled';
-    handle = handle || await window.chooseFileSystemEntries({
-      type: 'save-file',
-      accepts: [
-        {
-          description: options.description || '',
-          mimeTypes: [blob.type],
-          extensions: options.extensions || [''],
-        },
-      ],
-    });
-    const writable = await handle.createWritable();
-    await writable.write(blob);
-    await writable.close();
-    return handle;
-  } catch (err) {
-    throw err;
-  }
+  options.fileName = options.fileName || 'Untitled';
+  handle = handle || await window.chooseFileSystemEntries({
+    type: 'save-file',
+    accepts: [
+      {
+        description: options.description || '',
+        mimeTypes: [blob.type],
+        extensions: options.extensions || [''],
+      },
+    ],
+  });
+  const writable = await handle.createWritable();
+  await writable.write(blob);
+  await writable.close();
+  return handle;
 };

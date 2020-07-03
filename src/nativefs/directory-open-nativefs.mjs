@@ -15,15 +15,17 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
-const getFiles = async (entries, recursive, files = []) => {
-  for await (const entry of entries) {
+const getFiles = async (dirHandle, recursive) => {
+  const dirs = [];
+  const files = [];
+  for await (const entry of dirHandle.getEntries()) {
     if (entry.isFile) {
-      files.push(await entry.getFile());
+      files.push(entry.getFile());
     } else if (entry.isDirectory && recursive) {
-      await getFiles(await entry.getEntries(), recursive, files);
+      dirs.push(getFiles(entry, recursive));
     }
   }
-  return files;
+  return [...(await Promise.all(dirs)).flat(), ...(await Promise.all(files))];
 };
 
 /**
@@ -38,23 +40,16 @@ const getFiles = async (entries, recursive, files = []) => {
 export default async (options = {}) => {
   options.recursive = options.recursive || false;
   options.multiple = options.multiple || false;
-  try {
-    const handleOrHandles = await window.chooseFileSystemEntries({
-      type: 'open-directory',
-      multiple: options.multiple,
-    });
-    if (options.multiple) {
-      const files = [];
-      for (const handle of handleOrHandles) {
-        const entries = await handle.getEntries();
-        files.push(await getFiles(entries, options.recursive));
-      }
-      return files;
-    }
-    const entries = await handleOrHandles.getEntries();
-    const files = await getFiles(entries, options.recursive);
-    return files;
-  } catch (err) {
-    throw err;
+  const handleOrHandles = await window.chooseFileSystemEntries({
+    type: 'open-directory',
+    multiple: options.multiple,
+  });
+  if (options.multiple) {
+    return (
+      await Promise.all(
+          handleOrHandles.map((handle) => getFiles(handle, options.recursive)),
+      )
+    ).flat();
   }
+  return getFiles(handleOrHandles, options.recursive);
 };
