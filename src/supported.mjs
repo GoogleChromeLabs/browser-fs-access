@@ -15,18 +15,13 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
-import supported from './supported.mjs';
+const supported = (() => {
+  if ('chooseFileSystemEntries' in self) {
+    return 'chooseFileSystemEntries';
+  } else if ('showOpenFilePicker' in self) {
+    return 'showOpenFilePicker';
+  }
+  return false;
+})();
 
-const implementation = !supported
-  ? import('./legacy/file-open-legacy.mjs')
-  : supported === 'chooseFileSystemEntries'
-  ? import('./nativefs-legacy/file-open-nativefs.mjs')
-  : import('./nativefs/file-open-nativefs.mjs');
-
-/**
- * For opening files, dynamically either loads the Native File System API module
- * or the legacy method.
- */
-export async function fileOpen(...args) {
-  return (await implementation).default(...args);
-}
+export default supported;

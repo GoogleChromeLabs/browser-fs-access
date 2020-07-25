@@ -18,9 +18,9 @@
 const getFiles = async (dirHandle, recursive, path = dirHandle.name) => {
   const dirs = [];
   const files = [];
-  for await (const entry of dirHandle.values()) {
+  for await (const entry of dirHandle.getEntries()) {
     const nestedPath = `${path}/${entry.name}`;
-    if (entry.kind === 'file') {
+    if (entry.isFile) {
       files.push(
         entry.getFile().then((file) =>
           Object.defineProperty(file, 'webkitRelativePath', {
@@ -30,7 +30,7 @@ const getFiles = async (dirHandle, recursive, path = dirHandle.name) => {
           })
         )
       );
-    } else if (entry.kind === 'directory' && recursive) {
+    } else if (entry.isDirectory && recursive) {
       dirs.push(getFiles(entry, recursive, nestedPath));
     }
   }
@@ -46,6 +46,8 @@ const getFiles = async (dirHandle, recursive, path = dirHandle.name) => {
  */
 export default async (options = {}) => {
   options.recursive = options.recursive || false;
-  const handle = await window.showDirectoryPicker();
+  const handle = await window.chooseFileSystemEntries({
+    type: 'open-directory',
+  });
   return getFiles(handle, options.recursive);
 };

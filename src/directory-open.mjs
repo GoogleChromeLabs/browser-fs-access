@@ -15,10 +15,13 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
-const implementation =
-  'chooseFileSystemEntries' in self
-    ? import('./nativefs/directory-open-nativefs.mjs')
-    : import('./legacy/directory-open-legacy.mjs');
+import supported from './supported.mjs';
+
+const implementation = !supported
+  ? import('./legacy/directory-open-legacy.mjs')
+  : supported === 'chooseFileSystemEntries'
+  ? import('./nativefs-legacy/directory-open-nativefs.mjs')
+  : import('./nativefs/directory-open-nativefs.mjs');
 
 /**
  * For opening directories, dynamically either loads the Native File System API

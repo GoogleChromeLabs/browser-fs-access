@@ -28,13 +28,13 @@ export default async (blob, options = {}, handle = null) => {
   options.fileName = options.fileName || 'Untitled';
   handle =
     handle ||
-    (await window.showSaveFilePicker({
-      types: [
+    (await window.chooseFileSystemEntries({
+      type: 'save-file',
+      accepts: [
         {
           description: options.description || '',
-          accept: {
-            [blob.type]: options.extensions || [''],
-          },
+          mimeTypes: [blob.type],
+          extensions: options.extensions || [''],
         },
       ],
     }));

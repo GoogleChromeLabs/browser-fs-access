@@ -31,26 +31,18 @@ const getFileWithHandle = async (handle) => {
  * @return {File | File[]} Opened file(s).
  */
 export default async (options = {}) => {
-  const accept = {};
-  if (options.mimeTypes) {
-    options.mimeTypes.map((mimeType) => {
-      accept[mimeType] = options.extensions || [];
-    });
-  } else {
-    accept['*.*'] = options.extensions || [];
-  }
-  const handleOrHandles = await window.showOpenFilePicker({
-    types: [
+  const handleOrHandles = await window.chooseFileSystemEntries({
+    accepts: [
       {
         description: options.description || '',
-        accept: accept,
+        mimeTypes: options.mimeTypes || ['*/*'],
+        extensions: options.extensions || [''],
       },
     ],
     multiple: options.multiple || false,
   });
-  const files = await Promise.all(handleOrHandles.map(getFileWithHandle));
   if (options.multiple) {
-    return files;
+    return Promise.all(handleOrHandles.map(getFileWithHandle));
   }
-  return files[0];
+  return getFileWithHandle(handleOrHandles);
 };
