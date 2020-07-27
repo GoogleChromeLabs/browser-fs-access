@@ -18,7 +18,7 @@
 import supported from './supported.mjs';
 
 const implementation = !supported
-  ? import('./legacy/file-open-legacy.mjs')
+  ? import('./legacy/file-open.mjs')
   : supported === 'chooseFileSystemEntries'
   ? import('./nativefs-legacy/file-open-nativefs.mjs')
   : import('./nativefs/file-open-nativefs.mjs');
