@@ -16,12 +16,8 @@
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
 /**
- * Opens a directory from disk using the `<input type="file" webkitdirectory>`
- * method.
- * @param {Object} [options] - Optional options object.
- * @param {boolean} options.recursive - Whether to recursively get
- *     subdirectories.
- * @return {File[]} Contained files.
+ * Opens a file from disk using the legacy `<input type="file">` method.
+ * @type { typeof import("../../index").directoryOpen }
  */
 export default async (options = {}) => {
   options.recursive = options.recursive || false;

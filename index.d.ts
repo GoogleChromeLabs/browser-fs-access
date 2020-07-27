@@ -1,39 +1,48 @@
-export function fileOpen(options?: {
-  mimeTypes?: string[];
-  extensions?: string[];
-  description?: string;
-  multiple: true;
-}): Promise<File[]>;
+/**
+ * Opens file(s) from disk.
+ */
+export function fileOpen<M extends boolean>(
+  options?: {
+    /** Acceptable MIME types. [] */
+    mimeTypes?: string[];
+    /** Acceptable file extensions. Defaults to "". */
+    extensions?: string[];
+    /** Suggested file description. Defaults to "". */
+    description?: string;
+    /** Allow multiple files to be selected. Defaults to false. */
+    multiple?: M;
+  }
+): M extends true ? Promise<File[]> : Promise<File>;
 
-export function fileOpen(options?: {
-  mimeTypes?: string[];
-  extensions?: string[];
-  /** defaults to "" */
-  description?: string;
-  multiple?: false;
-}): Promise<File>;
-
-export interface FileSaveOptions {
-  mimeTypes: string[];
-  extensions: string[];
-  multiple: boolean;
-  /** defaults to "Untitled" */
-  fileName?: string;
-  /** defaults to "" */
-  description?: string;
-}
-
+/**
+ * Saves a file to disk.
+ * @returns Optional file handle to save in place.
+ */
 export function fileSave(
+  /** To-be-saved blob */
   blob: Blob,
-  options?: FileSaveOptions,
+  options?: {
+    /** Suggested file name. Defaults to "Untitled". */
+    fileName?: string;
+    /** Suggested file extensions. Defaults to [""]. */
+    extensions?: string[];
+    /** Suggested file description. Defaults to "". */
+    description?: string;
+  },
   handle?: FileSystemHandle | null
 ): Promise<FileSystemHandle>;
 
-export interface DirectoryOpenOptions {
-  recursive: boolean;
-}
 
-export function directoryOpen(options?: DirectoryOpenOptions): Promise<File[]>;
+/**
+ * Opens a directory from disk using the Native File System API.
+ * @returns Contained files.
+ */
+export function directoryOpen(
+  options?: {
+    /** Whether to recursively get subdirectories. */
+    recursive: boolean;
+  }
+): Promise<File[]>;
 
 export function imageToBlob(img: HTMLImageElement): Promise<Blob>;
 

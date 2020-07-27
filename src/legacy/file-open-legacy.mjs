@@ -16,12 +16,7 @@
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
 /**
- * Opens a file from disk using the legacy `<input type="file">` method.
- * @param {Object} [options] - Optional options object.
- * @param {string[]} options.mimeTypes - Acceptable MIME types.
- * @param {string[]} options.extensions - Acceptable file extensions.
- * @param {boolean} options.multiple - Allow multiple files to be selected.
- * @return {File | File[]} Opened file(s).
+ * @type { typeof import("../../index").fileOpen }
  */
 export default async (options = {}) => {
   return new Promise((resolve) => {

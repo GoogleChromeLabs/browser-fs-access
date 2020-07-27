@@ -38,11 +38,7 @@ const getFiles = async (dirHandle, recursive, path = dirHandle.name) => {
 };
 
 /**
- * Opens a directory from disk using the Native File System API.
- * @param {Object} [options] - Optional options object.
- * @param {boolean} options.recursive - Whether to recursively get
- *     subdirectories.
- * @return {File[]} Contained files.
+ * @type { typeof import("../../index").directoryOpen }
  */
 export default async (options = {}) => {
   options.recursive = options.recursive || false;

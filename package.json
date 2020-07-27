@@ -52,6 +52,9 @@
     "extends": [
       "google",
       "prettier"
-    ]
+    ],
+    "rules": {
+      "valid-jsdoc": "off"
+    }
   }
 }

@@ -17,9 +17,7 @@
 
 /**
  * Saves a file to disk using the legacy `<a download>` method.
- * @param {Blob} blob - To-be-saved blob.
- * @param {Object} [options] - Optional options object.
- * @param {string} options.fileName - Suggested file name.
+ * @type { typeof import("../../index").fileSave }
  */
 export default async (blob, options = {}) => {
   const a = document.createElement('a');
