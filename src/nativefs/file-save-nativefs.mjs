@@ -19,7 +19,7 @@
  * Saves file to disk using the (legacy) Native File System API.
  * @type { typeof import("../../index").fileSave }
  */
-export default async function fileSave (blob, options = {}, handle = null) {
+export default async (blob, options = {}, handle = null) => {
   options.fileName = options.fileName || 'Untitled';
   handle =
     handle ||
