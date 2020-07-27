@@ -130,8 +130,8 @@ is provided by [@jimmywarting](https://github.com/jimmywarting).
 
 Thanks to [@developit](https://github.com/developit)
 for improving the dynamic module loading
-and [@dwelle](https://github.com/dwelle) for the helpful feedback
-and issue reports.
+and [@dwelle](https://github.com/dwelle) for the helpful feedback,
+issue reports, and the Windows build fix.
 Directory operations were made consistent regarding `webkitRelativePath`
 and parallelized and sped up significantly by
 [@RReverser](https://github.com/RReverser).
