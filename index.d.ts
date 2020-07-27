@@ -8,6 +8,7 @@ export function fileOpen(options?: {
 export function fileOpen(options?: {
   mimeTypes?: string[];
   extensions?: string[];
+  /** defaults to "" */
   description?: string;
   multiple?: false;
 }): Promise<File>;
@@ -16,7 +17,10 @@ export interface FileSaveOptions {
   mimeTypes: string[];
   extensions: string[];
   multiple: boolean;
-  description: string;
+  /** defaults to "Untitled" */
+  fileName?: string;
+  /** defaults to "" */
+  description?: string;
 }
 
 export function fileSave(
