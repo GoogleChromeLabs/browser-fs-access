@@ -1,18 +1,16 @@
 /**
  * Opens file(s) from disk.
  */
-export function fileOpen<M extends boolean>(
-  options?: {
-    /** Acceptable MIME types. [] */
-    mimeTypes?: string[];
-    /** Acceptable file extensions. Defaults to "". */
-    extensions?: string[];
-    /** Suggested file description. Defaults to "". */
-    description?: string;
-    /** Allow multiple files to be selected. Defaults to false. */
-    multiple?: M;
-  }
-): M extends true ? Promise<File[]> : Promise<File>;
+export function fileOpen<M extends boolean>(options?: {
+  /** Acceptable MIME types. [] */
+  mimeTypes?: string[];
+  /** Acceptable file extensions. Defaults to "". */
+  extensions?: string[];
+  /** Suggested file description. Defaults to "". */
+  description?: string;
+  /** Allow multiple files to be selected. Defaults to false. */
+  multiple?: M;
+}): M extends true ? Promise<File[]> : Promise<File>;
 
 /**
  * Saves a file to disk.
@@ -32,17 +30,14 @@ export function fileSave(
   handle?: FileSystemHandle | null
 ): Promise<FileSystemHandle>;
 
-
 /**
  * Opens a directory from disk using the Native File System API.
  * @returns Contained files.
  */
-export function directoryOpen(
-  options?: {
-    /** Whether to recursively get subdirectories. */
-    recursive: boolean;
-  }
-): Promise<File[]>;
+export function directoryOpen(options?: {
+  /** Whether to recursively get subdirectories. */
+  recursive: boolean;
+}): Promise<File[]>;
 
 export function imageToBlob(img: HTMLImageElement): Promise<Blob>;
 
@@ -51,12 +46,12 @@ export function imageToBlob(img: HTMLImageElement): Promise<Blob>;
 // implemented as part of microsoft/TSJS-lib-generator.
 
 export interface FileSystemHandlePermissionDescriptor {
-  fileSystemHandle: FileSystemHandle,
-  mode: "read" | "readWrite";
+  fileSystemHandle: FileSystemHandle;
+  mode: 'read' | 'readWrite';
 }
 
 export interface FileSystemHandle {
-  readonly kind: "file" | "directory";
+  readonly kind: 'file' | 'directory';
   readonly name: string;
 
   isSameEntry: (other: FileSystemHandle) => Promise<boolean>;

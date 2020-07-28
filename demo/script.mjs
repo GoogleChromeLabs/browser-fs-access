@@ -14,12 +14,9 @@
  * limitations under the License.
  */
 
-import {
-  fileOpen,
-  directoryOpen,
-  fileSave,
-  imageToBlob,
-} from '../src/index.js';
+import { fileOpen, directoryOpen, fileSave } from '../src/index.js';
+
+import { imageToBlob } from './image-to-blob.mjs';
 
 (async () => {
   const openButton = document.querySelector('#open');
