@@ -23,12 +23,7 @@ const getFileWithHandle = async (handle) => {
 
 /**
  * Opens a file from disk using the Native File System API.
- * @param {Object} [options] - Optional options object.
- * @param {string[]} options.mimeTypes - Acceptable MIME types.
- * @param {string[]} options.extensions - Acceptable file extensions.
- * @param {boolean} options.multiple - Allow multiple files to be selected.
- * @param {string} options.description - Suggested file description.
- * @return {File | File[]} Opened file(s).
+ * @type { typeof import("../../index").fileOpen }
  */
 export default async (options = {}) => {
   const accept = {};

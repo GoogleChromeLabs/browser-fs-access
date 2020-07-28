@@ -16,13 +16,8 @@
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
 /**
- * Saves a file to disk using the Native File System API.
- * @param {Blob} blob - To-be-saved blob.
- * @param {Object} [options] - Optional options object.
- * @param {string} options.fileName - Suggested file name.
- * @param {string} options.description - Suggested file description.
- * @param {string[]} options.extensions - Suggested file extensions.
- * @param {FileSystemHandle} [handle] - Optional file handle to save in place.
+ * Saves file to disk using the Native File System API.
+ * @type { typeof import("../../index").fileSave }
  */
 export default async (blob, options = {}, handle = null) => {
   options.fileName = options.fileName || 'Untitled';

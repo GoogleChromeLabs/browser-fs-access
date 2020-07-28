@@ -18,10 +18,10 @@
 import supported from './supported.mjs';
 
 const implementation = !supported
-  ? import('./legacy/file-open-legacy.mjs')
+  ? import('./legacy/file-open.mjs')
   : supported === 'chooseFileSystemEntries'
-  ? import('./nativefs-legacy/file-open-nativefs.mjs')
-  : import('./nativefs/file-open-nativefs.mjs');
+  ? import('./nativefs-legacy/file-open.mjs')
+  : import('./nativefs/file-open.mjs');
 
 /**
  * For opening files, dynamically either loads the Native File System API module

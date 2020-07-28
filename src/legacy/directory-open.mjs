@@ -17,24 +17,22 @@
 
 /**
  * Opens a file from disk using the legacy `<input type="file">` method.
- * @param {Object} [options] - Optional options object.
- * @param {string[]} options.mimeTypes - Acceptable MIME types.
- * @param {string[]} options.extensions - Acceptable file extensions.
- * @param {boolean} options.multiple - Allow multiple files to be selected.
- * @return {File | File[]} Opened file(s).
+ * @type { typeof import("../../index").directoryOpen }
  */
 export default async (options = {}) => {
+  options.recursive = options.recursive || false;
   return new Promise((resolve) => {
     const input = document.createElement('input');
     input.type = 'file';
-    const accept = [
-      ...(options.mimeTypes ? options.mimeTypes : []),
-      options.extensions ? options.extensions.map((ext) => `.${ext}`) : [],
-    ].join();
-    input.multiple = options.multiple || false;
-    input.accept = accept || '*/*';
+    input.webkitdirectory = true;
     input.addEventListener('change', () => {
-      resolve(input.multiple ? input.files : input.files[0]);
+      let files = Array.from(input.files);
+      if (!options.recursive) {
+        files = files.filter((file) => {
+          return file.webkitRelativePath.split('/').length === 2;
+        });
+      }
+      resolve(files);
     });
     input.click();
   });

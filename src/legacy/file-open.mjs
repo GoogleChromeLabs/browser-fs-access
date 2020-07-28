@@ -16,27 +16,20 @@
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
 /**
- * Opens a directory from disk using the `<input type="file" webkitdirectory>`
- * method.
- * @param {Object} [options] - Optional options object.
- * @param {boolean} options.recursive - Whether to recursively get
- *     subdirectories.
- * @return {File[]} Contained files.
+ * @type { typeof import("../../index").fileOpen }
  */
 export default async (options = {}) => {
-  options.recursive = options.recursive || false;
   return new Promise((resolve) => {
     const input = document.createElement('input');
     input.type = 'file';
-    input.webkitdirectory = true;
+    const accept = [
+      ...(options.mimeTypes ? options.mimeTypes : []),
+      options.extensions ? options.extensions.map((ext) => `.${ext}`) : [],
+    ].join();
+    input.multiple = options.multiple || false;
+    input.accept = accept || '*/*';
     input.addEventListener('change', () => {
-      let files = Array.from(input.files);
-      if (!options.recursive) {
-        files = files.filter((file) => {
-          return file.webkitRelativePath.split('/').length === 2;
-        });
-      }
-      resolve(files);
+      resolve(input.multiple ? input.files : input.files[0]);
     });
     input.click();
   });
