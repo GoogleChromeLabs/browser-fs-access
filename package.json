@@ -1,6 +1,6 @@
 {
   "name": "browser-nativefs",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "description": "Native File System API with legacy fallback in the browser.",
   "browser": "dist/index.js",
   "main": "dist/index.js",
@@ -9,7 +9,7 @@
   "scripts": {
     "start": "npx http-server -o /demo/",
     "clean": "shx rm -rf ./dist",
-    "build": "npm run clean && shx mkdir ./dist && shx mkdir ./dist/util && shx mkdir ./dist/legacy && shx mkdir ./dist/nativefs && shx mkdir ./dist/nativefs-legacy && bash ./build.sh",
+    "build": "npm run clean && shx mkdir ./dist && shx mkdir ./dist/legacy && shx mkdir ./dist/nativefs && shx mkdir ./dist/nativefs-legacy && bash ./build.sh",
     "prepare": "npm run lint && npm run fix && npm run build",
     "lint": "npx eslint . --ext .js,.mjs --fix --ignore-pattern dist/",
     "fix": "npx prettier --write ."
