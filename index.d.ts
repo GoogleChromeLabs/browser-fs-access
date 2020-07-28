@@ -51,12 +51,12 @@ export function imageToBlob(img: HTMLImageElement): Promise<Blob>;
 // implemented as part of microsoft/TSJS-lib-generator.
 
 export interface FileSystemHandlePermissionDescriptor {
-  writable: boolean;
+  fileSystemHandle: FileSystemHandle,
+  mode: "read" | "readWrite";
 }
 
 export interface FileSystemHandle {
-  readonly isFile: boolean;
-  readonly isDirectory: boolean;
+  readonly kind: "file" | "directory";
   readonly name: string;
 
   isSameEntry: (other: FileSystemHandle) => Promise<boolean>;
