@@ -54,7 +54,7 @@ import {
   // Save a file.
   await fileSave(blob, {
     fileName: 'Untitled.png',
-    extensions: ['png'],
+    extensions: ['.png'],
   });
 })();
 ```
@@ -68,8 +68,8 @@ import {
 const options = {
   // List of allowed MIME types, defaults to `*/*`.
   mimeTypes: ['image/*'],
-  // List of allowed file extensions, defaults to `''`.
-  extensions: ['png', 'jpg', 'jpeg', 'webp'],
+  // List of allowed file extensions (with leading '.'), defaults to `''`.
+  extensions: ['.png', '.jpg', '.jpeg', '.webp'],
   // Set to `true` for allowing multiple files, defaults to `false`.
   multiple: true,
   // Textual description for file dialog , defaults to `''`.
@@ -101,8 +101,8 @@ The module also polyfills a [`webkitRelativePath`](https://developer.mozilla.org
 const options = {
   // Suggested file name to use, defaults to `''`.
   fileName: 'Untitled.txt',
-  // Suggested file extensions, defaults to `''`.
-  extensions: ['txt'],
+  // Suggested file extensions (with leading '.'), defaults to `''`.
+  extensions: ['.txt'],
 };
 
 // Optional file handle to save back to an existing file.
