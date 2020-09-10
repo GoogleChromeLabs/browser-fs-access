@@ -24,7 +24,7 @@ export default async (options = {}) => {
     input.type = 'file';
     const accept = [
       ...(options.mimeTypes ? options.mimeTypes : []),
-      options.extensions ? options.extensions.map((ext) => `.${ext}`) : [],
+      options.extensions ? options.extensions : [],
     ].join();
     input.multiple = options.multiple || false;
     input.accept = accept || '*/*';

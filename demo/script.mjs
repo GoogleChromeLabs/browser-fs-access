@@ -56,7 +56,7 @@ import { imageToBlob } from './image-to-blob.mjs';
     try {
       const blob = await fileOpen({
         mimeTypes: ['image/jpg', 'image/png', 'image/gif', 'image/webp'],
-        extensions: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+        extensions: ['.jpg', '.jpeg', '.png', '.gif', '.webp'],
       });
       appendImage(blob);
     } catch (err) {
@@ -70,7 +70,7 @@ import { imageToBlob } from './image-to-blob.mjs';
     try {
       const blobs = await fileOpen({
         mimeTypes: ['image/jpg', 'image/png', 'image/gif', 'image/webp'],
-        extensions: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+        extensions: ['.jpg', '.jpeg', '.png', '.gif', '.webp'],
         multiple: true,
       });
       for (const blob of blobs) {
@@ -99,7 +99,7 @@ import { imageToBlob } from './image-to-blob.mjs';
     try {
       await fileSave(blob, {
         fileName: 'Untitled.png',
-        extensions: ['png'],
+        extensions: ['.png'],
       });
     } catch (err) {
       if (err.name !== 'AbortError') {

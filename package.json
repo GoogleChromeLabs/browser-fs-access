@@ -1,6 +1,6 @@
 {
   "name": "browser-nativefs",
-  "version": "0.10.2",
+  "version": "0.10.3",
   "description": "Native File System API with legacy fallback in the browser.",
   "browser": "dist/index.js",
   "main": "dist/index.js",
@@ -36,13 +36,13 @@
   },
   "homepage": "https://github.com/GoogleChromeLabs/browser-nativefs#readme",
   "devDependencies": {
-    "eslint": "^7.5.0",
+    "eslint": "^7.8.1",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^6.11.0",
     "http-server": "^0.12.3",
-    "prettier": "^2.0.5",
+    "prettier": "^2.1.1",
     "shx": "^0.3.2",
-    "terser": "^4.8.0"
+    "terser": "^5.3.0"
   },
   "eslintConfig": {
     "parserOptions": {
