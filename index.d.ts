@@ -1,7 +1,7 @@
 /**
  * Opens file(s) from disk.
  */
-export function fileOpen<M extends boolean>(options?: {
+export function fileOpen<M extends boolean = false>(options?: {
   /** Acceptable MIME types. [] */
   mimeTypes?: string[];
   /** Acceptable file extensions. Defaults to "". */
