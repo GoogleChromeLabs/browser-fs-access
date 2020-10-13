@@ -32,7 +32,7 @@ export default async (options = {}) => {
       accept[mimeType] = options.extensions || [];
     });
   } else {
-    accept['*.*'] = options.extensions || [];
+    accept['*/*'] = options.extensions || [];
   }
   const handleOrHandles = await window.showOpenFilePicker({
     types: [
