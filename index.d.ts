@@ -1,7 +1,7 @@
 /**
  * Opens file(s) from disk.
  */
-export function fileOpen<M extends boolean>(options?: {
+export function fileOpen<M extends boolean | undefined = false>(options?: {
   /** Acceptable MIME types. [] */
   mimeTypes?: string[];
   /** Acceptable file extensions. Defaults to "". */
@@ -10,7 +10,7 @@ export function fileOpen<M extends boolean>(options?: {
   description?: string;
   /** Allow multiple files to be selected. Defaults to false. */
   multiple?: M;
-}): M extends true ? Promise<File[]> : Promise<File>;
+}): M extends false | undefined ? Promise<File> : Promise<File[]>;
 
 /**
  * Saves a file to disk.
