@@ -17,7 +17,7 @@ See the library in action: https://browser-nativefs.glitch.me/.
 ⚠️ In order to use the Native File System API, you need to quickly
 [request an origin trial token](https://developers.chrome.com/origintrials/#/view_trial/4019462667428167681)
 for your application and
-[communicate](https://github.com/GoogleChrome/OriginTrials/blob/gh-pages/developer-guide.md#how-do-i-enable-an-experimental-feature-on-my-origin) it to the browser via a meta tag or an HTTP header.
+[communicate](https://github.com/GoogleChrome/OriginTrials/blob/gh-pages/developer-guide.md#how-do-i-enable-an-experimental-feature-on-my-origin) it to the browser via a meta tag or a HTTP header.
 
 ## Usage Example
 
