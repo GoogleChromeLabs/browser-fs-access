@@ -1,7 +1,7 @@
 # Browser-NativeFS
 
 This module allows you to easily use the
-[Native File System API](https://wicg.github.io/native-file-system/) on supporting browsers,
+[File System Access API](https://wicg.github.io/file-system-access/) on supporting browsers,
 with a transparent fallback to the `<input type="file">` and `<a download>` legacy methods.
 This library is a [ponyfill](https://ponyfill.com/).
 
@@ -12,21 +12,14 @@ Read more on the background of this module in my post
 
 See the library in action: https://browser-nativefs.glitch.me/.
 
-## Origin Trial
-
-⚠️ In order to use the Native File System API, you need to quickly
-[request an origin trial token](https://developers.chrome.com/origintrials/#/view_trial/4019462667428167681)
-for your application and
-[communicate](https://github.com/GoogleChrome/OriginTrials/blob/gh-pages/developer-guide.md#how-do-i-enable-an-experimental-feature-on-my-origin) it to the browser via a meta tag or an HTTP header.
-
 ## Usage Example
 
-The module feature-detects support for the Native File System API and
+The module feature-detects support for the File System Access API and
 only loads the actually relevant code.
 
 ```js
-// The imported methods will use the Native
-// File System API or a fallback implementation.
+// The imported methods will use the File System
+// Access API or a fallback implementation.
 import {
   fileOpen,
   directoryOpen,
@@ -106,7 +99,7 @@ const options = {
 };
 
 // Optional file handle to save back to an existing file.
-// This will only work with the Native File System API.
+// This will only work with the File System Access API.
 // Get a `FileHandle` from the `handle` property of the `Blob`
 // you receive from `fileOpen()` (this is non-standard).
 const handle = previouslyOpenedBlob.handle;
