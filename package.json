@@ -1,7 +1,7 @@
 {
-  "name": "browser-nativefs",
-  "version": "0.12.0",
-  "description": "Native File System API with legacy fallback in the browser.",
+  "name": "browser-fs-access",
+  "version": "0.13.0",
+  "description": "File System Access API with legacy fallback in the browser.",
   "browser": "./dist/index.js",
   "main": "./dist/index.js",
   "exports": "./dist/index.js",
@@ -10,20 +10,19 @@
   "scripts": {
     "start": "npx http-server -o /demo/",
     "clean": "shx rm -rf ./dist",
-    "build": "npm run clean && shx mkdir ./dist && shx mkdir ./dist/legacy && shx mkdir ./dist/nativefs && shx mkdir ./dist/nativefs-legacy && bash ./build.sh",
+    "build": "npm run clean && shx mkdir ./dist && shx mkdir ./dist/legacy && shx mkdir ./dist/fs-access && shx mkdir ./dist/fs-access-legacy && bash ./build.sh",
     "prepare": "npm run lint && npm run fix && npm run build",
     "lint": "npx eslint . --ext .js,.mjs --fix --ignore-pattern dist/",
     "fix": "npx prettier --write ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GoogleChromeLabs/browser-nativefs.git"
+    "url": "git+https://github.com/GoogleChromeLabs/browser-fs-access.git"
   },
   "keywords": [
-    "native file system",
-    "native file system api",
-    "native fs",
-    "nativefs",
+    "file system access",
+    "file system access api",
+    "file system",
     "ponyfill"
   ],
   "files": [
@@ -33,13 +32,13 @@
   "author": "Thomas Steiner (https://blog.tomayac.com/)",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/GoogleChromeLabs/browser-nativefs/issues"
+    "url": "https://github.com/GoogleChromeLabs/browser-fs-access/issues"
   },
-  "homepage": "https://github.com/GoogleChromeLabs/browser-nativefs#readme",
+  "homepage": "https://github.com/GoogleChromeLabs/browser-fs-access#readme",
   "devDependencies": {
-    "eslint": "^7.15.0",
+    "eslint": "^7.18.0",
     "eslint-config-google": "^0.14.0",
-    "eslint-config-prettier": "^7.0.0",
+    "eslint-config-prettier": "^7.2.0",
     "http-server": "^0.12.3",
     "prettier": "^2.2.1",
     "shx": "^0.3.3",

@@ -22,7 +22,7 @@ const getFileWithHandle = async (handle) => {
 };
 
 /**
- * Opens a file from disk using the (legacy) Native File System API.
+ * Opens a file from disk using the (legacy) File System Access API.
  * @type { typeof import("../../index").fileOpen }
  */
 export default async (options = {}) => {

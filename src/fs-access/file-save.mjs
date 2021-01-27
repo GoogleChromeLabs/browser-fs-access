@@ -16,20 +16,28 @@
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
 /**
- * Saves file to disk using the Native File System API.
+ * Saves file to disk using the (legacy) File System Access API.
  * @type { typeof import("../../index").fileSave }
  */
 export default async (blob, options = {}, handle = null) => {
   options.fileName = options.fileName || 'Untitled';
+  const accept = {};
+  if (options.mimeTypes) {
+    options.mimeTypes.push(blob.type);
+    options.mimeTypes.map((mimeType) => {
+      accept[mimeType] = options.extensions || [];
+    });
+  } else {
+    accept[blob.type] = options.extensions || [];
+  }
   handle =
     handle ||
-    (await window.chooseFileSystemEntries({
-      type: 'save-file',
-      accepts: [
+    (await window.showSaveFilePicker({
+      suggestedName: options.fileName,
+      types: [
         {
           description: options.description || '',
-          mimeTypes: [blob.type],
-          extensions: options.extensions || [''],
+          accept: accept,
         },
       ],
     }));

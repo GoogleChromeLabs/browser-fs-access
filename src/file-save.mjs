@@ -20,11 +20,11 @@ import supported from './supported.mjs';
 const implementation = !supported
   ? import('./legacy/file-save.mjs')
   : supported === 'chooseFileSystemEntries'
-  ? import('./nativefs-legacy/file-save.mjs')
-  : import('./nativefs/file-save.mjs');
+  ? import('./fs-access-legacy/file-save.mjs')
+  : import('./fs-access/file-save.mjs');
 
 /**
- * For saving files, dynamically either loads the Native File System API module
+ * For saving files, dynamically either loads the File System Access API module
  * or the legacy method.
  */
 export async function fileSave(...args) {

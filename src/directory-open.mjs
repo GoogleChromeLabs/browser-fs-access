@@ -20,11 +20,11 @@ import supported from './supported.mjs';
 const implementation = !supported
   ? import('./legacy/directory-open.mjs')
   : supported === 'chooseFileSystemEntries'
-  ? import('./nativefs-legacy/directory-open.mjs')
-  : import('./nativefs/directory-open.mjs');
+  ? import('./fs-access-legacy/directory-open.mjs')
+  : import('./fs-access/directory-open.mjs');
 
 /**
- * For opening directories, dynamically either loads the Native File System API
+ * For opening directories, dynamically either loads the File System Access API
  * module or the legacy method.
  */
 export async function directoryOpen(...args) {

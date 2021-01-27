@@ -1,4 +1,4 @@
-# Browser-NativeFS
+# Browser-FS-Access
 
 This module allows you to easily use the
 [File System Access API](https://wicg.github.io/file-system-access/) on supporting browsers,
@@ -10,7 +10,7 @@ Read more on the background of this module in my post
 
 ## Live Demo
 
-See the library in action: https://browser-nativefs.glitch.me/.
+See the library in action: https://browser-fs-access.glitch.me/.
 
 ## Usage Example
 
@@ -24,7 +24,7 @@ import {
   fileOpen,
   directoryOpen,
   fileSave,
-} from 'https://unpkg.com/browser-nativefs';
+} from 'https://unpkg.com/browser-fs-access';
 
 (async () => {
   // Open a file.
@@ -107,7 +107,7 @@ const handle = previouslyOpenedBlob.handle;
 await fileSave(someBlob, options, handle);
 ```
 
-## Browser-NativeFS in Action
+## Browser-FS-Access in Action
 
 You can see the module in action in the [Excalidraw](https://excalidraw.com/) drawing app.
 

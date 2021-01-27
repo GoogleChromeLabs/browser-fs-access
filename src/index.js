@@ -16,7 +16,7 @@
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
 /**
- * @module browser-nativefs
+ * @module browser-fs-access
  */
 export { fileOpen } from './file-open.mjs';
 export { directoryOpen } from './directory-open.mjs';

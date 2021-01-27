@@ -37,7 +37,7 @@ import { imageToBlob } from './image-to-blob.mjs';
     blobs
       .sort((a, b) => a.webkitRelativePath.localeCompare(b))
       .forEach((blob) => {
-        // The Native File System API currently reports the `webkitRelativePath`
+        // The File System Access API currently reports the `webkitRelativePath`
         // as empty string `''`.
         fileStructure += `${blob.webkitRelativePath}\n`;
       });
@@ -98,7 +98,7 @@ import { imageToBlob } from './image-to-blob.mjs';
     const blob = await imageToBlob(document.querySelector('img'));
     try {
       await fileSave(blob, {
-        fileName: 'Untitled.png',
+        fileName: 'floppy.png',
         extensions: ['.png'],
       });
     } catch (err) {

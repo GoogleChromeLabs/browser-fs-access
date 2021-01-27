@@ -31,7 +31,7 @@ export function fileSave(
 ): Promise<FileSystemHandle>;
 
 /**
- * Opens a directory from disk using the Native File System API.
+ * Opens a directory from disk using the File System Access API.
  * @returns Contained files.
  */
 export function directoryOpen(options?: {
@@ -41,7 +41,7 @@ export function directoryOpen(options?: {
 
 export function imageToBlob(img: HTMLImageElement): Promise<Blob>;
 
-// The following typings implement the relevant parts of the Native File System API.
+// The following typings implement the relevant parts of the File System Access API.
 // This can be removed once the specification reaches the Candidate phase and is
 // implemented as part of microsoft/TSJS-lib-generator.
 

@@ -15,18 +15,26 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
-import supported from './supported.mjs';
-
-const implementation = !supported
-  ? import('./legacy/file-open.mjs')
-  : supported === 'chooseFileSystemEntries'
-  ? import('./fs-access-legacy/file-open.mjs')
-  : import('./fs-access/file-open.mjs');
-
 /**
- * For opening files, dynamically either loads the File System Access API module
- * or the legacy method.
+ * Saves file to disk using the File System Access API.
+ * @type { typeof import("../../index").fileSave }
  */
-export async function fileOpen(...args) {
-  return (await implementation).default(...args);
-}
+export default async (blob, options = {}, handle = null) => {
+  options.fileName = options.fileName || 'Untitled';
+  handle =
+    handle ||
+    (await window.chooseFileSystemEntries({
+      type: 'save-file',
+      accepts: [
+        {
+          description: options.description || '',
+          mimeTypes: [blob.type],
+          extensions: options.extensions || [''],
+        },
+      ],
+    }));
+  const writable = await handle.createWritable();
+  await writable.write(blob);
+  await writable.close();
+  return handle;
+};
