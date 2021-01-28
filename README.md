@@ -12,6 +12,14 @@ Read more on the background of this module in my post
 
 See the library in action: https://browser-fs-access.glitch.me/.
 
+## Installation
+
+You can install the module with npm.
+
+```bash
+npm install --save browser-fs-access
+```
+
 ## Usage Example
 
 The module feature-detects support for the File System Access API and
