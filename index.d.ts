@@ -10,7 +10,7 @@ export function fileOpen<M extends boolean | undefined = false>(options?: {
   description?: string;
   /** Allow multiple files to be selected. Defaults to false. */
   multiple?: M;
-}): M extends false | undefined ? Promise<File> : Promise<File[]>;
+}): M extends false | undefined ? Promise<FileWithHandle> : Promise<FileWithHandle[]>;
 
 /**
  * Saves a file to disk.
@@ -40,6 +40,10 @@ export function directoryOpen(options?: {
 }): Promise<File[]>;
 
 export function imageToBlob(img: HTMLImageElement): Promise<Blob>;
+
+export interface FileWithHandle extends File {
+  handle?: FileSystemHandle
+}
 
 // The following typings implement the relevant parts of the File System Access API.
 // This can be removed once the specification reaches the Candidate phase and is
