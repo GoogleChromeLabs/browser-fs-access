@@ -21,10 +21,22 @@
  */
 export default async (options = {}) => {
   options.recursive = options.recursive || false;
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const input = document.createElement('input');
     input.type = 'file';
     input.webkitdirectory = true;
+
+    const cancelDetector = () => {
+      window.removeEventListener('focus', cancelDetector);
+      if (input.files.length === 0) {
+        reject(new DOMException('The user aborted a request.', 'AbortError'));
+      }
+    };
+
+    input.addEventListener('click', () => {
+      window.addEventListener('focus', cancelDetector, true);
+    });
+
     input.addEventListener('change', () => {
       let files = Array.from(input.files);
       if (!options.recursive) {
