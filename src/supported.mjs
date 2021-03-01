@@ -16,10 +16,12 @@
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
 const supported = (() => {
-  if ('chooseFileSystemEntries' in self) {
-    return 'chooseFileSystemEntries';
-  } else if ('showOpenFilePicker' in self) {
-    return 'showOpenFilePicker';
+  if (process.browser) {
+    if ('chooseFileSystemEntries' in self) {
+      return 'chooseFileSystemEntries';
+    } else if ('showOpenFilePicker' in self) {
+      return 'showOpenFilePicker';
+    }
   }
   return false;
 })();
