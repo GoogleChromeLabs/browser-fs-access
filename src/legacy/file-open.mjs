@@ -27,7 +27,8 @@ export default async (options = {}) => {
       options.extensions ? options.extensions : [],
     ].join();
     input.multiple = options.multiple || false;
-    input.accept = accept || '*/*';
+    // Empty string allows everything.
+    input.accept = accept || '';
 
     const cancelDetector = () => {
       window.removeEventListener('focus', cancelDetector);
