@@ -16,7 +16,8 @@
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
 const supported = (() => {
-  if ('chooseFileSystemEntries' in self) {
+  if (window.self !== window.top) return false;
+  else if ('chooseFileSystemEntries' in self) {
     return 'chooseFileSystemEntries';
   } else if ('showOpenFilePicker' in self) {
     return 'showOpenFilePicker';
