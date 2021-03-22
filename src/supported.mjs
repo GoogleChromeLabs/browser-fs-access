@@ -16,7 +16,18 @@
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
 const supported = (() => {
-  if ('chooseFileSystemEntries' in self) {
+  // ToDo: Remove this check once Permissions Policy integration
+  // has happened, tracked in
+  // https://github.com/WICG/file-system-access/issues/245.
+  if (self !== top) {
+    try {      
+      // This will succeed on same-origin iframes,
+      // but fail on cross-origin iframes.
+      top.location + '';
+    } catch {      
+      return false;
+    }
+  } else if ('chooseFileSystemEntries' in self) {
     return 'chooseFileSystemEntries';
   } else if ('showOpenFilePicker' in self) {
     return 'showOpenFilePicker';
