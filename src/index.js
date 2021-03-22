@@ -21,4 +21,4 @@
 export { fileOpen } from './file-open.mjs';
 export { directoryOpen } from './directory-open.mjs';
 export { fileSave } from './file-save.mjs';
-export isSupported from './supported.mjs';
+export { isSupported } from './supported.mjs';
