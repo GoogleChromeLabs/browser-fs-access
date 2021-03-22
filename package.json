@@ -1,6 +1,6 @@
 {
   "name": "browser-fs-access",
-  "version": "0.14.2",
+  "version": "0.15.0",
   "description": "File System Access API with legacy fallback in the browser.",
   "browser": "./dist/index.js",
   "main": "./dist/index.js",
@@ -42,7 +42,7 @@
     "http-server": "^0.12.3",
     "prettier": "^2.2.1",
     "shx": "^0.3.3",
-    "terser": "^5.6.0"
+    "terser": "^5.6.1"
   },
   "eslintConfig": {
     "parserOptions": {

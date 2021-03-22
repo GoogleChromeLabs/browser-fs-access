@@ -30,3 +30,7 @@ img {
   height: auto;
   margin-block: 1rem;
 }
+
+.supported {
+  color: red;
+}

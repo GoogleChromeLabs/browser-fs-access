@@ -20,11 +20,11 @@ const supported = (() => {
   // has happened, tracked in
   // https://github.com/WICG/file-system-access/issues/245.
   if (self !== top) {
-    try {      
+    try {
       // This will succeed on same-origin iframes,
       // but fail on cross-origin iframes.
       top.location + '';
-    } catch {      
+    } catch {
       return false;
     }
   } else if ('chooseFileSystemEntries' in self) {

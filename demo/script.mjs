@@ -14,11 +14,15 @@
  * limitations under the License.
  */
 
-import { fileOpen, directoryOpen, fileSave } from '../src/index.js';
+import { fileOpen, directoryOpen, fileSave, supported } from '../src/index.js';
 
 import { imageToBlob } from './image-to-blob.mjs';
 
 (async () => {
+  if (!supported) {
+    document.querySelector('.supported').hidden = false;
+  }
+
   const openButton = document.querySelector('#open');
   const openMultipleButton = document.querySelector('#open-multiple');
   const openDirectoryButton = document.querySelector('#open-directory');

@@ -25,7 +25,7 @@ export default async (blob, options = {}) => {
   a.href = URL.createObjectURL(blob);
   a.addEventListener('click', () => {
     // `setTimeout()` due to
-    // https://github.com/LLK/scratch-gui/issues/1783#issuecomment-426286393 
+    // https://github.com/LLK/scratch-gui/issues/1783#issuecomment-426286393
     setTimeout(() => URL.revokeObjectURL(a.href), 30 * 1000);
   });
   a.click();
