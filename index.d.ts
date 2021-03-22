@@ -44,8 +44,7 @@ export function directoryOpen(options?: {
 /**
  * Whether the File System Access API is supported.
  */
-declare const supported: boolean;
-export default supported;
+export const supported: boolean;
 
 export function imageToBlob(img: HTMLImageElement): Promise<Blob>;
 
