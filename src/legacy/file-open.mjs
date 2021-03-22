@@ -32,15 +32,11 @@ export default async (options = {}) => {
 
     const cancelDetector = () => {
       window.removeEventListener('focus', cancelDetector);
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          if (input.files.length === 0) {
-            reject(
-              new DOMException('The user aborted a request.', 'AbortError')
-            );
-          }
-        });
-      });
+      setTimeout(() => {
+        if (input.files.length === 0) {
+          reject(new DOMException('The user aborted a request.', 'AbortError'));
+        }
+      }, 500);
     };
 
     input.addEventListener('click', () => {
