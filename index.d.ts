@@ -41,6 +41,12 @@ export function directoryOpen(options?: {
   recursive: boolean;
 }): Promise<File[]>;
 
+/**
+ * Whether the File System Access API is supported.
+ */
+declare const supported: boolean;
+export default supported;
+
 export function imageToBlob(img: HTMLImageElement): Promise<Blob>;
 
 export interface FileWithHandle extends File {
