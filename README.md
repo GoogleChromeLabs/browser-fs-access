@@ -32,9 +32,16 @@ import {
   fileOpen,
   directoryOpen,
   fileSave,
+  supported,
 } from 'https://unpkg.com/browser-fs-access';
 
 (async () => {
+  if (supported) {
+    console.log('Using the File System Access API.');
+  } else {
+    console.log('Using the fallback implementation.');
+  }
+
   // Open a file.
   const blob = await fileOpen({
     mimeTypes: ['image/*'],
@@ -138,6 +145,9 @@ and parallelized and sped up significantly by
 [@RReverser](https://github.com/RReverser).
 The TypeScript type annotations were provided by
 [@nanaian](https://github.com/nanaian).
+Dealing correctly with cross-origin iframes was contributed by
+[@nikhilbghodke](https://github.com/nikhilbghodke) and
+[@kbariotis](https://github.com/kbariotis).
 
 ## License and Note
 

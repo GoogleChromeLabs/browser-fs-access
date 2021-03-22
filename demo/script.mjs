@@ -19,15 +19,18 @@ import { fileOpen, directoryOpen, fileSave, supported } from '../src/index.js';
 import { imageToBlob } from './image-to-blob.mjs';
 
 (async () => {
-  if (!supported) {
-    document.querySelector('.supported').hidden = false;
-  }
-
   const openButton = document.querySelector('#open');
   const openMultipleButton = document.querySelector('#open-multiple');
   const openDirectoryButton = document.querySelector('#open-directory');
   const saveButton = document.querySelector('#save');
+  const supportedParagraph = document.querySelector('.supported');
   const pre = document.querySelector('pre');
+
+  if (supported) {
+    supportedParagraph.textContent = 'Using the File System Access API.';
+  } else {
+    supportedParagraph.textContent = 'Using the fallback implementation.';
+  }
 
   const appendImage = (blob) => {
     const img = document.createElement('img');
