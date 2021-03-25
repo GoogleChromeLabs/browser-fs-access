@@ -68,8 +68,9 @@ import { imageToBlob } from './image-to-blob.mjs';
       appendImage(blob);
     } catch (err) {
       if (err.name !== 'AbortError') {
-        console.error(err);
+        return console.error(err);
       }
+      console.log('The user aborted a request.');
     }
   });
 
@@ -85,8 +86,9 @@ import { imageToBlob } from './image-to-blob.mjs';
       }
     } catch (err) {
       if (err.name !== 'AbortError') {
-        console.error(err);
+        return console.error(err);
       }
+      console.log('The user aborted a request.');
     }
   });
 
@@ -96,8 +98,9 @@ import { imageToBlob } from './image-to-blob.mjs';
       listDirectory(blobs);
     } catch (err) {
       if (err.name !== 'AbortError') {
-        console.error(err);
+        return console.error(err);
       }
+      console.log('The user aborted a request.');
     }
   });
 
@@ -110,8 +113,9 @@ import { imageToBlob } from './image-to-blob.mjs';
       });
     } catch (err) {
       if (err.name !== 'AbortError') {
-        console.error(err);
+        return console.error(err);
       }
+      console.log('The user aborted a request.');
     }
   });
 

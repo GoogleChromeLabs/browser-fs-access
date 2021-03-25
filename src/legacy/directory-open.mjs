@@ -26,20 +26,23 @@ export default async (options = {}) => {
     input.type = 'file';
     input.webkitdirectory = true;
 
-    const cancelDetector = () => {
-      window.removeEventListener('focus', cancelDetector);
-      setTimeout(() => {
-        if (input.files.length === 0) {
-          reject(new DOMException('The user aborted a request.', 'AbortError'));
-        }
-      }, 500);
+    // ToDo: Remove this workaround once
+    // https://github.com/whatwg/html/issues/6376 is specified and supported.
+    const rejectOnPageInteraction = () => {
+      window.removeEventListener('pointermove', rejectOnPageInteraction);
+      window.removeEventListener('pointerdown', rejectOnPageInteraction);
+      window.removeEventListener('keydown', rejectOnPageInteraction);
+      reject(new DOMException('The user aborted a request.', 'AbortError'));
     };
 
-    input.addEventListener('click', () => {
-      window.addEventListener('focus', cancelDetector, true);
-    });
+    window.addEventListener('pointermove', rejectOnPageInteraction);
+    window.addEventListener('pointerdown', rejectOnPageInteraction);
+    window.addEventListener('keydown', rejectOnPageInteraction);
 
     input.addEventListener('change', () => {
+      window.removeEventListener('pointermove', rejectOnPageInteraction);
+      window.removeEventListener('pointerdown', rejectOnPageInteraction);
+      window.removeEventListener('keydown', rejectOnPageInteraction);
       let files = Array.from(input.files);
       if (!options.recursive) {
         files = files.filter((file) => {
@@ -48,6 +51,7 @@ export default async (options = {}) => {
       }
       resolve(files);
     });
+
     input.click();
   });
 };
