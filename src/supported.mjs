@@ -15,6 +15,11 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
+/**
+ * Returns whether the File System Access API is supported and usable in the
+ * current context (for example cross-origin iframes).
+ * @returns {boolean} Returns `true` if the File System Access API is supported and usable, else returns `false`.
+ */
 const supported = (() => {
   // ToDo: Remove this check once Permissions Policy integration
   // has happened, tracked in

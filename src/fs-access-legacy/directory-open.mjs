@@ -38,6 +38,7 @@ const getFiles = async (dirHandle, recursive, path = dirHandle.name) => {
 };
 
 /**
+ * Opens a directory from disk using the (legacy) File System Access API.
  * @type { typeof import("../../index").directoryOpen }
  */
 export default async (options = {}) => {

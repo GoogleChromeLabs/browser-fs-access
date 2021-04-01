@@ -16,7 +16,8 @@
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
 /**
- * Opens a file from disk using the legacy `<input type="file">` method.
+ * Opens a directory from disk using the legacy
+ * `<input type="file" webkitdirectory>` method.
  * @type { typeof import("../../index").directoryOpen }
  */
 export default async (options = {}) => {

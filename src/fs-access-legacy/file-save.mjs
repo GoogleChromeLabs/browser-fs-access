@@ -16,7 +16,7 @@
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
 /**
- * Saves file to disk using the File System Access API.
+ * Saves a file to disk using the (legacy) File System Access API.
  * @type { typeof import("../../index").fileSave }
  */
 export default async (blob, options = {}, handle = null) => {
