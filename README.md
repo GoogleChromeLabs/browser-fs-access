@@ -117,9 +117,14 @@ const options = {
 // This will only work with the File System Access API.
 // Get a `FileHandle` from the `handle` property of the `Blob`
 // you receive from `fileOpen()` (this is non-standard).
-const handle = previouslyOpenedBlob.handle;
+const existingHandle = previouslyOpenedBlob.handle;
 
-await fileSave(someBlob, options, handle);
+// Optional flag to determine whether to throw (rather than open a new file
+// save dialog) when `existingHandle` is no longer good, for example, because
+// the underlying file was deleted. Defaults to `false`.
+const throwIfExistingHandleNotGood = true;
+
+await fileSave(someBlob, options, existingHandle, throwIfExistingHandleNotGood);
 ```
 
 ## Browser-FS-Access in Action

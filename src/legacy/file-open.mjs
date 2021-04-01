@@ -16,6 +16,7 @@
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
 /**
+ * Opens a file from disk using the legacy `<input type="file">` method.
  * @type { typeof import("../../index").fileOpen }
  */
 export default async (options = {}) => {

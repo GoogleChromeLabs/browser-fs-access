@@ -19,7 +19,12 @@
  * Saves a file to disk using the File System Access API.
  * @type { typeof import("../../index").fileSave }
  */
-export default async (blob, options = {}, handle = null) => {
+export default async (
+  blob,
+  options = {},
+  existingHandle = null,
+  throwIfExistingHandleNotGood = false
+) => {
   options.fileName = options.fileName || 'Untitled';
   const accept = {};
   if (options.mimeTypes) {
@@ -30,8 +35,19 @@ export default async (blob, options = {}, handle = null) => {
   } else {
     accept[blob.type] = options.extensions || [];
   }
-  handle =
-    handle ||
+  if (existingHandle) {
+    try {
+      // Check if the file still exists.
+      await existingHandle.getFile();
+    } catch (err) {
+      existingHandle = null;
+      if (throwIfExistingHandleNotGood) {
+        throw err;
+      }
+    }
+  }
+  const handle =
+    existingHandle ||
     (await window.showSaveFilePicker({
       suggestedName: options.fileName,
       types: [

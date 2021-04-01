@@ -29,7 +29,10 @@ export function fileSave(
     /** Suggested file description. Defaults to "". */
     description?: string;
   },
-  handle?: FileSystemHandle | null
+  /** A potentially existing file handle for a file to save to. Defaults to null. */
+  existingHandle?: FileSystemHandle | null,
+  /** Determines whether to throw (rather than open a new file save dialog) when existingHandle is no longer good. Defaults to false. */
+  throwIfExistingHandleNotGood?: boolean | false
 ): Promise<FileSystemHandle>;
 
 /**
