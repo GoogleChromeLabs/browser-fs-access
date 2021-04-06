@@ -24,7 +24,7 @@ const supported = (() => {
   // ToDo: Remove this check once Permissions Policy integration
   // has happened, tracked in
   // https://github.com/WICG/file-system-access/issues/245.
-  if (self !== top) {
+  if (top && self !== top) {
     try {
       // This will succeed on same-origin iframes,
       // but fail on cross-origin iframes.
