@@ -48,7 +48,7 @@ export default async (options = {}) => {
       window.removeEventListener('pointermove', rejectOnPageInteraction);
       window.removeEventListener('pointerdown', rejectOnPageInteraction);
       window.removeEventListener('keydown', rejectOnPageInteraction);
-      resolve(input.multiple ? input.files : input.files[0]);
+      resolve(input.multiple ? Array.from(input.files) : input.files[0]);
     });
 
     input.click();
