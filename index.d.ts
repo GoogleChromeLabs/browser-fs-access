@@ -10,6 +10,15 @@ export function fileOpen<M extends boolean | undefined = false>(options?: {
   description?: string;
   /** Allow multiple files to be selected. Defaults to false. */
   multiple?: M;
+  /**
+   * Configurable cleanup and `Promise` rejector usable with legacy API for determining when (and reacting when) a user cancels the operation.
+   * The method will be called a reference to the internal `rejectionHandler` that can, e.g., be attached to/removed from the window or called after a timeout.
+   * The method should return a function that will be called when either the user chooses to open a file or the `rejectionHandler` is called.
+   * In the latter case, the returned function will also be passed a reference to the `reject` callback for the `Promise` returned by `fileOpen`, so that developers may reject the `Promise` when desired at that time.
+   */
+  setupLegacyCleanupAndRejection?: (
+    rejectionHandler?: () => void
+  ) => (reject: (reason?: any) => void) => void;
 }): M extends false | undefined
   ? Promise<FileWithHandle>
   : Promise<FileWithHandle[]>;
