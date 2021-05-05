@@ -29,21 +29,30 @@ export default async (options = {}) => {
 
     // ToDo: Remove this workaround once
     // https://github.com/whatwg/html/issues/6376 is specified and supported.
-    const rejectOnPageInteraction = () => {
-      window.removeEventListener('pointermove', rejectOnPageInteraction);
-      window.removeEventListener('pointerdown', rejectOnPageInteraction);
-      window.removeEventListener('keydown', rejectOnPageInteraction);
-      reject(new DOMException('The user aborted a request.', 'AbortError'));
-    };
+    let cleanupListenersAndMaybeReject;
+    const rejectionHandler = () => cleanupListenersAndMaybeReject(reject);
+    if (options.setupLegacyCleanupAndRejection) {
+      cleanupListenersAndMaybeReject = options.setupLegacyCleanupAndRejection(
+        rejectionHandler
+      );
+    } else {
+      // Default rejection behavior; works in most cases, but not in Chrome in non-secure contexts.
+      cleanupListenersAndMaybeReject = (reject) => {
+        window.removeEventListener('pointermove', rejectionHandler);
+        window.removeEventListener('pointerdown', rejectionHandler);
+        window.removeEventListener('keydown', rejectionHandler);
+        if (reject) {
+          reject(new DOMException('The user aborted a request.', 'AbortError'));
+        }
+      };
 
-    window.addEventListener('pointermove', rejectOnPageInteraction);
-    window.addEventListener('pointerdown', rejectOnPageInteraction);
-    window.addEventListener('keydown', rejectOnPageInteraction);
+      window.addEventListener('pointermove', rejectionHandler);
+      window.addEventListener('pointerdown', rejectionHandler);
+      window.addEventListener('keydown', rejectionHandler);
+    }
 
     input.addEventListener('change', () => {
-      window.removeEventListener('pointermove', rejectOnPageInteraction);
-      window.removeEventListener('pointerdown', rejectOnPageInteraction);
-      window.removeEventListener('keydown', rejectOnPageInteraction);
+      cleanupListenersAndMaybeReject();
       let files = Array.from(input.files);
       if (!options.recursive) {
         files = files.filter((file) => {

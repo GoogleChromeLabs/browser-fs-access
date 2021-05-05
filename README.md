@@ -127,6 +127,16 @@ const throwIfExistingHandleNotGood = true;
 await fileSave(someBlob, options, existingHandle, throwIfExistingHandleNotGood);
 ```
 
+### File operations and exceptions
+
+The File System Access API supports exceptions, so apps can throw when problems occur (permissions
+not granted, out of disk space,…), or when the user cancels the dialog. The legacy methods,
+unfortunately, do not support exceptions (albeit there is an
+[HTML issue](https://github.com/whatwg/html/issues/6376) open for this request). If your app depends
+on exceptions, see the file
+[`index.d.ts`](https://github.com/GoogleChromeLabs/browser-fs-access/blob/main/index.d.ts) for the
+documentation of the `setupLegacyCleanupAndRejection` parameter.
+
 ## Browser-FS-Access in Action
 
 You can see the module in action in the [Excalidraw](https://excalidraw.com/) drawing app.
@@ -148,11 +158,13 @@ issue reports, and the Windows build fix.
 Directory operations were made consistent regarding `webkitRelativePath`
 and parallelized and sped up significantly by
 [@RReverser](https://github.com/RReverser).
-The TypeScript type annotations were provided by
+The TypeScript type annotations were initially provided by
 [@nanaian](https://github.com/nanaian).
 Dealing correctly with cross-origin iframes was contributed by
 [@nikhilbghodke](https://github.com/nikhilbghodke) and
 [@kbariotis](https://github.com/kbariotis).
+The exception handling of the legacy methods was contributed by
+[@jmrog](https://github.com/jmrog).
 
 ## License and Note
 

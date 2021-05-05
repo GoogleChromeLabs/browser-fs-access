@@ -11,10 +11,18 @@ export function fileOpen<M extends boolean | undefined = false>(options?: {
   /** Allow multiple files to be selected. Defaults to false. */
   multiple?: M;
   /**
-   * Configurable cleanup and `Promise` rejector usable with legacy API for determining when (and reacting when) a user cancels the operation.
-   * The method will be called a reference to the internal `rejectionHandler` that can, e.g., be attached to/removed from the window or called after a timeout.
-   * The method should return a function that will be called when either the user chooses to open a file or the `rejectionHandler` is called.
-   * In the latter case, the returned function will also be passed a reference to the `reject` callback for the `Promise` returned by `fileOpen`, so that developers may reject the `Promise` when desired at that time.
+   * Configurable cleanup and `Promise` rejector usable with legacy API for
+   * determining when (and reacting if) a user cancels the operation. The
+   * method will be passed a reference to the internal `rejectionHandler` that
+   * can, e.g., be attached to/removed from the window or called after a
+   * timeout. The method should return a function that will be called when
+   * either the user chooses to open a file or the `rejectionHandler` is
+   * called. In the latter case, the returned function will also be passed a
+   * reference to the `reject` callback for the `Promise` returned by
+   * `fileOpen`, so that developers may reject the `Promise` when desired at
+   * that time.
+   * ToDo: Remove this workaround once
+   *   https://github.com/whatwg/html/issues/6376 is specified and supported.
    */
   setupLegacyCleanupAndRejection?: (
     rejectionHandler?: () => void
@@ -38,9 +46,15 @@ export function fileSave(
     /** Suggested file description. Defaults to "". */
     description?: string;
   },
-  /** A potentially existing file handle for a file to save to. Defaults to null. */
+  /**
+   * A potentially existing file handle for a file to save to. Defaults to
+   * null.
+   */
   existingHandle?: FileSystemHandle | null,
-  /** Determines whether to throw (rather than open a new file save dialog) when existingHandle is no longer good. Defaults to false. */
+  /**
+   * Determines whether to throw (rather than open a new file save dialog)
+   * when existingHandle is no longer good. Defaults to false.
+   */
   throwIfExistingHandleNotGood?: boolean | false
 ): Promise<FileSystemHandle>;
 
@@ -64,9 +78,9 @@ export interface FileWithHandle extends File {
   handle?: FileSystemHandle;
 }
 
-// The following typings implement the relevant parts of the File System Access API.
-// This can be removed once the specification reaches the Candidate phase and is
-// implemented as part of microsoft/TSJS-lib-generator.
+// The following typings implement the relevant parts of the File System Access
+// API. This can be removed once the specification reaches the Candidate phase
+// and is implemented as part of microsoft/TSJS-lib-generator.
 
 export interface FileSystemHandlePermissionDescriptor {
   fileSystemHandle: FileSystemHandle;
