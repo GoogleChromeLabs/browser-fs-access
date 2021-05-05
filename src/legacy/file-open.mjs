@@ -57,7 +57,7 @@ export default async (options = {}) => {
 
     input.addEventListener('change', () => {
       cleanupListenersAndMaybeReject();
-      resolve(input.multiple ? input.files : input.files[0]);
+      resolve(input.multiple ? Array.from(input.files) : input.files[0]);
     });
 
     input.click();
