@@ -1,6 +1,6 @@
 {
   "name": "browser-fs-access",
-  "version": "0.17.0",
+  "version": "0.17.1",
   "description": "File System Access API with legacy fallback in the browser.",
   "browser": "./dist/index.js",
   "main": "./dist/index.js",
@@ -36,11 +36,11 @@
   },
   "homepage": "https://github.com/GoogleChromeLabs/browser-fs-access#readme",
   "devDependencies": {
-    "eslint": "^7.25.0",
+    "eslint": "^7.26.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.3.0",
     "http-server": "^0.12.3",
-    "prettier": "^2.2.1",
+    "prettier": "^2.3.0",
     "shx": "^0.3.3",
     "terser": "^5.7.0"
   },

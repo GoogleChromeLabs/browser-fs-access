@@ -36,9 +36,8 @@ export default async (options = {}) => {
     let cleanupListenersAndMaybeReject;
     const rejectionHandler = () => cleanupListenersAndMaybeReject(reject);
     if (options.setupLegacyCleanupAndRejection) {
-      cleanupListenersAndMaybeReject = options.setupLegacyCleanupAndRejection(
-        rejectionHandler
-      );
+      cleanupListenersAndMaybeReject =
+        options.setupLegacyCleanupAndRejection(rejectionHandler);
     } else {
       // Default rejection behavior; works in most cases, but not in Chrome in non-secure contexts.
       cleanupListenersAndMaybeReject = (reject) => {
