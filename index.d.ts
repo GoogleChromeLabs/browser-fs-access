@@ -83,8 +83,7 @@ export interface FileWithHandle extends File {
 // and is implemented as part of microsoft/TSJS-lib-generator.
 
 export interface FileSystemHandlePermissionDescriptor {
-  fileSystemHandle: FileSystemHandle;
-  mode: 'read' | 'readWrite';
+  mode?: 'read' | 'readwrite';
 }
 
 export interface FileSystemHandle {
