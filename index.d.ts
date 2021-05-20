@@ -65,7 +65,7 @@ export function fileSave(
 export function directoryOpen(options?: {
   /** Whether to recursively get subdirectories. */
   recursive: boolean;
-}): Promise<File[]>;
+}): Promise<FileWithDirectoryHandle[]>;
 
 /**
  * Whether the File System Access API is supported.
@@ -76,6 +76,10 @@ export function imageToBlob(img: HTMLImageElement): Promise<Blob>;
 
 export interface FileWithHandle extends File {
   handle?: FileSystemHandle;
+}
+
+export interface FileWithDirectoryHandle extends File {
+  directoryHandle?: FileSystemHandle;
 }
 
 // The following typings implement the relevant parts of the File System Access

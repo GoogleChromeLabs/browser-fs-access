@@ -22,13 +22,14 @@ const getFiles = async (dirHandle, recursive, path = dirHandle.name) => {
     const nestedPath = `${path}/${entry.name}`;
     if (entry.isFile) {
       files.push(
-        entry.getFile().then((file) =>
-          Object.defineProperty(file, 'webkitRelativePath', {
+        entry.getFile().then((file) => {
+          file.directoryHandle = dirHandle;
+          return Object.defineProperty(file, 'webkitRelativePath', {
             configurable: true,
             enumerable: true,
             get: () => nestedPath,
-          })
-        )
+          });
+        })
       );
     } else if (entry.isDirectory && recursive) {
       dirs.push(getFiles(entry, recursive, nestedPath));
