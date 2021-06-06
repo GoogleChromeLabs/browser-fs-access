@@ -4,7 +4,10 @@
   "description": "File System Access API with legacy fallback in the browser.",
   "browser": "./dist/index.js",
   "main": "./dist/index.js",
-  "exports": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
   "module": "./dist/index.js",
   "types": "./index.d.ts",
   "scripts": {
