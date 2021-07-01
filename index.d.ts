@@ -21,6 +21,20 @@ export function fileOpen<M extends boolean | undefined = false>(options?: {
    * reference to the `reject` callback for the `Promise` returned by
    * `fileOpen`, so that developers may reject the `Promise` when desired at
    * that time.
+   * Example rejector:
+   *
+   * const file = await fileOpen({
+   *   setupLegacyCleanupAndRejection: (rejectionHandler) => {
+   *     const timeoutId = setTimeout(rejectionHandler, 10_000);
+   *     return (reject) => {
+   *       clearTimeout(timeoutId);
+   *       if (reject) {
+   *         reject('My error message here.');
+   *       }
+   *     };
+   *   },
+   * });
+   *
    * ToDo: Remove this workaround once
    *   https://github.com/whatwg/html/issues/6376 is specified and supported.
    */

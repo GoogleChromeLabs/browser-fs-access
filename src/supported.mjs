@@ -21,6 +21,10 @@
  * @returns {boolean} Returns `true` if the File System Access API is supported and usable, else returns `false`.
  */
 const supported = (() => {
+  // When running in an SSR environment return `false`.
+  if (typeof self === 'undefined') {
+    return false;
+  }
   // ToDo: Remove this check once Permissions Policy integration
   // has happened, tracked in
   // https://github.com/WICG/file-system-access/issues/245.

@@ -30,7 +30,6 @@ export default async (options = {}) => {
     input.multiple = options.multiple || false;
     // Empty string allows everything.
     input.accept = accept || '';
-
     // ToDo: Remove this workaround once
     // https://github.com/whatwg/html/issues/6376 is specified and supported.
     let cleanupListenersAndMaybeReject;
@@ -38,24 +37,9 @@ export default async (options = {}) => {
     if (options.setupLegacyCleanupAndRejection) {
       cleanupListenersAndMaybeReject =
         options.setupLegacyCleanupAndRejection(rejectionHandler);
-    } else {
-      // Default rejection behavior; works in most cases, but not in Chrome in non-secure contexts.
-      cleanupListenersAndMaybeReject = (reject) => {
-        window.removeEventListener('pointermove', rejectionHandler);
-        window.removeEventListener('pointerdown', rejectionHandler);
-        window.removeEventListener('keydown', rejectionHandler);
-        if (reject) {
-          reject(new DOMException('The user aborted a request.', 'AbortError'));
-        }
-      };
-
-      window.addEventListener('pointermove', rejectionHandler);
-      window.addEventListener('pointerdown', rejectionHandler);
-      window.addEventListener('keydown', rejectionHandler);
     }
-
     input.addEventListener('change', () => {
-      cleanupListenersAndMaybeReject();
+      cleanupListenersAndMaybeReject?.();
       resolve(input.multiple ? Array.from(input.files) : input.files[0]);
     });
 
