@@ -45,6 +45,14 @@ export function fileOpen<M extends boolean | undefined = false>(options?: {
   ? Promise<FileWithHandle>
   : Promise<FileWithHandle[]>;
 
+export type WellKnownDirectory =
+  | 'desktop'
+  | 'documents'
+  | 'downloads'
+  | 'music'
+  | 'pictures'
+  | 'videos';
+
 /**
  * Saves a file to disk.
  * @returns Optional file handle to save in place.
@@ -59,6 +67,10 @@ export function fileSave(
     extensions?: string[];
     /** Suggested file description. Defaults to "". */
     description?: string;
+    /** Suggested directory in which the file picker opens. */
+    startIn?: WellKnownDirectory | FileSystemHandle;
+    /** By specifying an ID, the user agent can remember different directories for different IDs. */
+    id?: string;
   },
   /**
    * A potentially existing file handle for a file to save to. Defaults to

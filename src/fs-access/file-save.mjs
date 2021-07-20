@@ -50,6 +50,8 @@ export default async (
     existingHandle ||
     (await window.showSaveFilePicker({
       suggestedName: options.fileName,
+      id: options.id,
+      startIn: options.startIn,
       types: [
         {
           description: options.description || '',

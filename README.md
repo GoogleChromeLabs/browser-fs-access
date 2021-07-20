@@ -82,6 +82,10 @@ const options = {
   multiple: true,
   // Textual description for file dialog , defaults to `''`.
   description: 'Image files',
+  // Suggested directory in which the file picker opens. A well-known directory or a file handle.
+  startIn: 'downloads',
+  // By specifying an ID, the user agent can remember different directories for different IDs.
+  id: 'projects',
 };
 
 const blobs = await fileOpen(options);
@@ -95,6 +99,10 @@ const options = {
   // Set to `true` to recursively open files in all subdirectories,
   // defaults to `false`.
   recursive: true,
+  // Suggested directory in which the file picker opens. A well-known directory or a file handle.
+  startIn: 'downloads',
+  // By specifying an ID, the user agent can remember different directories for different IDs.
+  id: 'projects',
 };
 
 const blobs = await directoryOpen(options);
@@ -111,6 +119,10 @@ const options = {
   fileName: 'Untitled.txt',
   // Suggested file extensions (with leading '.'), defaults to `''`.
   extensions: ['.txt'],
+  // Suggested directory in which the file picker opens. A well-known directory or a file handle.
+  startIn: 'downloads',
+  // By specifying an ID, the user agent can remember different directories for different IDs.
+  id: 'projects',
 };
 
 // Optional file handle to save back to an existing file.
