@@ -10,6 +10,9 @@ export function fileOpen<M extends boolean | undefined = false>(options?: {
   description?: string;
   /** Allow multiple files to be selected. Defaults to false. */
   multiple?: M;
+  startIn?: WellKnownDirectory | FileSystemHandle;
+  /** By specifying an ID, the user agent can remember different directories for different IDs. */
+  id?: string;
   /**
    * Configurable cleanup and `Promise` rejector usable with legacy API for
    * determining when (and reacting if) a user cancels the operation. The
@@ -91,6 +94,10 @@ export function fileSave(
 export function directoryOpen(options?: {
   /** Whether to recursively get subdirectories. */
   recursive: boolean;
+  /** Suggested directory in which the file picker opens. */
+  startIn?: WellKnownDirectory | FileSystemHandle;
+  /** By specifying an ID, the user agent can remember different directories for different IDs. */
+  id?: string;
 }): Promise<FileWithDirectoryHandle[]>;
 
 /**
