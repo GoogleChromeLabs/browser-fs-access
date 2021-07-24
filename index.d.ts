@@ -91,6 +91,10 @@ export function fileSave(
 export function directoryOpen(options?: {
   /** Whether to recursively get subdirectories. */
   recursive: boolean;
+  /** Suggested directory in which the file picker opens. */
+  startIn?: WellKnownDirectory | FileSystemHandle;
+  /** By specifying an ID, the user agent can remember different directories for different IDs. */
+  id?: string;
 }): Promise<FileWithDirectoryHandle[]>;
 
 /**
