@@ -39,7 +39,9 @@ export default async (options = {}) => {
         options.setupLegacyCleanupAndRejection(rejectionHandler);
     }
     input.addEventListener('change', () => {
-      cleanupListenersAndMaybeReject?.();
+      if (typeof cleanupListenersAndMaybeReject === 'function') {
+        cleanupListenersAndMaybeReject();
+      }
       resolve(input.multiple ? Array.from(input.files) : input.files[0]);
     });
 

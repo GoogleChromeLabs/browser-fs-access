@@ -36,7 +36,9 @@ export default async (options = {}) => {
         options.setupLegacyCleanupAndRejection(rejectionHandler);
     }
     input.addEventListener('change', () => {
-      cleanupListenersAndMaybeReject?.();
+      if (typeof cleanupListenersAndMaybeReject === 'function') {
+        cleanupListenersAndMaybeReject();
+      }
       let files = Array.from(input.files);
       if (!options.recursive) {
         files = files.filter((file) => {
