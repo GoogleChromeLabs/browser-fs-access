@@ -1,50 +1,9 @@
 /**
  * Opens file(s) from disk.
  */
-export function fileOpen<M extends boolean | undefined = false>(options?: {
-  /** Acceptable MIME types. [] */
-  mimeTypes?: string[];
-  /** Acceptable file extensions. Defaults to "". */
-  extensions?: string[];
-  /** Suggested file description. Defaults to "". */
-  description?: string;
-  /** Allow multiple files to be selected. Defaults to false. */
-  multiple?: M;
-  startIn?: WellKnownDirectory | FileSystemHandle;
-  /** By specifying an ID, the user agent can remember different directories for different IDs. */
-  id?: string;
-  /**
-   * Configurable cleanup and `Promise` rejector usable with legacy API for
-   * determining when (and reacting if) a user cancels the operation. The
-   * method will be passed a reference to the internal `rejectionHandler` that
-   * can, e.g., be attached to/removed from the window or called after a
-   * timeout. The method should return a function that will be called when
-   * either the user chooses to open a file or the `rejectionHandler` is
-   * called. In the latter case, the returned function will also be passed a
-   * reference to the `reject` callback for the `Promise` returned by
-   * `fileOpen`, so that developers may reject the `Promise` when desired at
-   * that time.
-   * Example rejector:
-   *
-   * const file = await fileOpen({
-   *   setupLegacyCleanupAndRejection: (rejectionHandler) => {
-   *     const timeoutId = setTimeout(rejectionHandler, 10_000);
-   *     return (reject) => {
-   *       clearTimeout(timeoutId);
-   *       if (reject) {
-   *         reject('My error message here.');
-   *       }
-   *     };
-   *   },
-   * });
-   *
-   * ToDo: Remove this workaround once
-   *   https://github.com/whatwg/html/issues/6376 is specified and supported.
-   */
-  setupLegacyCleanupAndRejection?: (
-    rejectionHandler?: () => void
-  ) => (reject: (reason?: any) => void) => void;
-}): M extends false | undefined
+export function fileOpen<M extends boolean | undefined = false>(
+  options?: FileOpenOptions | FileOpenOptions[]
+): M extends false | undefined
   ? Promise<FileWithHandle>
   : Promise<FileWithHandle[]>;
 
@@ -63,18 +22,7 @@ export type WellKnownDirectory =
 export function fileSave(
   /** To-be-saved blob */
   blob: Blob,
-  options?: {
-    /** Suggested file name. Defaults to "Untitled". */
-    fileName?: string;
-    /** Suggested file extensions. Defaults to [""]. */
-    extensions?: string[];
-    /** Suggested file description. Defaults to "". */
-    description?: string;
-    /** Suggested directory in which the file picker opens. */
-    startIn?: WellKnownDirectory | FileSystemHandle;
-    /** By specifying an ID, the user agent can remember different directories for different IDs. */
-    id?: string;
-  },
+  options?: FileSaveOptions | FileSaveOptions[],
   /**
    * A potentially existing file handle for a file to save to. Defaults to
    * null.
@@ -135,4 +83,57 @@ export interface FileSystemHandle {
   requestPermission: (
     descriptor?: FileSystemHandlePermissionDescriptor
   ) => Promise<PermissionState>;
+}
+
+export interface CoreFileOptions {
+  /** Acceptable file extensions. Defaults to [""]. */
+  extensions?: string[];
+  /** Suggested file description. Defaults to "". */
+  description?: string;
+  startIn?: WellKnownDirectory | FileSystemHandle;
+  /** By specifying an ID, the user agent can remember different directories for different IDs. */
+  id?: string;
+}
+
+export interface FileSaveOptions extends CoreFileOptions {
+  /** Suggested file name. Defaults to "Untitled". */
+  fileName?: string;
+}
+
+export interface FileOpenOptions extends CoreFileOptions {
+  /** Acceptable MIME types. [] */
+  mimeTypes?: string[];
+  /** Allow multiple files to be selected. Defaults to false. */
+  multiple?: M;
+  /**
+   * Configurable cleanup and `Promise` rejector usable with legacy API for
+   * determining when (and reacting if) a user cancels the operation. The
+   * method will be passed a reference to the internal `rejectionHandler` that
+   * can, e.g., be attached to/removed from the window or called after a
+   * timeout. The method should return a function that will be called when
+   * either the user chooses to open a file or the `rejectionHandler` is
+   * called. In the latter case, the returned function will also be passed a
+   * reference to the `reject` callback for the `Promise` returned by
+   * `fileOpen`, so that developers may reject the `Promise` when desired at
+   * that time.
+   * Example rejector:
+   *
+   * const file = await fileOpen({
+   *   setupLegacyCleanupAndRejection: (rejectionHandler) => {
+   *     const timeoutId = setTimeout(rejectionHandler, 10_000);
+   *     return (reject) => {
+   *       clearTimeout(timeoutId);
+   *       if (reject) {
+   *         reject('My error message here.');
+   *       }
+   *     };
+   *   },
+   * });
+   *
+   * ToDo: Remove this workaround once
+   *   https://github.com/whatwg/html/issues/6376 is specified and supported.
+   */
+  setupLegacyCleanupAndRejection?: (
+    rejectionHandler?: () => void
+  ) => (reject: (reason?: any) => void) => void;
 }
