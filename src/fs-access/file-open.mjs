@@ -25,28 +25,39 @@ const getFileWithHandle = async (handle) => {
  * Opens a file from disk using the File System Access API.
  * @type { typeof import("../../index").fileOpen }
  */
-export default async (options = {}) => {
-  const accept = {};
-  if (options.mimeTypes) {
-    options.mimeTypes.map((mimeType) => {
-      accept[mimeType] = options.extensions || [];
-    });
-  } else {
-    accept['*/*'] = options.extensions || [];
+export default async (options = [{}]) => {
+  if (!Array.isArray(options)) {
+    options = [options];
   }
+  const types = [];
+  options.forEach((option, i) => {
+    types[i] = {
+      description: option.description || '',
+      accept: {},
+    };
+    if (option.mimeTypes) {
+      option.mimeTypes.map((mimeType) => {
+        types[i].accept[mimeType] = option.extensions || [];
+      });
+    } else {
+      types[i].accept['/*/'] = option.extensions || [];
+    }
+  });
+
+  console.log({
+    id: options[0].id,
+    startIn: options[0].startIn,
+    types,
+    multiple: options[0].multiple || false,
+  });
   const handleOrHandles = await window.showOpenFilePicker({
-    id: options.id,
-    startIn: options.startIn,
-    types: [
-      {
-        description: options.description || '',
-        accept: accept,
-      },
-    ],
-    multiple: options.multiple || false,
+    id: options[0].id,
+    startIn: options[0].startIn,
+    types,
+    multiple: options[0].multiple || false,
   });
   const files = await Promise.all(handleOrHandles.map(getFileWithHandle));
-  if (options.multiple) {
+  if (options[0].multiple) {
     return files;
   }
   return files[0];

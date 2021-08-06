@@ -20,6 +20,9 @@
  * @type { typeof import("../../index").fileSave }
  */
 export default async (blob, options = {}) => {
+  if (Array.isArray(options)) {
+    options = options[0];
+  }
   const a = document.createElement('a');
   a.download = options.fileName || 'Untitled';
   a.href = URL.createObjectURL(blob);

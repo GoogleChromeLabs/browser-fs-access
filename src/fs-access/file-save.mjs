@@ -21,20 +21,31 @@
  */
 export default async (
   blob,
-  options = {},
+  options = [{}],
   existingHandle = null,
   throwIfExistingHandleNotGood = false
 ) => {
-  options.fileName = options.fileName || 'Untitled';
-  const accept = {};
-  if (options.mimeTypes) {
-    options.mimeTypes.push(blob.type);
-    options.mimeTypes.map((mimeType) => {
-      accept[mimeType] = options.extensions || [];
-    });
-  } else {
-    accept[blob.type] = options.extensions || [];
+  if (!Array.isArray(options)) {
+    options = [options];
   }
+  options[0].fileName = options[0].fileName || 'Untitled';
+  const types = [];
+  options.forEach((option, i) => {
+    types[i] = {
+      description: option.description || '',
+      accept: {},
+    };
+    if (option.mimeTypes) {
+      if (i === 0) {
+        option.mimeTypes.push(blob.type);
+      }
+      option.mimeTypes.map((mimeType) => {
+        types[i].accept[mimeType] = option.extensions || [];
+      });
+    } else {
+      types[i].accept[blob.type] = option.extensions || [];
+    }
+  });
   if (existingHandle) {
     try {
       // Check if the file still exists.
@@ -49,15 +60,10 @@ export default async (
   const handle =
     existingHandle ||
     (await window.showSaveFilePicker({
-      suggestedName: options.fileName,
-      id: options.id,
-      startIn: options.startIn,
-      types: [
-        {
-          description: options.description || '',
-          accept: accept,
-        },
-      ],
+      suggestedName: options[0].fileName,
+      id: options[0].id,
+      startIn: options[0].startIn,
+      types,
     }));
   const writable = await handle.createWritable();
   await writable.write(blob);

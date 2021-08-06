@@ -21,6 +21,7 @@ import { imageToBlob } from './image-to-blob.mjs';
 (async () => {
   const openButton = document.querySelector('#open');
   const openMultipleButton = document.querySelector('#open-multiple');
+  const openImageOrTextButton = document.querySelector('#open-image-or-text');
   const openDirectoryButton = document.querySelector('#open-directory');
   const saveButton = document.querySelector('#save');
   const supportedParagraph = document.querySelector('.supported');
@@ -92,6 +93,36 @@ import { imageToBlob } from './image-to-blob.mjs';
     }
   });
 
+  openImageOrTextButton.addEventListener('click', async () => {
+    try {
+      const blobs = await fileOpen([
+        {
+          description: 'Image files',
+          mimeTypes: ['image/jpg', 'image/png', 'image/gif', 'image/webp'],
+          extensions: ['.jpg', '.jpeg', '.png', '.gif', '.webp'],
+          multiple: true,
+        },
+        {
+          description: 'Text files',
+          mimeTypes: ['text/*'],
+          extensions: ['.txt'],
+        },
+      ]);
+      for (const blob of blobs) {
+        if (blob.type.startsWith('image/')) {
+          appendImage(blob);
+        } else {
+          document.body.append(await blob.text());
+        }
+      }
+    } catch (err) {
+      if (err.name !== 'AbortError') {
+        return console.error(err);
+      }
+      console.log('The user aborted a request.');
+    }
+  });
+
   openDirectoryButton.addEventListener('click', async () => {
     try {
       const blobs = await directoryOpen();
@@ -121,6 +152,7 @@ import { imageToBlob } from './image-to-blob.mjs';
 
   openButton.disabled = false;
   openMultipleButton.disabled = false;
+  openImageOrTextButton.disabled = false;
   openDirectoryButton.disabled = false;
   saveButton.disabled = false;
 })();

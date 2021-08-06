@@ -19,24 +19,27 @@
  * Opens a file from disk using the legacy `<input type="file">` method.
  * @type { typeof import("../../index").fileOpen }
  */
-export default async (options = {}) => {
+export default async (options = [{}]) => {
+  if (!Array.isArray(options)) {
+    options = [options];
+  }
   return new Promise((resolve, reject) => {
     const input = document.createElement('input');
     input.type = 'file';
     const accept = [
-      ...(options.mimeTypes ? options.mimeTypes : []),
-      options.extensions ? options.extensions : [],
+      ...options.map((option) => option.mimeTypes || []).join(),
+      options.map((option) => option.extensions || []).join(),
     ].join();
-    input.multiple = options.multiple || false;
+    input.multiple = options[0].multiple || false;
     // Empty string allows everything.
     input.accept = accept || '';
     // ToDo: Remove this workaround once
     // https://github.com/whatwg/html/issues/6376 is specified and supported.
     let cleanupListenersAndMaybeReject;
     const rejectionHandler = () => cleanupListenersAndMaybeReject(reject);
-    if (options.setupLegacyCleanupAndRejection) {
+    if (options[0].setupLegacyCleanupAndRejection) {
       cleanupListenersAndMaybeReject =
-        options.setupLegacyCleanupAndRejection(rejectionHandler);
+        options[0].setupLegacyCleanupAndRejection(rejectionHandler);
     }
     input.addEventListener('change', () => {
       if (typeof cleanupListenersAndMaybeReject === 'function') {

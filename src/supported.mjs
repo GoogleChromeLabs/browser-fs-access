@@ -36,8 +36,6 @@ const supported = (() => {
     } catch {
       return false;
     }
-  } else if ('chooseFileSystemEntries' in self) {
-    return 'chooseFileSystemEntries';
   } else if ('showOpenFilePicker' in self) {
     return 'showOpenFilePicker';
   }

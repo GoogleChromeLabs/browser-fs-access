@@ -19,8 +19,6 @@ import supported from './supported.mjs';
 
 const implementation = !supported
   ? import('./legacy/directory-open.mjs')
-  : supported === 'chooseFileSystemEntries'
-  ? import('./fs-access-legacy/directory-open.mjs')
   : import('./fs-access/directory-open.mjs');
 
 /**

@@ -20,27 +20,29 @@
  * `<input type="file" webkitdirectory>` method.
  * @type { typeof import("../../index").directoryOpen }
  */
-export default async (options = {}) => {
-  options.recursive = options.recursive || false;
+export default async (options = [{}]) => {
+  if (!Array.isArray(options)) {
+    options = [options];
+  }
+  options[0].recursive = options[0].recursive || false;
   return new Promise((resolve, reject) => {
     const input = document.createElement('input');
     input.type = 'file';
     input.webkitdirectory = true;
-
     // ToDo: Remove this workaround once
     // https://github.com/whatwg/html/issues/6376 is specified and supported.
     let cleanupListenersAndMaybeReject;
     const rejectionHandler = () => cleanupListenersAndMaybeReject(reject);
-    if (options.setupLegacyCleanupAndRejection) {
+    if (options[0].setupLegacyCleanupAndRejection) {
       cleanupListenersAndMaybeReject =
-        options.setupLegacyCleanupAndRejection(rejectionHandler);
+        options[0].setupLegacyCleanupAndRejection(rejectionHandler);
     }
     input.addEventListener('change', () => {
       if (typeof cleanupListenersAndMaybeReject === 'function') {
         cleanupListenersAndMaybeReject();
       }
       let files = Array.from(input.files);
-      if (!options.recursive) {
+      if (!options[0].recursive) {
         files = files.filter((file) => {
           return file.webkitRelativePath.split('/').length === 2;
         });
