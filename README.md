@@ -53,6 +53,21 @@ import {
     multiple: true,
   });
 
+  // Open files of different MIME types.
+  const blobs = await fileOpen([
+    {
+      description: 'Image files',
+      mimeTypes: ['image/jpg', 'image/png', 'image/gif', 'image/webp'],
+      extensions: ['.jpg', '.jpeg', '.png', '.gif', '.webp'],
+      multiple: true,
+    },
+    {
+      description: 'Text files',
+      mimeTypes: ['text/*'],
+      extensions: ['.txt'],
+    },
+  ]);
+
   // Open all files in a directory,
   // recursively including subdirectories.
   const blobsInDirectory = await directoryOpen({
@@ -72,7 +87,7 @@ import {
 ### Opening files:
 
 ```js
-// Options are optional.
+// Options are optional. You can pass an array of options, too.
 const options = {
   // List of allowed MIME types, defaults to `*/*`.
   mimeTypes: ['image/*'],
@@ -113,7 +128,7 @@ The module also polyfills a [`webkitRelativePath`](https://developer.mozilla.org
 ### Saving files:
 
 ```js
-// Options are optional.
+// Options are optional. You can pass an array of options, too.
 const options = {
   // Suggested file name to use, defaults to `''`.
   fileName: 'Untitled.txt',

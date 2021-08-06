@@ -43,13 +43,6 @@ export default async (options = [{}]) => {
       types[i].accept['/*/'] = option.extensions || [];
     }
   });
-
-  console.log({
-    id: options[0].id,
-    startIn: options[0].startIn,
-    types,
-    multiple: options[0].multiple || false,
-  });
   const handleOrHandles = await window.showOpenFilePicker({
     id: options[0].id,
     startIn: options[0].startIn,
