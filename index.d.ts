@@ -2,7 +2,7 @@
  * Opens file(s) from disk.
  */
 export function fileOpen<M extends boolean | undefined = false>(
-  options?: FileOpenOptions | FileOpenOptions[]
+  options?: FileOpenOptions<M> | FileOpenOptions<M>[]
 ): M extends false | undefined
   ? Promise<FileWithHandle>
   : Promise<FileWithHandle[]>;
@@ -100,7 +100,8 @@ export interface FileSaveOptions extends CoreFileOptions {
   fileName?: string;
 }
 
-export interface FileOpenOptions extends CoreFileOptions {
+export interface FileOpenOptions<M extends boolean | undefined = false>
+  extends CoreFileOptions {
   /** Acceptable MIME types. [] */
   mimeTypes?: string[];
   /** Allow multiple files to be selected. Defaults to false. */
