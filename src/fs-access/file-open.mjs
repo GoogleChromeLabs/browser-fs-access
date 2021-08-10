@@ -40,7 +40,7 @@ export default async (options = [{}]) => {
         types[i].accept[mimeType] = option.extensions || [];
       });
     } else {
-      types[i].accept['/*/'] = option.extensions || [];
+      types[i].accept['*/*'] = option.extensions || [];
     }
   });
   const handleOrHandles = await window.showOpenFilePicker({
