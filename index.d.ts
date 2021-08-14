@@ -77,9 +77,7 @@ export interface FirstFileOpenOptions<M extends boolean | undefined>
  * Opens file(s) from disk.
  */
 export function fileOpen<M extends boolean | undefined = false>(
-  options?: O extends any[]
-    ? [FirstFileOpenOptions<M>, ...CoreFileOptions[]]
-    : FirstFileOpenOptions<M>
+  options?: [FirstFileOpenOptions<M>, ...CoreFileOptions[]] | FirstFileOpenOptions<M>
 ): M extends false | undefined
   ? Promise<FileWithHandle>
   : Promise<FileWithHandle[]>;
@@ -99,9 +97,7 @@ export type WellKnownDirectory =
 export function fileSave(
   /** To-be-saved blob */
   blob: Blob,
-  options?: O extends any[]
-    ? [FirstFileSaveOptions, ...CoreFileOptions[]]
-    : FirstFileSaveOptions,
+  options?: [FirstFileSaveOptions, ...CoreFileOptions[]] | FirstFileSaveOptions,
   /**
    * A potentially existing file handle for a file to save to. Defaults to
    * null.
