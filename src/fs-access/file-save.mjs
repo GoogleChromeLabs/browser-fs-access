@@ -64,6 +64,7 @@ export default async (
       id: options[0].id,
       startIn: options[0].startIn,
       types,
+      excludeAcceptAllOption: options[0].excludeAcceptAllOption || false,
     }));
   const writable = await handle.createWritable();
   await writable.write(blob);

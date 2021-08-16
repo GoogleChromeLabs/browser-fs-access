@@ -19,6 +19,7 @@ export interface FirstCoreFileOptions extends CoreFileOptions {
   startIn?: WellKnownDirectory | FileSystemHandle;
   /** By specifying an ID, the user agent can remember different directories for different IDs. */
   id?: string;
+  excludeAcceptAllOption?: boolean | false;
 }
 
 /**
@@ -77,7 +78,9 @@ export interface FirstFileOpenOptions<M extends boolean | undefined>
  * Opens file(s) from disk.
  */
 export function fileOpen<M extends boolean | undefined = false>(
-  options?: [FirstFileOpenOptions<M>, ...CoreFileOptions[]] | FirstFileOpenOptions<M>
+  options?:
+    | [FirstFileOpenOptions<M>, ...CoreFileOptions[]]
+    | FirstFileOpenOptions<M>
 ): M extends false | undefined
   ? Promise<FileWithHandle>
   : Promise<FileWithHandle[]>;

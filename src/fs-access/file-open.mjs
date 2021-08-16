@@ -48,6 +48,7 @@ export default async (options = [{}]) => {
     startIn: options[0].startIn,
     types,
     multiple: options[0].multiple || false,
+    excludeAcceptAllOption: options[0].excludeAcceptAllOption || false,
   });
   const files = await Promise.all(handleOrHandles.map(getFileWithHandle));
   if (options[0].multiple) {

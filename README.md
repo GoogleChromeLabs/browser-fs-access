@@ -101,6 +101,8 @@ const options = {
   startIn: 'downloads',
   // By specifying an ID, the user agent can remember different directories for different IDs.
   id: 'projects',
+  // Include an option to not apply any filter in the file picker, defaults to `false`.
+  excludeAcceptAllOption: true,
 };
 
 const blobs = await fileOpen(options);
@@ -138,6 +140,8 @@ const options = {
   startIn: 'downloads',
   // By specifying an ID, the user agent can remember different directories for different IDs.
   id: 'projects',
+  // Include an option to not apply any filter in the file picker, defaults to `false`.
+  excludeAcceptAllOption: true,
 };
 
 // Optional file handle to save back to an existing file.
