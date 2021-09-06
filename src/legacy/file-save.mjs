@@ -25,7 +25,14 @@ export default async (blob, options = {}) => {
   }
   const a = document.createElement('a');
   a.download = options.fileName || 'Untitled';
-  a.href = URL.createObjectURL(blob);
+
+  // handle the case where passed data is a readable stream
+  let data = blob
+  if ("getReader" in blob) {
+    const response = new Response(stream)
+    data = await response.blob()
+  }
+  a.href = URL.createObjectURL(data);
   // ToDo: Remove this workaround once
   // https://github.com/whatwg/html/issues/6376 is specified and supported.
   let cleanupListenersAndMaybeReject;

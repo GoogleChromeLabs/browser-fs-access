@@ -67,6 +67,17 @@ export default async (
       excludeAcceptAllOption: options[0].excludeAcceptAllOption || false,
     }));
   const writable = await handle.createWritable();
+  // use streaming on the blob if the browser supports it
+  if ("stream" in blob) {
+    const stream = blob.stream()
+    await stream.pipeTo(writable)
+    return handle
+  // handle passed readable stream
+  } else if ("getReader" in blob) {
+    await blob.pipeTo(writable)
+    return handle
+  }
+  // default case of blob passed and streams not supported
   await writable.write(blob);
   await writable.close();
   return handle;
