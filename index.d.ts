@@ -99,7 +99,7 @@ export type WellKnownDirectory =
  */
 export function fileSave(
   /** To-be-saved blob */
-  blob: Blob | ReadableStream,
+  blobOrStream: Blob | ReadableStream,
   options?: [FirstFileSaveOptions, ...CoreFileOptions[]] | FirstFileSaveOptions,
   /**
    * A potentially existing file handle for a file to save to. Defaults to
