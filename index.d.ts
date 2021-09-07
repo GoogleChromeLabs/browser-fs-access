@@ -98,8 +98,8 @@ export type WellKnownDirectory =
  * @returns Optional file handle to save in place.
  */
 export function fileSave(
-  /** To-be-saved blob */
-  blobOrStream: Blob | ReadableStream,
+  /** To-be-saved blob or stream&mimeType object*/
+  blobOrStream: Blob | { readable: ReadableStream; type: string },
   options?: [FirstFileSaveOptions, ...CoreFileOptions[]] | FirstFileSaveOptions,
   /**
    * A potentially existing file handle for a file to save to. Defaults to

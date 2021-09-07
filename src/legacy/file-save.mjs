@@ -26,8 +26,8 @@ export default async (blobOrStream, options = {}) => {
   const a = document.createElement('a');
   let data = blobOrStream
   // handle the case where input is a stream
-  if ("getReader" in blob) {
-    await streamToBlob(blobOrStream)
+  if ("readable" in blobOrStream) {
+    data = await streamToBlob(blobOrStream.readable, blobOrStream.type)
   }
   a.download = options.fileName || 'Untitled';
   a.href = URL.createObjectURL(data);
@@ -53,9 +53,10 @@ export default async (blobOrStream, options = {}) => {
 /**
  * Converts a passed readable stream to a blob
  * @param {ReadableStream} stream
+ * @param {string} type
  * @returns {Promise<Blob>}
  */
-async function streamToBlob(stream) {
+async function streamToBlob(stream, type) {
   const reader = stream.getReader()
   const stream = new ReadableStream({
     start(controller) {
@@ -77,5 +78,5 @@ async function streamToBlob(stream) {
 
   const res = new Response(stream)
   reader.releaseLock()
-  return res.blob()
+  return new Blob([await res.blob()], { type })
 }
