@@ -20,7 +20,7 @@
  * @type { typeof import("../../index").fileSave }
  */
 export default async (
-  blob,
+  blobOrStream,
   options = [{}],
   existingHandle = null,
   throwIfExistingHandleNotGood = false
@@ -36,14 +36,14 @@ export default async (
       accept: {},
     };
     if (option.mimeTypes) {
-      if (i === 0) {
-        option.mimeTypes.push(blob.type);
+      if (i === 0 && blobOrStream.type) {
+        option.mimeTypes.push(blobOrStream.type);
       }
       option.mimeTypes.map((mimeType) => {
         types[i].accept[mimeType] = option.extensions || [];
       });
-    } else {
-      types[i].accept[blob.type] = option.extensions || [];
+    } else if (blobOrStream.type) {
+      types[i].accept[blobOrStream.type] = option.extensions || [];
     }
   });
   if (existingHandle) {
