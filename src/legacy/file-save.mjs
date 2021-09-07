@@ -19,19 +19,17 @@
  * Saves a file to disk using the legacy `<a download>` method.
  * @type { typeof import("../../index").fileSave }
  */
-export default async (blob, options = {}) => {
+export default async (blobOrStream, options = {}) => {
   if (Array.isArray(options)) {
     options = options[0];
   }
   const a = document.createElement('a');
-  a.download = options.fileName || 'Untitled';
-
-  // handle the case where passed data is a readable stream
-  let data = blob
+  let data = blobOrStream
+  // handle the case where input is a stream
   if ("getReader" in blob) {
-    const response = new Response(stream)
-    data = await response.blob()
+    await streamToBlob(blobOrStream)
   }
+  a.download = options.fileName || 'Untitled';
   a.href = URL.createObjectURL(data);
   // ToDo: Remove this workaround once
   // https://github.com/whatwg/html/issues/6376 is specified and supported.
@@ -51,3 +49,33 @@ export default async (blob, options = {}) => {
   });
   a.click();
 };
+
+/**
+ * Converts a passed readable stream to a blob
+ * @param {ReadableStream} stream
+ * @returns {Promise<Blob>}
+ */
+async function streamToBlob(stream) {
+  const reader = stream.getReader()
+  const stream = new ReadableStream({
+    start(controller) {
+      return pump();
+      function pump() {
+        return reader.read().then(({ done, value }) => {
+          // When no more data needs to be consumed, close the stream
+          if (done) {
+              controller.close();
+              return;
+          }
+          // Enqueue the next data chunk into our target stream
+          controller.enqueue(value);
+          return pump();
+        });
+      }
+    }
+  })
+
+  const res = new Response(stream)
+  reader.releaseLock()
+  return res.blob()
+}
