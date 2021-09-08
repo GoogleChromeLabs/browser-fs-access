@@ -26,7 +26,7 @@ export default async (blobOrStream, options = {}) => {
   const a = document.createElement('a');
   let data = blobOrStream;
   // Handle the case where input is a `ReadableStream`.
-  if ("readable" in blobOrStream) {
+  if ('readable' in blobOrStream) {
     data = await streamToBlob(blobOrStream.readable, blobOrStream.type);
   }
   a.download = options.fileName || 'Untitled';
