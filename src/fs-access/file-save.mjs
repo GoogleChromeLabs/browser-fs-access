@@ -77,7 +77,7 @@ export default async (
     await blobOrStream.readable.pipeTo(writable);
     return handle;
   }
-  // default case of blob passed and streams not supported
+  // Default case of `Blob` passed and `Blob.stream()` not supported.
   await writable.write(blob);
   await writable.close();
   return handle;
