@@ -51,7 +51,7 @@ export default async (blobOrStream, options = {}) => {
 };
 
 /**
- * Converts a passed readable stream to a blob
+ * Converts a passed `ReadableStream` to a `Blob`.
  * @param {ReadableStream} stream
  * @param {string} type
  * @returns {Promise<Blob>}
