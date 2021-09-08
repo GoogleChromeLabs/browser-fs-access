@@ -67,7 +67,7 @@ export default async (
       excludeAcceptAllOption: options[0].excludeAcceptAllOption || false,
     }));
   const writable = await handle.createWritable();
-  // use streaming on the blob if the browser supports it
+  // Use streaming on the `Blob` if the browser supports it.
   if ('stream' in blobOrStream) {
     const stream = blobOrStream.stream();
     await stream.pipeTo(writable);
