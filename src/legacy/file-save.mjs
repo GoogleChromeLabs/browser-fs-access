@@ -62,7 +62,7 @@ async function streamToBlob(stream, type) {
     start(controller) {
       return pump();
       /**
-       * recursively pumps data chunks out of the stream
+       * Recursively pumps data chunks out of the `ReadableStream`.
        * @type { () => Promise<void> }
        */
       async function pump() {
