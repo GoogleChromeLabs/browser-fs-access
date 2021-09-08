@@ -72,7 +72,6 @@ async function streamToBlob(stream, type) {
             controller.close();
             return;
           }
-          // Enqueue the next data chunk into our target stream
           controller.enqueue(value);
           return pump();
         });
