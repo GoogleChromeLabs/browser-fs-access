@@ -67,7 +67,6 @@ async function streamToBlob(stream, type) {
        */
       async function pump() {
         return reader.read().then(({ done, value }) => {
-          // When no more data needs to be consumed, close the stream
           if (done) {
             controller.close();
             return;
