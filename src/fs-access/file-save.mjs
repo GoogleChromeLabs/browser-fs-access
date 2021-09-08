@@ -72,7 +72,7 @@ export default async (
     const stream = blobOrStream.stream();
     await stream.pipeTo(writable);
     return handle;
-    // handle passed readable stream
+    // Handle passed `ReadableStream`.
   } else if ('readable' in blobOrStream) {
     await blobOrStream.readable.pipeTo(writable);
     return handle;
