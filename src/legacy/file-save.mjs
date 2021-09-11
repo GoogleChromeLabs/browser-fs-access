@@ -43,4 +43,5 @@ export default async (blob, options = {}) => {
     setTimeout(() => URL.revokeObjectURL(a.href), 30 * 1000);
   });
   a.click();
+  return null;
 };
