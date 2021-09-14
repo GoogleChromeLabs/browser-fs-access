@@ -111,7 +111,7 @@ export function fileSave(
    * when existingHandle is no longer good. Defaults to false.
    */
   throwIfExistingHandleNotGood?: boolean | false
-): Promise<FileSystemHandle>;
+): Promise<FileSystemHandle | null>;
 
 /**
  * Opens a directory from disk using the File System Access API.
