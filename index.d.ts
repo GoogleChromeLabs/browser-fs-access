@@ -29,6 +29,39 @@ export interface FirstCoreFileOptions extends CoreFileOptions {
 export interface FirstFileSaveOptions extends FirstCoreFileOptions {
   /** Suggested file name. Defaults to "Untitled". */
   fileName?: string;
+  /**
+   * Configurable cleanup and `Promise` rejector usable with legacy API for
+   * determining when (and reacting if) a user cancels the operation. The
+   * method will be passed a reference to the internal `rejectionHandler` that
+   * can, e.g., be attached to/removed from the window or called after a
+   * timeout. The method should return a function that will be called when
+   * either the user chooses to open a file or the `rejectionHandler` is
+   * called. In the latter case, the returned function will also be passed a
+   * reference to the `reject` callback for the `Promise` returned by
+   * `fileOpen`, so that developers may reject the `Promise` when desired at
+   * that time.
+   * Example rejector:
+   *
+   * const file = await fileOpen({
+   *   legacySetup: (rejectionHandler) => {
+   *     const timeoutId = setTimeout(rejectionHandler, 10_000);
+   *     return (reject) => {
+   *       clearTimeout(timeoutId);
+   *       if (reject) {
+   *         reject('My error message here.');
+   *       }
+   *     };
+   *   },
+   * });
+   *
+   * ToDo: Remove this workaround once
+   *   https://github.com/whatwg/html/issues/6376 is specified and supported.
+   */
+   legacySetup?: (
+    resolve: (value: Blob) => void,
+    rejectionHandler: () => void,
+    anchor: HTMLAnchorElement
+  ) => (reject?: (reason?: any) => void) => void;
 }
 
 /**
@@ -55,7 +88,7 @@ export interface FirstFileOpenOptions<M extends boolean | undefined>
    * Example rejector:
    *
    * const file = await fileOpen({
-   *   setupLegacyCleanupAndRejection: (rejectionHandler) => {
+   *   legacySetup: (rejectionHandler) => {
    *     const timeoutId = setTimeout(rejectionHandler, 10_000);
    *     return (reject) => {
    *       clearTimeout(timeoutId);
@@ -69,9 +102,13 @@ export interface FirstFileOpenOptions<M extends boolean | undefined>
    * ToDo: Remove this workaround once
    *   https://github.com/whatwg/html/issues/6376 is specified and supported.
    */
-  setupLegacyCleanupAndRejection?: (
-    rejectionHandler?: () => void
-  ) => (reject: (reason?: any) => void) => void;
+  legacySetup?: (
+    resolve: (value: M extends false | undefined
+      ? FileWithHandle
+      : FileWithHandle[]) => void,
+    rejectionHandler: () => void,
+    input: HTMLInputElement
+  ) => (reject?: (reason?: any) => void) => void;
 }
 
 /**
@@ -125,8 +162,8 @@ export function directoryOpen(options?: {
   /** By specifying an ID, the user agent can remember different directories for different IDs. */
   id?: string;
   /**
-   * Configurable cleanup and `Promise` rejector usable with legacy API for
-   * determining when (and reacting if) a user cancels the operation. The
+   * Configurable setup, cleanup and `Promise` rejector usable with legacy API
+   * for determining when (and reacting if) a user cancels the operation. The
    * method will be passed a reference to the internal `rejectionHandler` that
    * can, e.g., be attached to/removed from the window or called after a
    * timeout. The method should return a function that will be called when
@@ -138,7 +175,7 @@ export function directoryOpen(options?: {
    * Example rejector:
    *
    * const file = await directoryOpen({
-   *   setupLegacyCleanupAndRejection: (rejectionHandler) => {
+   *   legacySetup: (rejectionHandler) => {
    *     const timeoutId = setTimeout(rejectionHandler, 10_000);
    *     return (reject) => {
    *       clearTimeout(timeoutId);
@@ -152,9 +189,11 @@ export function directoryOpen(options?: {
    * ToDo: Remove this workaround once
    *   https://github.com/whatwg/html/issues/6376 is specified and supported.
    */
-  setupLegacyCleanupAndRejection?: (
-    rejectionHandler?: () => void
-  ) => (reject: (reason?: any) => void) => void;
+  legacySetup?: (
+    resolve: (value: FileWithDirectoryHandle) => void,
+    rejectionHandler: () => void,
+    input: HTMLInputElement
+  ) => (reject?: (reason?: any) => void) => void;
 }): Promise<FileWithDirectoryHandle[]>;
 
 /**

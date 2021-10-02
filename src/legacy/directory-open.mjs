@@ -33,9 +33,9 @@ export default async (options = [{}]) => {
     // https://github.com/whatwg/html/issues/6376 is specified and supported.
     let cleanupListenersAndMaybeReject;
     const rejectionHandler = () => cleanupListenersAndMaybeReject(reject);
-    if (options[0].setupLegacyCleanupAndRejection) {
+    if (options[0].legacySetup) {
       cleanupListenersAndMaybeReject =
-        options[0].setupLegacyCleanupAndRejection(rejectionHandler);
+        options[0].legacySetup(resolve, rejectionHandler, input);
     }
     input.addEventListener('change', () => {
       if (typeof cleanupListenersAndMaybeReject === 'function') {

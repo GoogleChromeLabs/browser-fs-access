@@ -30,9 +30,9 @@ export default async (blob, options = {}) => {
   // https://github.com/whatwg/html/issues/6376 is specified and supported.
   let cleanupListenersAndMaybeReject;
   const rejectionHandler = () => cleanupListenersAndMaybeReject(reject);
-  if (options.setupLegacyCleanupAndRejection) {
+  if (options.legacySetup) {
     cleanupListenersAndMaybeReject =
-      options.setupLegacyCleanupAndRejection(rejectionHandler);
+      options[0].legacySetup(resolve, rejectionHandler, a);
   }
   a.addEventListener('click', () => {
     if (typeof cleanupListenersAndMaybeReject === 'function') {
