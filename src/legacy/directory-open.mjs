@@ -34,8 +34,11 @@ export default async (options = [{}]) => {
     let cleanupListenersAndMaybeReject;
     const rejectionHandler = () => cleanupListenersAndMaybeReject(reject);
     if (options[0].legacySetup) {
-      cleanupListenersAndMaybeReject =
-        options[0].legacySetup(resolve, rejectionHandler, input);
+      cleanupListenersAndMaybeReject = options[0].legacySetup(
+        resolve,
+        rejectionHandler,
+        input
+      );
     }
     input.addEventListener('change', () => {
       if (typeof cleanupListenersAndMaybeReject === 'function') {

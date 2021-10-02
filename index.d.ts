@@ -57,7 +57,7 @@ export interface FirstFileSaveOptions extends FirstCoreFileOptions {
    * ToDo: Remove this workaround once
    *   https://github.com/whatwg/html/issues/6376 is specified and supported.
    */
-   legacySetup?: (
+  legacySetup?: (
     resolve: (value: Blob) => void,
     rejectionHandler: () => void,
     anchor: HTMLAnchorElement
@@ -103,9 +103,9 @@ export interface FirstFileOpenOptions<M extends boolean | undefined>
    *   https://github.com/whatwg/html/issues/6376 is specified and supported.
    */
   legacySetup?: (
-    resolve: (value: M extends false | undefined
-      ? FileWithHandle
-      : FileWithHandle[]) => void,
+    resolve: (
+      value: M extends false | undefined ? FileWithHandle : FileWithHandle[]
+    ) => void,
     rejectionHandler: () => void,
     input: HTMLInputElement
   ) => (reject?: (reason?: any) => void) => void;

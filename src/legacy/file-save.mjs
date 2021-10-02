@@ -31,8 +31,11 @@ export default async (blob, options = {}) => {
   let cleanupListenersAndMaybeReject;
   const rejectionHandler = () => cleanupListenersAndMaybeReject(reject);
   if (options.legacySetup) {
-    cleanupListenersAndMaybeReject =
-      options[0].legacySetup(resolve, rejectionHandler, a);
+    cleanupListenersAndMaybeReject = options[0].legacySetup(
+      resolve,
+      rejectionHandler,
+      a
+    );
   }
   a.addEventListener('click', () => {
     if (typeof cleanupListenersAndMaybeReject === 'function') {
