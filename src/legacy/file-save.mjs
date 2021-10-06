@@ -37,7 +37,7 @@ export default async (blob, options = {}) => {
   // ToDo: Remove this workaround once
   // https://github.com/whatwg/html/issues/6376 is specified and supported.
   const cleanupListenersAndMaybeReject =
-    options[0].legacySetup && options[0].legacySetup(_resolve, _reject, a);
+    options.legacySetup && options.legacySetup(_resolve, _reject, a);
 
   a.addEventListener('click', () => {
     // `setTimeout()` due to
