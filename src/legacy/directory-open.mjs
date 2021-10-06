@@ -29,28 +29,32 @@ export default async (options = [{}]) => {
     const input = document.createElement('input');
     input.type = 'file';
     input.webkitdirectory = true;
-    // ToDo: Remove this workaround once
-    // https://github.com/whatwg/html/issues/6376 is specified and supported.
-    let cleanupListenersAndMaybeReject;
-    const rejectionHandler = () => cleanupListenersAndMaybeReject(reject);
-    if (options[0].legacySetup) {
-      cleanupListenersAndMaybeReject = options[0].legacySetup(
-        resolve,
-        rejectionHandler,
-        input
-      );
-    }
-    input.addEventListener('change', () => {
+
+    const _reject = () => cleanupListenersAndMaybeReject(reject);
+    const _resolve = (value) => {
       if (typeof cleanupListenersAndMaybeReject === 'function') {
         cleanupListenersAndMaybeReject();
       }
+      resolve(value);
+    };
+    // ToDo: Remove this workaround once
+    // https://github.com/whatwg/html/issues/6376 is specified and supported.
+    const cleanupListenersAndMaybeReject =
+      options[0].legacySetup &&
+      options[0].legacySetup(_resolve, _reject, input);
+
+    input.addEventListener('change', () => {
+      _resolve(input.multiple ? Array.from(input.files) : input.files[0]);
+    });
+
+    input.addEventListener('change', () => {
       let files = Array.from(input.files);
       if (!options[0].recursive) {
         files = files.filter((file) => {
           return file.webkitRelativePath.split('/').length === 2;
         });
       }
-      resolve(files);
+      _resolve(files);
     });
 
     input.click();

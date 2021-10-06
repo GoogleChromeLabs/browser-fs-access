@@ -26,24 +26,24 @@ export default async (blob, options = {}) => {
   const a = document.createElement('a');
   a.download = options.fileName || 'Untitled';
   a.href = URL.createObjectURL(blob);
-  // ToDo: Remove this workaround once
-  // https://github.com/whatwg/html/issues/6376 is specified and supported.
-  let cleanupListenersAndMaybeReject;
-  const rejectionHandler = () => cleanupListenersAndMaybeReject(reject);
-  if (options.legacySetup) {
-    cleanupListenersAndMaybeReject = options[0].legacySetup(
-      resolve,
-      rejectionHandler,
-      a
-    );
-  }
-  a.addEventListener('click', () => {
+
+  const _reject = () => cleanupListenersAndMaybeReject(reject);
+  const _resolve = (value) => {
     if (typeof cleanupListenersAndMaybeReject === 'function') {
       cleanupListenersAndMaybeReject();
     }
+    resolve(value);
+  };
+  // ToDo: Remove this workaround once
+  // https://github.com/whatwg/html/issues/6376 is specified and supported.
+  const cleanupListenersAndMaybeReject =
+    options[0].legacySetup && options[0].legacySetup(_resolve, _reject, a);
+
+  a.addEventListener('click', () => {
     // `setTimeout()` due to
     // https://github.com/LLK/scratch-gui/issues/1783#issuecomment-426286393
     setTimeout(() => URL.revokeObjectURL(a.href), 30 * 1000);
+    _resolve(null);
   });
   a.click();
   return null;
