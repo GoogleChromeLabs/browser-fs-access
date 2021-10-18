@@ -28,11 +28,10 @@ export default async (blob, options = {}) => {
   a.href = URL.createObjectURL(blob);
 
   const _reject = () => cleanupListenersAndMaybeReject(reject);
-  const _resolve = (value) => {
+  const _resolve = () => {
     if (typeof cleanupListenersAndMaybeReject === 'function') {
       cleanupListenersAndMaybeReject();
     }
-    resolve(value);
   };
   // ToDo: Remove this workaround once
   // https://github.com/whatwg/html/issues/6376 is specified and supported.
