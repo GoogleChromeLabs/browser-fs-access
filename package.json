@@ -1,5 +1,5 @@
 {
-  "name": "@dwelle/browser-fs-access",
+  "name": "browser-fs-access",
   "version": "0.21.2",
   "description": "File System Access API with legacy fallback in the browser.",
   "browser": "./dist/index.js",
