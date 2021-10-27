@@ -44,10 +44,6 @@ export default async (options = [{}]) => {
       options[0].legacySetup(_resolve, _reject, input);
 
     input.addEventListener('change', () => {
-      _resolve(input.multiple ? Array.from(input.files) : input.files[0]);
-    });
-
-    input.addEventListener('change', () => {
       let files = Array.from(input.files);
       if (!options[0].recursive) {
         files = files.filter((file) => {

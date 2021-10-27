@@ -27,6 +27,8 @@ import { imageToBlob } from './image-to-blob.mjs';
   const supportedParagraph = document.querySelector('.supported');
   const pre = document.querySelector('pre');
 
+  const ABORT_MESSAGE = 'The user aborted a request.';
+
   if (supported) {
     supportedParagraph.textContent = 'Using the File System Access API.';
   } else {
@@ -71,7 +73,7 @@ import { imageToBlob } from './image-to-blob.mjs';
       if (err.name !== 'AbortError') {
         return console.error(err);
       }
-      console.log('The user aborted a request.');
+      console.log(ABORT_MESSAGE);
     }
   });
 
@@ -89,7 +91,7 @@ import { imageToBlob } from './image-to-blob.mjs';
       if (err.name !== 'AbortError') {
         return console.error(err);
       }
-      console.log('The user aborted a request.');
+      console.log(ABORT_MESSAGE);
     }
   });
 
@@ -119,7 +121,7 @@ import { imageToBlob } from './image-to-blob.mjs';
       if (err.name !== 'AbortError') {
         return console.error(err);
       }
-      console.log('The user aborted a request.');
+      console.log(ABORT_MESSAGE);
     }
   });
 
@@ -131,7 +133,7 @@ import { imageToBlob } from './image-to-blob.mjs';
       if (err.name !== 'AbortError') {
         return console.error(err);
       }
-      console.log('The user aborted a request.');
+      console.log(ABORT_MESSAGE);
     }
   });
 
@@ -146,7 +148,7 @@ import { imageToBlob } from './image-to-blob.mjs';
       if (err.name !== 'AbortError') {
         return console.error(err);
       }
-      console.log('The user aborted a request.');
+      console.log(ABORT_MESSAGE);
     }
   });
 
