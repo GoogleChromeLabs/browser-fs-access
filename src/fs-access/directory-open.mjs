@@ -15,7 +15,12 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
-const getFiles = async (dirHandle, recursive, path = dirHandle.name, skipDirectory) => {
+const getFiles = async (
+  dirHandle,
+  recursive,
+  path = dirHandle.name,
+  skipDirectory
+) => {
   const dirs = [];
   const files = [];
   for await (const entry of dirHandle.values()) {
@@ -31,7 +36,11 @@ const getFiles = async (dirHandle, recursive, path = dirHandle.name, skipDirecto
           });
         })
       );
-    } else if (entry.kind === 'directory' && recursive && (!skipDirectory || !skipDirectory(entry))) {
+    } else if (
+      entry.kind === 'directory' &&
+      recursive &&
+      (!skipDirectory || !skipDirectory(entry))
+    ) {
       dirs.push(getFiles(entry, recursive, nestedPath, skipDirectory));
     }
   }

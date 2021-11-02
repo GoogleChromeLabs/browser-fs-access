@@ -52,8 +52,13 @@ export default async (options = [{}]) => {
       } else if (options[0].recursive && options[0].skipDirectory) {
         files = files.filter((file) => {
           const directoriesName = file.webkitRelativePath.split('/');
-
-          return directoriesName.every((directoryName) => !options[0].skipDirectory({ name: directoryName, kind: 'directory' }));
+          return directoriesName.every(
+            (directoryName) =>
+              !options[0].skipDirectory({
+                name: directoryName,
+                kind: 'directory',
+              })
+          );
         });
       }
 

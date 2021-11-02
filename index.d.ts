@@ -161,8 +161,10 @@ export function directoryOpen(options?: {
   startIn?: WellKnownDirectory | FileSystemHandle;
   /** By specifying an ID, the user agent can remember different directories for different IDs. */
   id?: string;
-  /** Callback whether a directory needs to be opened, return false to skip */
-  skipDirectory?: (fileSystemDirectoryEntry: FileSystemDirectoryEntry) => boolean;
+  /** Callback to determine whether a directory should be entered, return `true` to skip. */
+  skipDirectory?: (
+    fileSystemDirectoryEntry: FileSystemDirectoryEntry
+  ) => boolean;
   /**
    * Configurable setup, cleanup and `Promise` rejector usable with legacy API
    * for determining when (and reacting if) a user cancels the operation. The
