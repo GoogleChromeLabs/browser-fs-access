@@ -18,11 +18,11 @@
 const getFiles = async (dirHandle, recursive, path = dirHandle.name) => {
   const dirs = [];
   const files = [];
-  for await (const entry of dirHandle.getEntries()) {
+  for (const entry of dirHandle.getEntries()) {
     const nestedPath = `${path}/${entry.name}`;
     if (entry.isFile) {
       files.push(
-        entry.getFile().then((file) => {
+        await entry.getFile().then((file) => {
           file.directoryHandle = dirHandle;
           return Object.defineProperty(file, 'webkitRelativePath', {
             configurable: true,
@@ -32,7 +32,7 @@ const getFiles = async (dirHandle, recursive, path = dirHandle.name) => {
         })
       );
     } else if (entry.isDirectory && recursive) {
-      dirs.push(getFiles(entry, recursive, nestedPath));
+      dirs.push(await getFiles(entry, recursive, nestedPath));
     }
   }
   return [...(await Promise.all(dirs)).flat(), ...(await Promise.all(files))];
