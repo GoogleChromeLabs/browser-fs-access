@@ -45,8 +45,7 @@
     "eslint-config-prettier": "^8.3.0",
     "http-server": "^0.12.3",
     "prettier": "^2.3.1",
-    "shx": "^0.3.3",
-    "terser": "^5.7.0"
+    "shx": "^0.3.3"
   },
   "eslintConfig": {
     "parserOptions": {
