@@ -120,6 +120,8 @@ const options = {
   startIn: 'downloads',
   // By specifying an ID, the user agent can remember different directories for different IDs.
   id: 'projects',
+  // Callback to determine whether a directory should be entered, return `true` to skip.
+  skipDirectory: (entry) => entry.name[0] === '.',
 };
 
 const blobs = await directoryOpen(options);
