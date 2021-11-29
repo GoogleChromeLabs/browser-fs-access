@@ -19,15 +19,15 @@
  * Saves a file to disk using the legacy `<a download>` method.
  * @type { typeof import("../../index").fileSave }
  */
-export default async (blobOrStream, options = {}) => {
+export default async (blobOrResponse, options = {}) => {
   if (Array.isArray(options)) {
     options = options[0];
   }
   const a = document.createElement('a');
-  let data = blobOrStream;
+  let data = blobOrResponse;
   // Handle the case where input is a `ReadableStream`.
-  if ('readable' in blobOrStream) {
-    data = await streamToBlob(blobOrStream.readable, blobOrStream.type);
+  if ('body' in blobOrResponse) {
+    data = await streamToBlob(blobOrResponse.body, blobOrResponse.headers.get('content-type'));
   }
   a.download = options.fileName || 'Untitled';
   a.href = URL.createObjectURL(data);
