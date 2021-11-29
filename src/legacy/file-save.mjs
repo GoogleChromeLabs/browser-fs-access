@@ -27,10 +27,13 @@ export default async (blobOrResponse, options = {}) => {
   let data = blobOrResponse;
   // Handle the case where input is a `ReadableStream`.
   if ('body' in blobOrResponse) {
-    data = await streamToBlob(blobOrResponse.body, blobOrResponse.headers.get('content-type'));
+    data = await streamToBlob(
+      blobOrResponse.body,
+      blobOrResponse.headers.get('content-type')
+    );
   }
   a.download = options.fileName || 'Untitled';
-  a.href = URL.createObjectURL(blob);
+  a.href = URL.createObjectURL(data);
 
   const _reject = () => cleanupListenersAndMaybeReject(reject);
   const _resolve = () => {

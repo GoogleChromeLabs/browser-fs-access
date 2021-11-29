@@ -39,7 +39,10 @@ export default async (
       if (i === 0) {
         if (blobOrResponse.type) {
           option.mimeTypes.push(blobOrResponse.type);
-        } else if (blobOrResponse.headers && blobOrResponse.headers.get('content-type')) {
+        } else if (
+          blobOrResponse.headers &&
+          blobOrResponse.headers.get('content-type')
+        ) {
           option.mimeTypes.push(blobOrResponse.headers.get('content-type'));
         }
       }

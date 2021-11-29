@@ -1,6 +1,6 @@
 {
   "name": "browser-fs-access",
-  "version": "0.22.1",
+  "version": "0.23.0",
   "description": "File System Access API with legacy fallback in the browser.",
   "browser": "./dist/esm/index.js",
   "main": "./dist/esm/index.js",

@@ -53,9 +53,9 @@ async function main() {
         );
       });
     });
-  } catch (e) {
+  } catch (err) {
     console.log(`× ${name}: Build failed due to an error.`);
-    console.log(e);
+    console.log(err);
   }
 }
 
