@@ -20,7 +20,7 @@
  * @type { typeof import("../../index").fileSave }
  */
 export default async (
-  blob,
+  blobOrResponse,
   options = [{}],
   existingHandle = null,
   throwIfExistingHandleNotGood = false
@@ -37,13 +37,17 @@ export default async (
     };
     if (option.mimeTypes) {
       if (i === 0) {
-        option.mimeTypes.push(blob.type);
+        if (blobOrResponse.type) {
+          option.mimeTypes.push(blobOrResponse.type);
+        } else if (blobOrResponse.headers && blobOrResponse.headers.get('content-type')) {
+          option.mimeTypes.push(blobOrResponse.headers.get('content-type'));
+        }
       }
       option.mimeTypes.map((mimeType) => {
         types[i].accept[mimeType] = option.extensions || [];
       });
-    } else {
-      types[i].accept[blob.type] = option.extensions || [];
+    } else if (blobOrResponse.type) {
+      types[i].accept[blobOrResponse.type] = option.extensions || [];
     }
   });
   if (existingHandle) {
@@ -67,6 +71,17 @@ export default async (
       excludeAcceptAllOption: options[0].excludeAcceptAllOption || false,
     }));
   const writable = await handle.createWritable();
+  // Use streaming on the `Blob` if the browser supports it.
+  if ('stream' in blobOrResponse) {
+    const stream = blobOrResponse.stream();
+    await stream.pipeTo(writable);
+    return handle;
+    // Handle passed `ReadableStream`.
+  } else if ('body' in blobOrResponse) {
+    await blobOrResponse.body.pipeTo(writable);
+    return handle;
+  }
+  // Default case of `Blob` passed and `Blob.stream()` not supported.
   await writable.write(blob);
   await writable.close();
   return handle;

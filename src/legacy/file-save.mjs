@@ -19,11 +19,16 @@
  * Saves a file to disk using the legacy `<a download>` method.
  * @type { typeof import("../../index").fileSave }
  */
-export default async (blob, options = {}) => {
+export default async (blobOrResponse, options = {}) => {
   if (Array.isArray(options)) {
     options = options[0];
   }
   const a = document.createElement('a');
+  let data = blobOrResponse;
+  // Handle the case where input is a `ReadableStream`.
+  if ('body' in blobOrResponse) {
+    data = await streamToBlob(blobOrResponse.body, blobOrResponse.headers.get('content-type'));
+  }
   a.download = options.fileName || 'Untitled';
   a.href = URL.createObjectURL(blob);
 
@@ -47,3 +52,36 @@ export default async (blob, options = {}) => {
   a.click();
   return null;
 };
+
+/**
+ * Converts a passed `ReadableStream` to a `Blob`.
+ * @param {ReadableStream} stream
+ * @param {string} type
+ * @returns {Promise<Blob>}
+ */
+async function streamToBlob(stream, type) {
+  const reader = stream.getReader();
+  const pumpedStream = new ReadableStream({
+    start(controller) {
+      return pump();
+      /**
+       * Recursively pumps data chunks out of the `ReadableStream`.
+       * @type { () => Promise<void> }
+       */
+      async function pump() {
+        return reader.read().then(({ done, value }) => {
+          if (done) {
+            controller.close();
+            return;
+          }
+          controller.enqueue(value);
+          return pump();
+        });
+      }
+    },
+  });
+
+  const res = new Response(pumpedStream);
+  reader.releaseLock();
+  return new Blob([await res.blob()], { type });
+}
