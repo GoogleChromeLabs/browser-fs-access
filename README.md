@@ -120,6 +120,8 @@ const options = {
   startIn: 'downloads',
   // By specifying an ID, the user agent can remember different directories for different IDs.
   id: 'projects',
+  // Callback to determine whether a directory should be entered, return `true` to skip.
+  skipDirectory: (entry) => entry.name[0] === '.',
 };
 
 const blobs = await directoryOpen(options);
@@ -166,7 +168,7 @@ unfortunately, do not support exceptions (albeit there is an
 [HTML issue](https://github.com/whatwg/html/issues/6376) open for this request). If your app depends
 on exceptions, see the file
 [`index.d.ts`](https://github.com/GoogleChromeLabs/browser-fs-access/blob/main/index.d.ts) for the
-documentation of the `setupLegacyCleanupAndRejection` parameter.
+documentation of the `legacySetup` parameter.
 
 ## Browser-FS-Access in Action
 

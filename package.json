@@ -1,20 +1,23 @@
 {
   "name": "browser-fs-access",
-  "version": "0.20.4",
+  "version": "0.22.1",
   "description": "File System Access API with legacy fallback in the browser.",
-  "browser": "./dist/index.js",
-  "main": "./dist/index.js",
+  "browser": "./dist/esm/index.js",
+  "main": "./dist/esm/index.js",
   "exports": {
-    ".": "./dist/index.js",
+    ".": "./dist/esm/index.js",
     "./package.json": "./package.json"
   },
-  "module": "./dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "module": "./dist/esm/index.js",
   "type": "module",
   "types": "./index.d.ts",
   "scripts": {
     "start": "npx http-server -o /demo/",
     "clean": "shx rm -rf ./dist",
-    "build": "npm run clean && shx mkdir ./dist && shx mkdir ./dist/legacy && shx mkdir ./dist/fs-access && shx mkdir ./dist/fs-access-legacy && bash ./build.sh",
+    "build": "node esbuild.config.js",
     "prepare": "npm run lint && npm run fix && npm run build",
     "lint": "npx eslint . --ext .js,.mjs --fix --ignore-pattern dist/",
     "fix": "npx prettier --write ."
@@ -40,13 +43,13 @@
   },
   "homepage": "https://github.com/GoogleChromeLabs/browser-fs-access#readme",
   "devDependencies": {
-    "eslint": "^7.32.0",
+    "esbuild": "^0.14.0",
+    "eslint": "^8.3.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.3.0",
-    "http-server": "^13.0.0",
-    "prettier": "^2.3.2",
-    "shx": "^0.3.3",
-    "terser": "^5.7.1"
+    "http-server": "^14.0.0",
+    "prettier": "^2.5.0",
+    "shx": "^0.3.3"
   },
   "eslintConfig": {
     "parserOptions": {

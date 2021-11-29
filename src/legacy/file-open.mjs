@@ -33,19 +33,20 @@ export default async (options = [{}]) => {
     input.multiple = options[0].multiple || false;
     // Empty string allows everything.
     input.accept = accept || '';
-    // ToDo: Remove this workaround once
-    // https://github.com/whatwg/html/issues/6376 is specified and supported.
-    let cleanupListenersAndMaybeReject;
-    const rejectionHandler = () => cleanupListenersAndMaybeReject(reject);
-    if (options[0].setupLegacyCleanupAndRejection) {
-      cleanupListenersAndMaybeReject =
-        options[0].setupLegacyCleanupAndRejection(rejectionHandler);
-    }
-    input.addEventListener('change', () => {
+    const _reject = () => cleanupListenersAndMaybeReject(reject);
+    const _resolve = (value) => {
       if (typeof cleanupListenersAndMaybeReject === 'function') {
         cleanupListenersAndMaybeReject();
       }
-      resolve(input.multiple ? Array.from(input.files) : input.files[0]);
+      resolve(value);
+    };
+    // ToDo: Remove this workaround once
+    // https://github.com/whatwg/html/issues/6376 is specified and supported.
+    const cleanupListenersAndMaybeReject =
+      options[0].legacySetup &&
+      options[0].legacySetup(_resolve, _reject, input);
+    input.addEventListener('change', () => {
+      _resolve(input.multiple ? Array.from(input.files) : input.files[0]);
     });
 
     input.click();
