@@ -194,11 +194,11 @@ export function directoryOpen(options?: {
    *   https://github.com/whatwg/html/issues/6376 is specified and supported.
    */
   legacySetup?: (
-    resolve: (value: FileWithDirectoryHandle) => void,
+    resolve: (value: FileWithDirectoryAndFileHandle) => void,
     rejectionHandler: () => void,
     input: HTMLInputElement
   ) => (reject?: (reason?: any) => void) => void;
-}): Promise<FileWithDirectoryHandle[]>;
+}): Promise<FileWithDirectoryAndFileHandle[]>;
 
 /**
  * Whether the File System Access API is supported.
@@ -208,11 +208,12 @@ export const supported: boolean;
 export function imageToBlob(img: HTMLImageElement): Promise<Blob>;
 
 export interface FileWithHandle extends File {
-  handle?: FileSystemHandle;
+  handle?: FileSystemFileHandle;
 }
 
-export interface FileWithDirectoryHandle extends File {
-  directoryHandle?: FileSystemHandle;
+export interface FileWithDirectoryAndFileHandle extends File {
+  directoryHandle?: FileSystemDirectoryHandle;
+  handle?: FileSystemFileHandle;
 }
 
 // The following typings implement the relevant parts of the File System Access

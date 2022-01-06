@@ -29,6 +29,7 @@ const getFiles = async (
       files.push(
         entry.getFile().then((file) => {
           file.directoryHandle = dirHandle;
+          file.handle = entry;
           return Object.defineProperty(file, 'webkitRelativePath', {
             configurable: true,
             enumerable: true,
