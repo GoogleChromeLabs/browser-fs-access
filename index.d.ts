@@ -163,7 +163,7 @@ export function directoryOpen(options?: {
   id?: string;
   /** Callback to determine whether a directory should be entered, return `true` to skip. */
   skipDirectory?: (
-    fileSystemDirectoryEntry: FileSystemDirectoryEntry
+    entry: FileSystemDirectoryEntry | FileSystemDirectoryHandle
   ) => boolean;
   /**
    * Configurable setup, cleanup and `Promise` rejector usable with legacy API
