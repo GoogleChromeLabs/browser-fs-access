@@ -27,8 +27,8 @@ export default async (options = [{}]) => {
     const input = document.createElement('input');
     input.type = 'file';
     const accept = [
-      ...options.map((option) => option.mimeTypes || []).join(),
-      options.map((option) => option.extensions || []).join(),
+      ...options.map((option) => option.mimeTypes || []),
+      ...options.map((option) => option.extensions || []),
     ].join();
     input.multiple = options[0].multiple || false;
     // Empty string allows everything.
