@@ -182,6 +182,11 @@ A similar, but more extensive library called
 [native-file-system-adapter](https://github.com/jimmywarting/native-file-system-adapter/)
 is provided by [@jimmywarting](https://github.com/jimmywarting).
 
+## Ecosystem
+
+If you are looking for a similar solution for dragging and dropping of files,
+check out [@placemarkio/flat-drop-files](https://github.com/placemark/flat-drop-files).
+
 ## Acknowledgements
 
 Thanks to [@developit](https://github.com/developit)
