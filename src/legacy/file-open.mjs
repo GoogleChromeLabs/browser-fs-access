@@ -17,7 +17,7 @@
 
 /**
  * Opens a file from disk using the legacy `<input type="file">` method.
- * @type { typeof import("../../index").fileOpen }
+ * @type { typeof import("../index").fileOpen }
  */
 export default async (options = [{}]) => {
   if (!Array.isArray(options)) {

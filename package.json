@@ -1,26 +1,31 @@
 {
   "name": "browser-fs-access",
-  "version": "0.25.0",
+  "version": "0.25.1",
   "description": "File System Access API with legacy fallback in the browser.",
-  "browser": "./dist/esm/index.js",
-  "main": "./dist/esm/index.js",
-  "exports": {
-    ".": "./dist/esm/index.js",
-    "./package.json": "./package.json"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "module": "./dist/esm/index.js",
   "type": "module",
-  "types": "./index.d.ts",
+  "source": "./src/index.js",
+  "exports": {
+    "./package.json": "./package.json",
+    "require": "./dist/index.cjs",
+    "default": "./dist/index.modern.js"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.module.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "start": "npx http-server -o /demo/",
     "clean": "shx rm -rf ./dist",
-    "build": "node esbuild.config.js",
+    "build": "npm run clean && microbundle -f modern,esm,cjs --sourcemap false",
+    "dev": "microbundle watch",
     "prepare": "npm run lint && npm run fix && npm run build",
     "lint": "npx eslint . --ext .js,.mjs --fix --ignore-pattern dist/",
     "fix": "npx prettier --write ."
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "repository": {
     "type": "git",
@@ -32,10 +37,6 @@
     "file system",
     "ponyfill"
   ],
-  "files": [
-    "dist/",
-    "index.d.ts"
-  ],
   "author": "Thomas Steiner (https://blog.tomayac.com/)",
   "license": "Apache-2.0",
   "bugs": {
@@ -43,12 +44,12 @@
   },
   "homepage": "https://github.com/GoogleChromeLabs/browser-fs-access#readme",
   "devDependencies": {
-    "esbuild": "^0.14.23",
-    "eslint": "^8.9.0",
+    "eslint": "^8.12.0",
     "eslint-config-google": "^0.14.0",
-    "eslint-config-prettier": "^8.4.0",
+    "eslint-config-prettier": "^8.5.0",
     "http-server": "^14.1.0",
-    "prettier": "^2.5.1",
+    "microbundle": "^0.14.2",
+    "prettier": "^2.6.1",
     "shx": "^0.3.4"
   },
   "eslintConfig": {

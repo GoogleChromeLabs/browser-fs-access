@@ -18,7 +18,7 @@
 /**
  * Opens a directory from disk using the legacy
  * `<input type="file" webkitdirectory>` method.
- * @type { typeof import("../../index").directoryOpen }
+ * @type { typeof import("../index").directoryOpen }
  */
 export default async (options = [{}]) => {
   if (!Array.isArray(options)) {

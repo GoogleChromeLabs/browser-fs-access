@@ -50,7 +50,7 @@ const getFiles = async (
 
 /**
  * Opens a directory from disk using the File System Access API.
- * @type { typeof import("../../index").directoryOpen }
+ * @type { typeof import("../index").directoryOpen }
  */
 export default async (options = {}) => {
   options.recursive = options.recursive || false;
