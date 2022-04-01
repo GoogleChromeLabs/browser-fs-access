@@ -1,18 +1,19 @@
 {
   "name": "browser-fs-access",
-  "version": "0.25.2",
+  "version": "0.25.3",
   "description": "File System Access API with legacy fallback in the browser.",
   "type": "module",
   "source": "./src/index.js",
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
-      "default": "./dist/index.modern.js"
+      "module": "./dist/index.mjs",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
-  "module": "./dist/index.module.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist/"
@@ -20,7 +21,7 @@
   "scripts": {
     "start": "npx http-server -o /demo/",
     "clean": "shx rm -rf ./dist",
-    "build": "npm run clean && microbundle -f modern,esm,cjs --sourcemap false",
+    "build": "npm run clean && microbundle -f modern,cjs --sourcemap false",
     "dev": "microbundle watch",
     "prepare": "npm run lint && npm run fix && npm run build",
     "lint": "npx eslint . --ext .js,.mjs --fix --ignore-pattern dist/",
