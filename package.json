@@ -22,7 +22,7 @@
   "scripts": {
     "start": "npx http-server -o /demo/",
     "clean": "shx rm -rf ./dist",
-    "build": "npm run clean && microbundle -f modern,cjs --sourcemap false",
+    "build": "npm run clean && microbundle -f modern,cjs --no-sourcemap --no-generateTypes",
     "dev": "microbundle watch",
     "prepare": "npm run lint && npm run fix && npm run build",
     "lint": "npx eslint . --ext .js,.mjs --fix --ignore-pattern dist/",
