@@ -1,6 +1,6 @@
 {
   "name": "browser-fs-access",
-  "version": "0.25.3",
+  "version": "0.26.0",
   "description": "File System Access API with legacy fallback in the browser.",
   "type": "module",
   "source": "./src/index.js",
@@ -14,9 +14,10 @@
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./index.d.ts",
   "files": [
-    "dist/"
+    "dist/",
+    "index.d.ts"
   ],
   "scripts": {
     "start": "npx http-server -o /demo/",
@@ -52,7 +53,7 @@
     "eslint-config-prettier": "^8.5.0",
     "http-server": "^14.1.0",
     "microbundle": "^0.14.2",
-    "prettier": "^2.6.1",
+    "prettier": "^2.6.2",
     "shx": "^0.3.4"
   },
   "eslintConfig": {
