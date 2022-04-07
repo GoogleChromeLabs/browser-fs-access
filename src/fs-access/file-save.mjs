@@ -37,9 +37,7 @@ export default async (
     };
     if (option.mimeTypes) {
       if (i === 0) {
-        if (blobOrResponse.type) {
-          option.mimeTypes.push(blobOrResponse.type);
-        } else if (
+        if (
           blobOrResponse.headers &&
           blobOrResponse.headers.get('content-type')
         ) {
@@ -49,8 +47,6 @@ export default async (
       option.mimeTypes.map((mimeType) => {
         types[i].accept[mimeType] = option.extensions || [];
       });
-    } else if (blobOrResponse.type) {
-      types[i].accept[blobOrResponse.type] = option.extensions || [];
     }
   });
   if (existingHandle) {
