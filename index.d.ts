@@ -139,6 +139,11 @@ export function fileSave(
   blobOrResponse: Blob | Response,
   options?: [FirstFileSaveOptions, ...CoreFileOptions[]] | FirstFileSaveOptions,
   /**
+   * A callback to be called when the file picker was shown (which only happens
+   * when no existingHandle is provided). Defaults to null.
+   */
+  filePickerShownCb?: () => void | null,
+  /**
    * A potentially existing file handle for a file to save to. Defaults to
    * null.
    */
