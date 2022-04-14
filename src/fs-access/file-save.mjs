@@ -22,9 +22,9 @@
 export default async (
   blobOrResponse,
   options = [{}],
-  filePickerShownCb = null,
   existingHandle = null,
-  throwIfExistingHandleNotGood = false
+  throwIfExistingHandleNotGood = false,
+  filePickerShownCb = null
 ) => {
   if (!Array.isArray(options)) {
     options = [options];
