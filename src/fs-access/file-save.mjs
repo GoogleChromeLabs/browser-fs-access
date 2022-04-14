@@ -30,23 +30,29 @@ export default async (
   }
   options[0].fileName = options[0].fileName || 'Untitled';
   const types = [];
+  let type = null;
+  if (blobOrResponse instanceof Blob && blobOrResponse.type) {
+    type = blobOrResponse.type;
+  } else if (
+    blobOrResponse.headers &&
+    blobOrResponse.headers.get('content-type')
+  ) {
+    type = blobOrResponse.headers.get('content-type');
+  }
   options.forEach((option, i) => {
     types[i] = {
       description: option.description || '',
       accept: {},
     };
     if (option.mimeTypes) {
-      if (i === 0) {
-        if (
-          blobOrResponse.headers &&
-          blobOrResponse.headers.get('content-type')
-        ) {
-          option.mimeTypes.push(blobOrResponse.headers.get('content-type'));
-        }
+      if (i === 0 && type) {
+        option.mimeTypes.push(type);
       }
       option.mimeTypes.map((mimeType) => {
         types[i].accept[mimeType] = option.extensions || [];
       });
+    } else if (type) {
+      types[i].accept[type] = option.extensions || [];
     }
   });
   if (existingHandle) {
@@ -60,6 +66,13 @@ export default async (
       }
     }
   }
+  console.log({
+    suggestedName: options[0].fileName,
+    id: options[0].id,
+    startIn: options[0].startIn,
+    types,
+    excludeAcceptAllOption: options[0].excludeAcceptAllOption || false,
+  });
   const handle =
     existingHandle ||
     (await window.showSaveFilePicker({
