@@ -2,11 +2,11 @@
  * Properties shared by all `options` provided to file save and open operations
  */
 export interface CoreFileOptions {
-  /** Acceptable file extensions. Defaults to [""]. */
+  /** Acceptable file extensions. Defaults to `[""]`. */
   extensions?: string[];
-  /** Suggested file description. Defaults to "". */
+  /** Suggested file description. Defaults to `""`. */
   description?: string;
-  /** Acceptable MIME types. [] */
+  /** Acceptable MIME types. Defaults to `[]`. */
   mimeTypes?: string[];
 }
 
@@ -27,7 +27,7 @@ export interface FirstCoreFileOptions extends CoreFileOptions {
  * a filename
  */
 export interface FirstFileSaveOptions extends FirstCoreFileOptions {
-  /** Suggested file name. Defaults to "Untitled". */
+  /** Suggested file name. Defaults to `"Untitled"`. */
   fileName?: string;
   /**
    * Configurable cleanup and `Promise` rejector usable with legacy API for
@@ -72,7 +72,7 @@ export interface FirstFileSaveOptions extends FirstCoreFileOptions {
  */
 export interface FirstFileOpenOptions<M extends boolean | undefined>
   extends FirstCoreFileOptions {
-  /** Allow multiple files to be selected. Defaults to false. */
+  /** Allow multiple files to be selected. Defaults to `false`. */
   multiple?: M;
   /**
    * Configurable cleanup and `Promise` rejector usable with legacy API for
@@ -140,14 +140,19 @@ export function fileSave(
   options?: [FirstFileSaveOptions, ...CoreFileOptions[]] | FirstFileSaveOptions,
   /**
    * A potentially existing file handle for a file to save to. Defaults to
-   * null.
+   * `null`.
    */
   existingHandle?: FileSystemHandle | null,
   /**
    * Determines whether to throw (rather than open a new file save dialog)
-   * when existingHandle is no longer good. Defaults to false.
+   * when `existingHandle` is no longer good. Defaults to `false`.
    */
-  throwIfExistingHandleNotGood?: boolean | false
+  throwIfExistingHandleNotGood?: boolean | false,
+  /**
+   * A callback to be called when the file picker was shown (which only happens
+   * when no `existingHandle` is provided). Defaults to `null`.
+   */
+  filePickerShown?: () => void | null   
 ): Promise<FileSystemHandle | null>;
 
 /**

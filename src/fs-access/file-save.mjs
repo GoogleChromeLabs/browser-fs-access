@@ -23,7 +23,8 @@ export default async (
   blobOrResponse,
   options = [{}],
   existingHandle = null,
-  throwIfExistingHandleNotGood = false
+  throwIfExistingHandleNotGood = false,
+  filePickerShown = null
 ) => {
   if (!Array.isArray(options)) {
     options = [options];
@@ -69,6 +70,9 @@ export default async (
       types,
       excludeAcceptAllOption: options[0].excludeAcceptAllOption || false,
     }));
+  if (!existingHandle && filePickerShown) {
+    filePickerShown();
+  }
   const writable = await handle.createWritable();
   // Use streaming on the `Blob` if the browser supports it.
   if ('stream' in blobOrResponse) {
