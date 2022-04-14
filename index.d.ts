@@ -139,11 +139,6 @@ export function fileSave(
   blobOrResponse: Blob | Response,
   options?: [FirstFileSaveOptions, ...CoreFileOptions[]] | FirstFileSaveOptions,
   /**
-   * A callback to be called when the file picker was shown (which only happens
-   * when no existingHandle is provided). Defaults to null.
-   */
-  filePickerShownCb?: () => void | null,
-  /**
    * A potentially existing file handle for a file to save to. Defaults to
    * null.
    */
@@ -152,7 +147,12 @@ export function fileSave(
    * Determines whether to throw (rather than open a new file save dialog)
    * when existingHandle is no longer good. Defaults to false.
    */
-  throwIfExistingHandleNotGood?: boolean | false
+  throwIfExistingHandleNotGood?: boolean | false,
+  /**
+   * A callback to be called when the file picker was shown (which only happens
+   * when no existingHandle is provided). Defaults to null.
+   */
+  filePickerShownCb?: () => void | null   
 ): Promise<FileSystemHandle | null>;
 
 /**
