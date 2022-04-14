@@ -67,13 +67,6 @@ export default async (
       }
     }
   }
-  console.log({
-    suggestedName: options[0].fileName,
-    id: options[0].id,
-    startIn: options[0].startIn,
-    types,
-    excludeAcceptAllOption: options[0].excludeAcceptAllOption || false,
-  });
   const handle =
     existingHandle ||
     (await window.showSaveFilePicker({
