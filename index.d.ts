@@ -152,7 +152,7 @@ export function fileSave(
    * A callback to be called when the file picker was shown (which only happens
    * when no `existingHandle` is provided). Defaults to `null`.
    */
-  filePickerShown?: () => void | null   
+  filePickerShown?: () => void | null
 ): Promise<FileSystemHandle | null>;
 
 /**
