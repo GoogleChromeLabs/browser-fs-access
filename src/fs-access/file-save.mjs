@@ -24,7 +24,7 @@ export default async (
   options = [{}],
   existingHandle = null,
   throwIfExistingHandleNotGood = false,
-  filePickerShownCb = null
+  filePickerShown = null
 ) => {
   if (!Array.isArray(options)) {
     options = [options];
@@ -74,8 +74,8 @@ export default async (
       types,
       excludeAcceptAllOption: options[0].excludeAcceptAllOption || false,
     }));
-  if (!existingHandle && filePickerShownCb) {
-    filePickerShownCb();
+  if (!existingHandle && filePickerShown) {
+    filePickerShown();
   }
   const writable = await handle.createWritable();
   // Use streaming on the `Blob` if the browser supports it.
