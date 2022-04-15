@@ -85,6 +85,7 @@ async function streamToBlob(stream, type) {
   });
 
   const res = new Response(pumpedStream);
+  const blob = await res.blob();
   reader.releaseLock();
-  return new Blob([await res.blob()], { type });
+  return new Blob([blob], { type });
 }
