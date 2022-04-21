@@ -91,7 +91,7 @@ export default async (
     return handle;
   }
   // Default case of `Blob` passed and `Blob.stream()` not supported.
-  await writable.write(blobOrResponse);
+  await writable.write(await blobOrResponse);
   await writable.close();
   return handle;
 };

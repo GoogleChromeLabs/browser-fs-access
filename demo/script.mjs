@@ -24,6 +24,7 @@ import { imageToBlob } from './image-to-blob.mjs';
   const openImageOrTextButton = document.querySelector('#open-image-or-text');
   const openDirectoryButton = document.querySelector('#open-directory');
   const saveButton = document.querySelector('#save');
+  const saveBlobButton = document.querySelector('#save-blob');
   const supportedParagraph = document.querySelector('.supported');
   const pre = document.querySelector('pre');
 
@@ -152,9 +153,25 @@ import { imageToBlob } from './image-to-blob.mjs';
     }
   });
 
+  saveBlobButton.addEventListener('click', async () => {
+    const blob = imageToBlob(document.querySelector('img'));
+    try {
+      await fileSave(blob, {
+        fileName: 'floppy.png',
+        extensions: ['.png'],
+      });
+    } catch (err) {
+      if (err.name !== 'AbortError') {
+        return console.error(err);
+      }
+      console.log(ABORT_MESSAGE);
+    }
+  });
+
   openButton.disabled = false;
   openMultipleButton.disabled = false;
   openImageOrTextButton.disabled = false;
   openDirectoryButton.disabled = false;
   saveButton.disabled = false;
+  saveBlobButton.disabled = false;
 })();
