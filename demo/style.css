@@ -30,3 +30,7 @@ img {
   height: auto;
   margin-block: 1rem;
 }
+
+code {
+  font-family: ui-monospace, monospace;
+}

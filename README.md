@@ -87,7 +87,7 @@ import {
     extensions: ['.png'],
   });
 
-  // Save a `<Promise>Blob` that will be streamed.
+  // Save a `Promise<Blob>` that will be streamed.
   // No need to `await` the `Blob` to be created.
   const blob = createBlobAsyncWhichMightTakeLonger(someData);
   await fileSave(response, {
@@ -172,7 +172,7 @@ const existingHandle = previouslyOpenedBlob.handle;
 // the underlying file was deleted. Defaults to `false`.
 const throwIfExistingHandleNotGood = true;
 
-// `blobOrPromiseBlobOrResponse` is a `Blob`, a `<Promise>Blob`, or a `Response`.
+// `blobOrPromiseBlobOrResponse` is a `Blob`, a `Promise<Blob>`, or a `Response`.
 await fileSave(
   blobOrResponseOrPromiseBlob,
   options,

@@ -136,7 +136,7 @@ export type WellKnownDirectory =
  */
 export function fileSave(
   /** To-be-saved `Blob` or `Response` */
-  blobOrResponse: Blob | Response | Promise<Blob>,
+  blobOrPromiseBlobOrResponse: Blob | Promise<Blob> | Response,
   options?: [FirstFileSaveOptions, ...CoreFileOptions[]] | FirstFileSaveOptions,
   /**
    * A potentially existing file handle for a file to save to. Defaults to
