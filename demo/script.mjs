@@ -25,6 +25,7 @@ import { imageToBlob } from './image-to-blob.mjs';
   const openDirectoryButton = document.querySelector('#open-directory');
   const saveButton = document.querySelector('#save');
   const saveBlobButton = document.querySelector('#save-blob');
+  const saveResponseButton = document.querySelector('#save-response');
   const supportedParagraph = document.querySelector('.supported');
   const pre = document.querySelector('pre');
 
@@ -157,7 +158,22 @@ import { imageToBlob } from './image-to-blob.mjs';
     const blob = imageToBlob(document.querySelector('img'));
     try {
       await fileSave(blob, {
-        fileName: 'floppy.png',
+        fileName: 'floppy-blob.png',
+        extensions: ['.png'],
+      });
+    } catch (err) {
+      if (err.name !== 'AbortError') {
+        return console.error(err);
+      }
+      console.log(ABORT_MESSAGE);
+    }
+  });
+
+  saveResponseButton.addEventListener('click', async () => {
+    const response = await fetch('./floppy.png');
+    try {
+      await fileSave(response, {
+        fileName: 'floppy-response.png',
         extensions: ['.png'],
       });
     } catch (err) {
@@ -174,4 +190,5 @@ import { imageToBlob } from './image-to-blob.mjs';
   openDirectoryButton.disabled = false;
   saveButton.disabled = false;
   saveBlobButton.disabled = false;
+  saveResponseButton.disabled = false;
 })();
