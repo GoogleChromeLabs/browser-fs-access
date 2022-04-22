@@ -10,7 +10,7 @@ Read more on the background of this module in my post
 
 ## Live Demo
 
-Try library in your browser: https://googlechromelabs.github.io/browser-fs-access/demo/.
+Try the library in your browser: https://googlechromelabs.github.io/browser-fs-access/demo/.
 
 ## Installation
 
