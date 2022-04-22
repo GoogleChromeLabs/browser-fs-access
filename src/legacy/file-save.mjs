@@ -33,7 +33,7 @@ export default async (blobOrResponse, options = {}) => {
     );
   }
   a.download = options.fileName || 'Untitled';
-  a.href = URL.createObjectURL(data);
+  a.href = URL.createObjectURL(await data);
 
   const _reject = () => cleanupListenersAndMaybeReject(reject);
   const _resolve = () => {
