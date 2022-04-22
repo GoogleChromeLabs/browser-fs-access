@@ -79,6 +79,21 @@ import {
     fileName: 'Untitled.png',
     extensions: ['.png'],
   });
+
+  // Save a `Response` that will be streamed.
+  const response = await fetch('foo.png');
+  await fileSave(response, {
+    fileName: 'foo.png',
+    extensions: ['.png'],
+  });
+
+  // Save a `<Promise>Blob` that will be streamed.
+  // No need to `await` the `Blob` to be created.
+  const blob = createBlobAsyncWhichMightTakeLonger(someData);
+  await fileSave(response, {
+    fileName: 'Untitled.png',
+    extensions: ['.png'],
+  });
 })();
 ```
 
@@ -157,7 +172,13 @@ const existingHandle = previouslyOpenedBlob.handle;
 // the underlying file was deleted. Defaults to `false`.
 const throwIfExistingHandleNotGood = true;
 
-await fileSave(someBlob, options, existingHandle, throwIfExistingHandleNotGood);
+// `blobOrPromiseBlobOrResponse` is a `Blob`, a `<Promise>Blob`, or a `Response`.
+await fileSave(
+  blobOrResponseOrPromiseBlob,
+  options,
+  existingHandle,
+  throwIfExistingHandleNotGood
+);
 ```
 
 ### File operations and exceptions
@@ -175,6 +196,10 @@ documentation of the `legacySetup` parameter.
 You can see the module in action in the [Excalidraw](https://excalidraw.com/) drawing app.
 
 ![excalidraw](https://user-images.githubusercontent.com/145676/73060246-b4a64200-3e97-11ea-8f70-fa5edd63f78e.png)
+
+It also powers the [SVGcode](https://svgco.de/) app that converts raster images to SVGs.
+
+![svgcode](https://github.com/tomayac/SVGcode/raw/main/public/screenshots/desktop.png)
 
 ## Alternatives
 
@@ -203,6 +228,7 @@ Dealing correctly with cross-origin iframes was contributed by
 [@kbariotis](https://github.com/kbariotis).
 The exception handling of the legacy methods was contributed by
 [@jmrog](https://github.com/jmrog).
+The streams and blob saving was improved by [@tmcw](https://github.com/tmcw).
 
 ## License and Note
 
