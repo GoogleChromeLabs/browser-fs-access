@@ -35,7 +35,7 @@ export default async (blobOrResponse, options = {}) => {
   a.download = options.fileName || 'Untitled';
   a.href = URL.createObjectURL(data);
 
-  const _reject = () => cleanupListenersAndMaybeReject(reject);
+  const _reject = () => cleanupListenersAndMaybeReject();
   const _resolve = () => {
     if (typeof cleanupListenersAndMaybeReject === 'function') {
       cleanupListenersAndMaybeReject();
