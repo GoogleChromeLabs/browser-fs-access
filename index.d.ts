@@ -58,10 +58,10 @@ export interface FirstFileSaveOptions extends FirstCoreFileOptions {
    *   https://github.com/whatwg/html/issues/6376 is specified and supported.
    */
   legacySetup?: (
-    resolve: (value: Blob) => void,
+    resolve: () => void,
     rejectionHandler: () => void,
     anchor: HTMLAnchorElement
-  ) => (reject?: (reason?: any) => void) => void;
+  ) => () => void;
 }
 
 /**
