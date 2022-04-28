@@ -1,20 +1,20 @@
 {
   "name": "browser-fs-access",
-  "version": "0.29.2",
+  "version": "0.29.3",
   "description": "File System Access API with legacy fallback in the browser.",
   "type": "module",
   "source": "./src/index.js",
   "exports": {
     ".": {
-      "module": "./dist/index.mjs",
-      "import": "./dist/index.mjs",
+      "module": "./dist/index.modern.js",
+      "import": "./dist/index.modern.js",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "browser": "./dist/index.mjs",
+  "module": "./dist/index.modern.js",
+  "browser": "./dist/index.modern.js",
   "types": "./index.d.ts",
   "files": [
     "dist/",
