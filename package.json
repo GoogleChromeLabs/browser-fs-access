@@ -1,6 +1,6 @@
 {
   "name": "browser-fs-access",
-  "version": "0.29.3",
+  "version": "0.29.4",
   "description": "File System Access API with legacy fallback in the browser.",
   "type": "module",
   "source": "./src/index.js",

@@ -142,7 +142,7 @@ export function fileSave(
    * A potentially existing file handle for a file to save to. Defaults to
    * `null`.
    */
-  existingHandle?: FileSystemHandle | null,
+  existingHandle?: FileSystemFileHandle | null,
   /**
    * Determines whether to throw (rather than open a new file save dialog)
    * when `existingHandle` is no longer good. Defaults to `false`.
@@ -153,7 +153,7 @@ export function fileSave(
    * when no `existingHandle` is provided). Defaults to `null`.
    */
   filePickerShown?: () => void | null
-): Promise<FileSystemHandle | null>;
+): Promise<FileSystemFileHandle | null>;
 
 /**
  * Opens a directory from disk using the File System Access API.
