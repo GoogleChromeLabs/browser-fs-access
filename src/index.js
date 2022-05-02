@@ -21,4 +21,13 @@
 export { fileOpen } from './file-open.mjs';
 export { directoryOpen } from './directory-open.mjs';
 export { fileSave } from './file-save.mjs';
+
+export { default as fileOpenModern } from './fs-access/file-open.mjs';
+export { default as directoryOpenModern } from './fs-access/directory-open.mjs';
+export { default as fileSaveModern } from './fs-access/file-save.mjs';
+
+export { default as fileOpenLegacy } from './legacy/file-open.mjs';
+export { default as directoryOpenLegacy } from './legacy/directory-open.mjs';
+export { default as fileSaveLegacy } from './legacy/file-save.mjs';
+
 export { default as supported } from './supported.mjs';
