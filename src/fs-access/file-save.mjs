@@ -57,6 +57,8 @@ export default async (
       });
     } else if (type) {
       types[i].accept[type] = option.extensions || [];
+    } else {
+      types[i].accept['*/*'] = option.extensions || [];
     }
   });
   if (existingHandle) {
