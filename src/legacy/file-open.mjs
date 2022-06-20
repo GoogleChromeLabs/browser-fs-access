@@ -33,8 +33,10 @@ export default async (options = [{}]) => {
     input.multiple = options[0].multiple || false;
     // Empty string allows everything.
     input.accept = accept || '';
+    // Append to the DOM, else Safari on iOS won't fire the `change` event
+    // reliably.
     input.style.display = 'none';
-    document.body.appendChild(input);
+    document.body.append(input);
     const _reject = () => cleanupListenersAndMaybeReject(reject);
     const _resolve = (value) => {
       if (typeof cleanupListenersAndMaybeReject === 'function') {
@@ -50,15 +52,16 @@ export default async (options = [{}]) => {
 
     const cancelDetector = () => {
       window.removeEventListener('focus', cancelDetector);
-      document.body.removeChild(input);
+      input.remove();
     };
 
     input.addEventListener('click', () => {
-      window.addEventListener('focus', cancelDetector, true);
+      window.addEventListener('focus', cancelDetector);
     });
 
     input.addEventListener('change', () => {
-      document.body.removeChild(input);
+      window.removeEventListener('focus', cancelDetector);
+      input.remove();
       _resolve(input.multiple ? Array.from(input.files) : input.files[0]);
     });
 
