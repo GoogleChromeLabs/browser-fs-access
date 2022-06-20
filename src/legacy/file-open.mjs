@@ -33,6 +33,8 @@ export default async (options = [{}]) => {
     input.multiple = options[0].multiple || false;
     // Empty string allows everything.
     input.accept = accept || '';
+    input.style.display = 'none';
+    document.body.appendChild(input);
     const _reject = () => cleanupListenersAndMaybeReject(reject);
     const _resolve = (value) => {
       if (typeof cleanupListenersAndMaybeReject === 'function') {
@@ -45,7 +47,18 @@ export default async (options = [{}]) => {
     const cleanupListenersAndMaybeReject =
       options[0].legacySetup &&
       options[0].legacySetup(_resolve, _reject, input);
+
+    const cancelDetector = () => {
+      window.removeEventListener('focus', cancelDetector);
+      document.body.removeChild(input);
+    };
+
+    input.addEventListener('click', () => {
+      window.addEventListener('focus', cancelDetector, true);
+    });
+
     input.addEventListener('change', () => {
+      document.body.removeChild(input);
       _resolve(input.multiple ? Array.from(input.files) : input.files[0]);
     });
 
