@@ -82,7 +82,7 @@ export default async (
       excludeAcceptAllOption: options[0].excludeAcceptAllOption || false,
     }));
   if (!existingHandle && filePickerShown) {
-    filePickerShown();
+    filePickerShown(handle);
   }
   const writable = await handle.createWritable();
   // Use streaming on the `Blob` if the browser supports it.
