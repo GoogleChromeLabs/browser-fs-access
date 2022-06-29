@@ -45,7 +45,7 @@ export default async (
   }
   options.forEach((option, i) => {
     types[i] = {
-      description: option.description || '',
+      description: option.description || 'Files',
       accept: {},
     };
     if (option.mimeTypes) {

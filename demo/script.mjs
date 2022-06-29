@@ -67,6 +67,7 @@ import { imageToBlob } from './image-to-blob.mjs';
   openButton.addEventListener('click', async () => {
     try {
       const blob = await fileOpen({
+        description: 'Image files',
         mimeTypes: ['image/jpg', 'image/png', 'image/gif', 'image/webp'],
         extensions: ['.jpg', '.jpeg', '.png', '.gif', '.webp'],
       });
@@ -82,6 +83,7 @@ import { imageToBlob } from './image-to-blob.mjs';
   openMultipleButton.addEventListener('click', async () => {
     try {
       const blobs = await fileOpen({
+        description: 'Image files',
         mimeTypes: ['image/jpg', 'image/png', 'image/gif', 'image/webp'],
         extensions: ['.jpg', '.jpeg', '.png', '.gif', '.webp'],
         multiple: true,
