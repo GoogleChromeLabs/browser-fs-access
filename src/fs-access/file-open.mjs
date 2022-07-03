@@ -29,19 +29,19 @@ export default async (options = [{}]) => {
   if (!Array.isArray(options)) {
     options = [options];
   }
-  const types = [];
-  options.forEach((option, i) => {
-    types[i] = {
+  const types = options.map((option) => {
+    const type = {
       description: option.description || 'Files',
       accept: {},
     };
     if (option.mimeTypes) {
-      option.mimeTypes.map((mimeType) => {
-        types[i].accept[mimeType] = option.extensions || [];
-      });
+      for (const mimeType of option.mimeTypes) {
+        type.accept[mimeType] = option.extensions || [];
+      }
     } else {
-      types[i].accept['*/*'] = option.extensions || [];
+      type.accept['*/*'] = option.extensions || [];
     }
+    return type;
   });
   const handleOrHandles = await window.showOpenFilePicker({
     id: options[0].id,
