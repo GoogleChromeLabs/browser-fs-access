@@ -15,6 +15,29 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
+const tryExisitingHandle = async (handle, discontinue) => {
+  try {
+    await handle.getFile();
+    return handle;
+  } catch (error) {
+    if (discontinue) throw error;
+    return null;
+  }
+}
+
+const getHandle = async (handle, options) => {
+  if (handle) return handle;
+  return await window.showSaveFilePicker(opts)
+};
+
+const getType = (blob, response) => {
+  const { type } = blob;
+  if (type) return type;
+  const { headers } = response;
+  if (headers) return headers.get('content-type');
+  return '';
+};
+
 /**
  * Saves a file to disk using the File System Access API.
  * @type { typeof import("../../index").fileSave }
@@ -26,64 +49,38 @@ export default async (
   throwIfExistingHandleNotGood = false,
   filePickerShown = null
 ) => {
-  if (!Array.isArray(options)) {
-    options = [options];
-  }
-  options[0].fileName = options[0].fileName || 'Untitled';
-  const types = [];
-  let type = null;
-  if (
-    blobOrPromiseBlobOrResponse instanceof Blob &&
-    blobOrPromiseBlobOrResponse.type
-  ) {
-    type = blobOrPromiseBlobOrResponse.type;
-  } else if (
-    blobOrPromiseBlobOrResponse.headers &&
-    blobOrPromiseBlobOrResponse.headers.get('content-type')
-  ) {
-    type = blobOrPromiseBlobOrResponse.headers.get('content-type');
-  }
-  options.forEach((option, i) => {
-    types[i] = {
-      description: option.description || 'Files',
-      accept: {},
-    };
-    if (option.mimeTypes) {
-      if (i === 0 && type) {
-        option.mimeTypes.push(type);
+  const opts = Array.isArray(options) ? options : [options];
+  const types = opts.map(({ description = 'Files', extensions = [], mimeTypes }) => {
+    const accept = {};
+    if (mimeTypes) {
+      for (const mimeType of mimeTypes) {
+        accept[mimeType] = extensions;
       }
-      option.mimeTypes.map((mimeType) => {
-        types[i].accept[mimeType] = option.extensions || [];
-      });
     } else if (type) {
-      types[i].accept[type] = option.extensions || [];
+      accept[type] = extensions;
     } else {
-      types[i].accept['*/*'] = option.extensions || [];
+      accept['*/*'] = extensions;
     }
+    return { description, accept }
   });
-  if (existingHandle) {
-    try {
-      // Check if the file still exists.
-      await existingHandle.getFile();
-    } catch (err) {
-      existingHandle = null;
-      if (throwIfExistingHandleNotGood) {
-        throw err;
-      }
-    }
+
+  const blob = blobOrPromiseBlobOrResponse instanceof Blob ? blobOrPromiseBlobOrResponse : {};
+  const response = blobOrPromiseBlobOrResponse;
+  const type = getType(blob, response);
+  const [{ mimeTypes, extentions = [] }] = opts;
+  const [{ accept }] = types;
+  if (mimeTypes && type) {
+    accept[type] = extentions;
   }
-  const handle =
-    existingHandle ||
-    (await window.showSaveFilePicker({
-      suggestedName: options[0].fileName,
-      id: options[0].id,
-      startIn: options[0].startIn,
-      types,
-      excludeAcceptAllOption: options[0].excludeAcceptAllOption || false,
-    }));
-  if (!existingHandle && filePickerShown) {
+
+  const prevHandle = await tryExistingHandle(existingHandle, throwIfExistingHandleNotGood)
+  const [{ fileName = 'Untitled', id, startIn, excludeAcceptAllOption = false }] = options;
+  const handleOptions = { suggestedName: fileName, id, startIn, types, excludeAcceptAllOption };
+  const handle = await getHandle(prevHandle, handleOptions);
+  if (!prevHandle && filePickerShown) {
     filePickerShown(handle);
   }
+
   const writable = await handle.createWritable();
   // Use streaming on the `Blob` if the browser supports it.
   if ('stream' in blobOrPromiseBlobOrResponse) {
@@ -96,7 +93,8 @@ export default async (
     return handle;
   }
   // Default case of `Blob` passed and `Blob.stream()` not supported.
-  await writable.write(await blobOrPromiseBlobOrResponse);
+  const contents = await blobOrPromiseBlobOrResponse;
+  await writable.write(contents);
   await writable.close();
   return handle;
 };
