@@ -15,7 +15,7 @@
  */
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 
-const tryExisitingHandle = async (handle, discontinue) => {
+const tryExistingHandle = async (handle, discontinue) => {
   try {
     await handle.getFile();
     return handle;
@@ -27,7 +27,7 @@ const tryExisitingHandle = async (handle, discontinue) => {
 
 const getHandle = async (handle, options) => {
   if (handle) return handle;
-  return await window.showSaveFilePicker(opts)
+  return await window.showSaveFilePicker(options)
 };
 
 const getType = (blob, response) => {
@@ -50,6 +50,9 @@ export default async (
   filePickerShown = null
 ) => {
   const opts = Array.isArray(options) ? options : [options];
+  const blob = blobOrPromiseBlobOrResponse instanceof Blob ? blobOrPromiseBlobOrResponse : {};
+  const response = blobOrPromiseBlobOrResponse;
+  const type = getType(blob, response);
   const types = opts.map(({ description = 'Files', extensions = [], mimeTypes }) => {
     const accept = {};
     if (mimeTypes) {
@@ -63,10 +66,6 @@ export default async (
     }
     return { description, accept }
   });
-
-  const blob = blobOrPromiseBlobOrResponse instanceof Blob ? blobOrPromiseBlobOrResponse : {};
-  const response = blobOrPromiseBlobOrResponse;
-  const type = getType(blob, response);
   const [{ mimeTypes, extentions = [] }] = opts;
   const [{ accept }] = types;
   if (mimeTypes && type) {
@@ -74,7 +73,7 @@ export default async (
   }
 
   const prevHandle = await tryExistingHandle(existingHandle, throwIfExistingHandleNotGood)
-  const [{ fileName = 'Untitled', id, startIn, excludeAcceptAllOption = false }] = options;
+  const [{ fileName = 'Untitled', id, startIn, excludeAcceptAllOption = false }] = opts;
   const handleOptions = { suggestedName: fileName, id, startIn, types, excludeAcceptAllOption };
   const handle = await getHandle(prevHandle, handleOptions);
   if (!prevHandle && filePickerShown) {
