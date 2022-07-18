@@ -130,6 +130,8 @@ export type WellKnownDirectory =
   | 'pictures'
   | 'videos';
 
+export type FileSystemPermissionMode = 'read' | 'readwrite';
+
 /**
  * Saves a file to disk.
  * @returns Optional file handle to save in place.
@@ -166,6 +168,8 @@ export function directoryOpen(options?: {
   startIn?: WellKnownDirectory | FileSystemHandle;
   /** By specifying an ID, the user agent can remember different directories for different IDs. */
   id?: string;
+  /** By specifying a mode of `'readwrite'`, you can open a directory with write access. */
+  mode?: FileSystemPermissionMode;
   /** Callback to determine whether a directory should be entered, return `true` to skip. */
   skipDirectory?: (
     entry: FileSystemDirectoryEntry | FileSystemDirectoryHandle

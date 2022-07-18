@@ -54,9 +54,11 @@ const getFiles = async (
  */
 export default async (options = {}) => {
   options.recursive = options.recursive || false;
+  options.mode = options.mode || 'read';
   const handle = await window.showDirectoryPicker({
     id: options.id,
     startIn: options.startIn,
+    mode: options.mode,
   });
   return getFiles(handle, options.recursive, undefined, options.skipDirectory);
 };
