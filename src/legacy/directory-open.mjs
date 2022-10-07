@@ -64,7 +64,10 @@ export default async (options = [{}]) => {
 
       _resolve(files);
     });
-
-    input.click();
+    if ('showPicker' in HTMLInputElement.prototype) {
+      input.showPicker();
+    } else {
+      input.click();
+    }
   });
 };
