@@ -25,76 +25,108 @@ npm install --save browser-fs-access
 The module feature-detects support for the File System Access API and
 only loads the actually relevant code.
 
+### Importing what you need
+
+Import only the features that you need. In the code sample below, all
+features are loaded. The imported methods will use the File System
+Access API or a fallback implementation.
+
 ```js
-// The imported methods will use the File System
-// Access API or a fallback implementation.
 import {
   fileOpen,
   directoryOpen,
   fileSave,
   supported,
 } from 'https://unpkg.com/browser-fs-access';
+```
 
-(async () => {
-  if (supported) {
-    console.log('Using the File System Access API.');
-  } else {
-    console.log('Using the fallback implementation.');
-  }
+### Feature detection
 
-  // Open a file.
-  const blob = await fileOpen({
-    mimeTypes: ['image/*'],
-  });
+You can check `supported` to see if the File System Access API is
+supported.
 
-  // Open multiple files.
-  const blobs = await fileOpen({
-    mimeTypes: ['image/*'],
+```js
+if (supported) {
+  console.log('Using the File System Access API.');
+} else {
+  console.log('Using the fallback implementation.');
+}
+```
+
+### Opening a file
+
+```js
+const blob = await fileOpen({
+  mimeTypes: ['image/*'],
+});
+```
+
+### Opening multiple files
+
+```js
+const blobs = await fileOpen({
+  mimeTypes: ['image/*'],
+  multiple: true,
+});
+```
+
+### Opening files of different MIME types
+
+```js
+const blobs = await fileOpen([
+  {
+    description: 'Image files',
+    mimeTypes: ['image/jpg', 'image/png', 'image/gif', 'image/webp'],
+    extensions: ['.jpg', '.jpeg', '.png', '.gif', '.webp'],
     multiple: true,
-  });
+  },
+  {
+    description: 'Text files',
+    mimeTypes: ['text/*'],
+    extensions: ['.txt'],
+  },
+]);
+```
 
-  // Open files of different MIME types.
-  const blobs = await fileOpen([
-    {
-      description: 'Image files',
-      mimeTypes: ['image/jpg', 'image/png', 'image/gif', 'image/webp'],
-      extensions: ['.jpg', '.jpeg', '.png', '.gif', '.webp'],
-      multiple: true,
-    },
-    {
-      description: 'Text files',
-      mimeTypes: ['text/*'],
-      extensions: ['.txt'],
-    },
-  ]);
+### Opening all files in a directory
 
-  // Open all files in a directory,
-  // recursively including subdirectories.
-  const blobsInDirectory = await directoryOpen({
-    recursive: true,
-  });
+Optionally, you can recursively include subdirectories.
 
-  // Save a file.
-  await fileSave(blob, {
-    fileName: 'Untitled.png',
-    extensions: ['.png'],
-  });
+```js
+const blobsInDirectory = await directoryOpen({
+  recursive: true,
+});
+```
 
-  // Save a `Response` that will be streamed.
-  const response = await fetch('foo.png');
-  await fileSave(response, {
-    fileName: 'foo.png',
-    extensions: ['.png'],
-  });
+### Saving a file
 
-  // Save a `Promise<Blob>` that will be streamed.
-  // No need to `await` the `Blob` to be created.
-  const blob = createBlobAsyncWhichMightTakeLonger(someData);
-  await fileSave(response, {
-    fileName: 'Untitled.png',
-    extensions: ['.png'],
-  });
-})();
+```js
+await fileSave(blob, {
+  fileName: 'Untitled.png',
+  extensions: ['.png'],
+});
+```
+
+### Saving a `Response` that will be streamed
+
+```js
+const response = await fetch('foo.png');
+await fileSave(response, {
+  fileName: 'foo.png',
+  extensions: ['.png'],
+});
+```
+
+### Saving a `Promise<Blob>` that will be streamed.
+
+No need to `await` the `Blob` to be created.
+
+```js
+const blob = createBlobAsyncWhichMightTakeLonger(someData);
+await fileSave(blob, {
+  fileName: 'Untitled.png',
+  extensions: ['.png'],
+});
 ```
 
 ## API Documentation
