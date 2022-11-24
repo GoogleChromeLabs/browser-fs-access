@@ -20,7 +20,7 @@ You can install the module with npm.
 npm install --save browser-fs-access
 ```
 
-## Usage Example
+## Usage Examples
 
 The module feature-detects support for the File System Access API and
 only loads the actually relevant code.
