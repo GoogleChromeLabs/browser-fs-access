@@ -167,6 +167,8 @@ const options = {
   startIn: 'downloads',
   // By specifying an ID, the user agent can remember different directories for different IDs.
   id: 'projects',
+  // Set to 'read' or 'readwrite'; the browser will prompt the user accordingly.
+  mode: 'read',
   // Callback to determine whether a directory should be entered, return `true` to skip.
   skipDirectory: (entry) => entry.name[0] === '.',
 };
@@ -175,6 +177,32 @@ const blobs = await directoryOpen(options);
 ```
 
 The module also polyfills a [`webkitRelativePath`](https://developer.mozilla.org/en-US/docs/Web/API/File/webkitRelativePath) property on returned files in a consistent way, regardless of the underlying implementation.
+
+### Opening A Directory Hierarchy
+
+A variant of directoryOpen which is not backwards/legacy compatible, but includes
+a handle referencing the directory being opened, as well as its contents.
+
+```js
+// Options are optional.
+const options = {
+  // Set to `true` to recursively open files in all subdirectories,
+  // defaults to `false`.
+  recursive: true,
+  // Suggested directory in which the file picker opens. A well-known directory, or a file or directory handle.
+  startIn: 'downloads',
+  // By specifying an ID, the user agent can remember different directories for different IDs.
+  id: 'projects',
+  // Set to 'read' or 'readwrite'; the browser will prompt the user accordingly.
+  mode: 'read',
+  // Callback to determine whether a directory should be entered, return `true` to skip.
+  skipDirectory: (entry) => entry.name[0] === '.',
+};
+
+const dirWithContents = fileHierarchy(options);
+const dir = dirWithContents.currentDir;
+const contents = await dirWithContents.contents;
+```
 
 ### Saving files:
 
