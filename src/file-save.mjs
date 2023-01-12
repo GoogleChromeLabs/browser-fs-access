@@ -17,9 +17,9 @@
 
 import supported from './supported.mjs';
 
-const implementation = !supported
-  ? import('./legacy/file-save.mjs')
-  : import('./fs-access/file-save.mjs');
+const implementation = supported
+  ? import('./fs-access/file-save.mjs')
+  : import('./legacy/file-save.mjs');
 
 /**
  * For saving files, dynamically either loads the File System Access API module
