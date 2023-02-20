@@ -46,7 +46,7 @@ import { imageToBlob } from './image-to-blob.mjs';
 
   const listDirectory = (blobs) => {
     let fileStructure = '';
-    if (!blobs.length || !(blobs[0] instanceof File)) {
+    if (blobs.length && !(blobs[0] instanceof File)) {
       return (pre.textContent += 'No files in directory.\n');
     }
     blobs
