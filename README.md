@@ -160,9 +160,10 @@ const blobs = await fileOpen(options);
 ```js
 // Options are optional.
 const options = {
-  // Set to `true` to recursively open files in all subdirectories,
-  // defaults to `false`.
+  // Set to `true` to recursively open files in all subdirectories, defaults to `false`.
   recursive: true,
+  // Open the directory with `"read"` or `"readwrite"` permission, defaults to `"read"`.
+  mode?: 
   // Suggested directory in which the file picker opens. A well-known directory, or a file or directory handle.
   startIn: 'downloads',
   // By specifying an ID, the user agent can remember different directories for different IDs.
