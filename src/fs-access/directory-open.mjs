@@ -60,11 +60,10 @@ export default async (options = {}) => {
     startIn: options.startIn,
     mode: options.mode,
   });
-  const files = getFiles(
-    handle,
-    options.recursive,
-    undefined,
-    options.skipDirectory
-  );
-  return handle.values ? files : [handle];
+  // If the directory is empty, return an array with the handle.
+  if ((await (await handle.values()).next()).done) {
+    return [handle];
+  }
+  // Else, return an array of File objects.
+  return getFiles(handle, options.recursive, undefined, options.skipDirectory);
 };
