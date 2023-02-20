@@ -207,7 +207,7 @@ export function directoryOpen(options?: {
     rejectionHandler: () => void,
     input: HTMLInputElement
   ) => (reject?: (reason?: any) => void) => void;
-}): Promise<FileWithDirectoryAndFileHandle[]>;
+}): Promise<FileWithDirectoryAndFileHandle[] | FileSystemDirectoryHandle[]>;
 
 /**
  * Whether the File System Access API is supported.

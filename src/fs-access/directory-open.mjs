@@ -60,5 +60,11 @@ export default async (options = {}) => {
     startIn: options.startIn,
     mode: options.mode,
   });
-  return getFiles(handle, options.recursive, undefined, options.skipDirectory);
+  const files = getFiles(
+    handle,
+    options.recursive,
+    undefined,
+    options.skipDirectory
+  );
+  return handle.values ? files : [handle];
 };

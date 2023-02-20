@@ -46,6 +46,9 @@ import { imageToBlob } from './image-to-blob.mjs';
 
   const listDirectory = (blobs) => {
     let fileStructure = '';
+    if (!blobs.length || !(blobs[0] instanceof File)) {
+      return (pre.textContent += 'No files in directory.\n');
+    }
     blobs
       .sort((a, b) => a.webkitRelativePath.localeCompare(b))
       .forEach((blob) => {
@@ -131,7 +134,9 @@ import { imageToBlob } from './image-to-blob.mjs';
 
   openDirectoryButton.addEventListener('click', async () => {
     try {
-      const blobs = await directoryOpen();
+      const blobs = await directoryOpen({
+        recursive: true,
+      });
       listDirectory(blobs);
     } catch (err) {
       if (err.name !== 'AbortError') {
