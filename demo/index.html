@@ -44,5 +44,21 @@
       >.
     </p>
     <pre></pre>
+    <div class="iframes">
+      <h2>In same-origin iframe</h2>
+      <p>
+        If above it says "Using the File System Access API", then it should say
+        so in the iframe.
+      </p>
+      <iframe src="."></iframe>
+      <h2>In cross-origin iframe</h2>
+      <p>
+        Cross-origin iframes cannot use the File System Access API, so it uses
+        the fallback.
+      </p>
+      <iframe
+        src="https://tomayac.github.io/cross-origin-browser-fs-access/"
+      ></iframe>
+    </div>
   </body>
 </html>

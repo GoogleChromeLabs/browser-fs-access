@@ -199,3 +199,7 @@ import { imageToBlob } from './image-to-blob.mjs';
   saveBlobButton.disabled = false;
   saveResponseButton.disabled = false;
 })();
+
+if (window.self !== window.top) {
+  document.querySelector('.iframes').remove();
+}
