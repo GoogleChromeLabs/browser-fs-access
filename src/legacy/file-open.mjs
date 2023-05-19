@@ -51,7 +51,7 @@ export default async (options = [{}]) => {
       options[0].legacySetup(_resolve, _reject, input);
 
     const cancelDetector = () => {
-      window.removeEventListener('focus', cancelDetector);
+      window.removeEventListener('focus', cancelDetector, true);
       input.remove();
     };
 
@@ -60,7 +60,7 @@ export default async (options = [{}]) => {
     });
 
     input.addEventListener('change', () => {
-      window.removeEventListener('focus', cancelDetector);
+      window.removeEventListener('focus', cancelDetector, true);
       input.remove();
       _resolve(input.multiple ? Array.from(input.files) : input.files[0]);
     });
