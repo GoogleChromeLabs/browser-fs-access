@@ -32,7 +32,8 @@ const supported = (() => {
     try {
       // This will succeed on same-origin iframes,
       // but fail on cross-origin iframes.
-      top.location + '';
+      // This is longer than necessary, as else the minifier removes it.
+      top.window.document._ = 0;
     } catch {
       return false;
     }
