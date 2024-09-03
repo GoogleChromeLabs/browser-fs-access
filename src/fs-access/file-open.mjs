@@ -26,33 +26,27 @@ const getFileWithHandle = async (handle) => {
  * @type { typeof import("../../index").fileOpen }
  */
 export default async (options = [{}]) => {
-  if (!Array.isArray(options)) {
-    options = [options];
-  }
-  const types = [];
-  options.forEach((option, i) => {
-    types[i] = {
-      description: option.description || 'Files',
-      accept: {},
-    };
-    if (option.mimeTypes) {
-      option.mimeTypes.map((mimeType) => {
-        types[i].accept[mimeType] = option.extensions || [];
-      });
+  const opts = Array.isArray(options) ? options : [options];
+  const types = opts.map(({ description = 'Files', extensions = [], mimeTypes }) => {
+    const accept = {};
+    if (mimeTypes) {
+      for (const mimeType of mimeTypes) {
+        accept[mimeType] = extensions;
+      }
     } else {
-      types[i].accept['*/*'] = option.extensions || [];
+      accept['*/*'] = extensions;
     }
+    return { description, accept };
   });
+  const [{ id, startIn, multiple = false, excludeAcceptAllOption = false }] = opts;
   const handleOrHandles = await window.showOpenFilePicker({
-    id: options[0].id,
-    startIn: options[0].startIn,
+    id,
+    startIn,
     types,
-    multiple: options[0].multiple || false,
-    excludeAcceptAllOption: options[0].excludeAcceptAllOption || false,
+    multiple,
+    excludeAcceptAllOption,
   });
   const files = await Promise.all(handleOrHandles.map(getFileWithHandle));
-  if (options[0].multiple) {
-    return files;
-  }
+  if (multiple) return files;
   return files[0];
 };
