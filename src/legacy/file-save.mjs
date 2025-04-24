@@ -41,8 +41,7 @@ export default async (blobOrPromiseBlobOrResponse, options = {}) => {
       cleanupListenersAndMaybeReject();
     }
   };
-  // ToDo: Remove this workaround once
-  // https://github.com/whatwg/html/issues/6376 is specified and supported.
+
   const cleanupListenersAndMaybeReject =
     options.legacySetup && options.legacySetup(_resolve, _reject, a);
 

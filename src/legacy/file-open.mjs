@@ -44,19 +44,10 @@ export default async (options = [{}]) => {
       }
       resolve(value);
     };
-    // ToDo: Remove this workaround once
-    // https://github.com/whatwg/html/issues/6376 is specified and supported.
-    const cleanupListenersAndMaybeReject =
-      options[0].legacySetup &&
-      options[0].legacySetup(_resolve, _reject, input);
 
-    const cancelDetector = () => {
-      window.removeEventListener('focus', cancelDetector);
+    input.addEventListener('cancel', () => {
       input.remove();
-    };
-
-    input.addEventListener('click', () => {
-      window.addEventListener('focus', cancelDetector);
+      reject(new DOMException('The user aborted a request.', 'AbortError'));
     });
 
     input.addEventListener('change', () => {

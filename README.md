@@ -217,10 +217,8 @@ await fileSave(
 ### File operations and exceptions
 
 The File System Access API supports exceptions, so apps can throw when problems occur (permissions
-not granted, out of disk space,…), or when the user cancels the dialog. The legacy methods,
-unfortunately, do not support exceptions (albeit there is an
-[HTML issue](https://github.com/whatwg/html/issues/6376) open for this request). If your app depends
-on exceptions, see the file
+not granted, out of disk space,…), or when the user cancels the dialog. The legacy save method,
+unfortunately, doesn't support exceptions. If your app depends on exceptions, see the file
 [`index.d.ts`](https://github.com/GoogleChromeLabs/browser-fs-access/blob/main/index.d.ts) for the
 documentation of the `legacySetup` parameter.
 

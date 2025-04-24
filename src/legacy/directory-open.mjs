@@ -30,18 +30,10 @@ export default async (options = [{}]) => {
     input.type = 'file';
     input.webkitdirectory = true;
 
-    const _reject = () => cleanupListenersAndMaybeReject(reject);
-    const _resolve = (value) => {
-      if (typeof cleanupListenersAndMaybeReject === 'function') {
-        cleanupListenersAndMaybeReject();
-      }
-      resolve(value);
-    };
-    // ToDo: Remove this workaround once
-    // https://github.com/whatwg/html/issues/6376 is specified and supported.
-    const cleanupListenersAndMaybeReject =
-      options[0].legacySetup &&
-      options[0].legacySetup(_resolve, _reject, input);
+    input.addEventListener('cancel', () => {
+      input.remove();
+      reject(new DOMException('The user aborted a request.', 'AbortError'));
+    });
 
     input.addEventListener('change', () => {
       let files = Array.from(input.files);
@@ -62,7 +54,7 @@ export default async (options = [{}]) => {
         });
       }
 
-      _resolve(files);
+      resolve(files);
     });
     if ('showPicker' in HTMLInputElement.prototype) {
       input.showPicker();
