@@ -29,6 +29,10 @@ export default async (options = [{}]) => {
     const input = document.createElement('input');
     input.type = 'file';
     input.webkitdirectory = true;
+    // Append to the DOM, else Safari on iOS won't fire the `change` event
+    // reliably.
+    input.style.display = 'none';
+    document.body.append(input);
 
     input.addEventListener('cancel', () => {
       input.remove();
@@ -36,6 +40,7 @@ export default async (options = [{}]) => {
     });
 
     input.addEventListener('change', () => {
+      input.remove();
       let files = Array.from(input.files);
       if (!options[0].recursive) {
         files = files.filter((file) => {

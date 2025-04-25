@@ -37,13 +37,6 @@ export default async (options = [{}]) => {
     // reliably.
     input.style.display = 'none';
     document.body.append(input);
-    const _reject = () => cleanupListenersAndMaybeReject(reject);
-    const _resolve = (value) => {
-      if (typeof cleanupListenersAndMaybeReject === 'function') {
-        cleanupListenersAndMaybeReject();
-      }
-      resolve(value);
-    };
 
     input.addEventListener('cancel', () => {
       input.remove();
@@ -51,9 +44,8 @@ export default async (options = [{}]) => {
     });
 
     input.addEventListener('change', () => {
-      window.removeEventListener('focus', cancelDetector);
       input.remove();
-      _resolve(input.multiple ? Array.from(input.files) : input.files[0]);
+      resolve(input.multiple ? Array.from(input.files) : input.files[0]);
     });
 
     if ('showPicker' in HTMLInputElement.prototype) {
