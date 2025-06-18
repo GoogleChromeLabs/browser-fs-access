@@ -21,6 +21,7 @@
 export { fileOpen } from './file-open.mjs';
 export { directoryOpen } from './directory-open.mjs';
 export { fileSave } from './file-save.mjs';
+export { fileHierarchy } from './file-hierarchy.mjs';
 
 export { default as fileOpenModern } from './fs-access/file-open.mjs';
 export { default as directoryOpenModern } from './fs-access/directory-open.mjs';
