@@ -48,7 +48,9 @@ export default async (options = [{}]) => {
         });
       } else if (options[0].recursive && options[0].skipDirectory) {
         files = files.filter((file) => {
-          const directoriesName = file.webkitRelativePath.split('/');
+          const directoriesName = file.webkitRelativePath
+            .split('/')
+            .slice(1, -1);
           return directoriesName.every(
             (directoryName) =>
               !options[0].skipDirectory({
