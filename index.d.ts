@@ -66,8 +66,9 @@ export interface FirstFileSaveOptions extends FirstCoreFileOptions {
  * whether multiple files can be selected (the return type of the operation
  * will be updated appropriately).
  */
-export interface FirstFileOpenOptions<M extends boolean | undefined>
-  extends FirstCoreFileOptions {
+export interface FirstFileOpenOptions<
+  M extends boolean | undefined,
+> extends FirstCoreFileOptions {
   /** Allow multiple files to be selected. Defaults to `false`. */
   multiple?: M;
 }
@@ -77,19 +78,13 @@ export interface FirstFileOpenOptions<M extends boolean | undefined>
  */
 export function fileOpen<M extends boolean | undefined = false>(
   options?:
-    | [FirstFileOpenOptions<M>, ...CoreFileOptions[]]
-    | FirstFileOpenOptions<M>
+    [FirstFileOpenOptions<M>, ...CoreFileOptions[]] | FirstFileOpenOptions<M>
 ): M extends false | undefined
   ? Promise<FileWithHandle>
   : Promise<FileWithHandle[]>;
 
 export type WellKnownDirectory =
-  | 'desktop'
-  | 'documents'
-  | 'downloads'
-  | 'music'
-  | 'pictures'
-  | 'videos';
+  'desktop' | 'documents' | 'downloads' | 'music' | 'pictures' | 'videos';
 
 export type FileSystemPermissionMode = 'read' | 'readwrite';
 
